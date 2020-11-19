@@ -22,6 +22,7 @@ namespace MetroidVaniaTools
         protected Animator anim;
         protected HorizonalMovement movement;
         protected Jump jump;
+        protected InputManager input;
 
         private Vector2 facingLeft;
 
@@ -41,18 +42,19 @@ namespace MetroidVaniaTools
             movement = GetComponent<HorizonalMovement>();
             jump = GetComponent<Jump>();
             facingLeft = new Vector2(-transform.localScale.x, transform.localScale.y);
+            input = GetComponent<InputManager>();
         }
 
         protected virtual void Flip()
         {
-            if (isFacingLeft)
+            if (isFacingLeft || (!isFacingLeft && isWallSliding))
             {
                 transform.localScale = facingLeft;
             }
-            else
+            if (!isFacingLeft || (isFacingLeft && isWallSliding))
             {
                 transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y);
-            }             
+            }           
         }
         protected virtual bool CollisionCheck(Vector2 direction, float distance, LayerMask collision)
         {

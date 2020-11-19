@@ -30,28 +30,23 @@ namespace MetroidVaniaTools
         // Update is called once per frame
         protected virtual void Update()
         {
-            DashPressed();
+            Dashing();
         }
-
-        protected virtual bool DashPressed()
-        {
-            if (Input.GetKeyDown(KeyCode.Z) && canDash)
-            {
-                Dashing();
-                return true;
-            }
-            else
-                return false;
-        }
+            
 
         protected virtual void Dashing()
         {
-            dashCountDown = dashCooldownTime;
-            character.isDashing = true;
-            CapsuleCollider2D.direction = CapsuleDirection2D.Horizontal;
-            CapsuleCollider2D.size = new Vector2(CapsuleCollider2D.size.y, CapsuleCollider2D.size.x);
-            anim.SetBool("Dashing", true);
-            StartCoroutine(FinishedDashing());
+
+            if (input.DashPressed() && canDash)
+            {
+                dashCountDown = dashCooldownTime;
+                character.isDashing = true;
+                CapsuleCollider2D.direction = CapsuleDirection2D.Horizontal;
+                CapsuleCollider2D.size = new Vector2(CapsuleCollider2D.size.y, CapsuleCollider2D.size.x);
+                anim.SetBool("Dashing", true);
+                StartCoroutine(FinishedDashing());
+            }
+            
         }
 
         protected virtual void FixedUpdate()

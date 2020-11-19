@@ -54,6 +54,7 @@ namespace MetroidVaniaTools
         private int numberOfJumpsLeft;
         private bool isJumping;
         private bool isWallJumping;
+        private bool flipped;
         private float jumpCountDown;
         private float fallCountDown;
         private float originalGravity;
@@ -72,8 +73,7 @@ namespace MetroidVaniaTools
         // Update is called once per frame
         protected virtual void Update()
         {
-            JumpPressed();
-            JumpHeld();
+            CheckForJump();
         }
 
         protected virtual void FixedUpdate()
@@ -85,7 +85,7 @@ namespace MetroidVaniaTools
             WallJump();
         }
 
-        protected virtual bool JumpPressed()
+        protected virtual bool CheckForJump()
         {
             groundedRemember -= Time.deltaTime;
             if (character.isGrounded)
@@ -94,12 +94,12 @@ namespace MetroidVaniaTools
             }
             
             jumpPressedRemember -= Time.deltaTime;
-            if (Input.GetButtonDown("Jump"))
+            if (input.JumpPressed())
             {
                 jumpPressedRemember = jumpPressedBufferTime;
             }
             
-            if (jumpPressedRemember > 0 || Input.GetButtonDown("Jump"))
+            if (jumpPressedRemember > 0 || input.JumpPressed())
             {
                 if (!character.isGrounded && numberOfJumpsLeft == maxJumps)
                 {
@@ -132,19 +132,6 @@ namespace MetroidVaniaTools
             else
                 return false;
         }
-
-        protected virtual bool JumpHeld()
-        {
-            if (Input.GetKey(KeyCode.Space))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
         protected virtual void IsJumping()
         {
 
@@ -164,7 +151,7 @@ namespace MetroidVaniaTools
 
         protected virtual void Gliding()
         {
-            if (Falling(0) && JumpHeld())
+            if (Falling(0) && input.JumpHeld())
             {
                 fallCountDown -= Time.deltaTime;
                 if (fallCountDown > 0 && rb.velocity.y > acceptedFallSpeed)
@@ -180,7 +167,7 @@ namespace MetroidVaniaTools
 
         protected virtual void AdditionalAir()
         {
-            if (JumpHeld())
+            if (input.JumpHeld())
             {
                 jumpCountDown -= Time.deltaTime;
                 if (jumpCountDown <= 0)
@@ -250,13 +237,25 @@ namespace MetroidVaniaTools
         {
             if (WallCheck())
             {
+                if (!flipped)
+                {
+                    Flip();
+                    flipped = true;
+                }
                 FallSpeed(glideGravity);
                 character.isWallSliding = true;
+                anim.SetBool("WallSliding", true);
                 return true;
             }
             else
             {
                 character.isWallSliding = false;
+                anim.SetBool("WallSliding", false);
+                if (flipped && !isWallJumping)
+                {
+                    Flip();
+                    flipped = false;
+                }
                 return false;
             }
         }

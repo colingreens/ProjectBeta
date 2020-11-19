@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace MetroidVaniaTools
 {
-    public class HorizonalMovement : Abilities
+    public class TestHorizonalMovement : Abilities
     {
         [SerializeField]
         protected float timeTillMaxSpeed;
@@ -40,6 +40,7 @@ namespace MetroidVaniaTools
         protected virtual void Update()
         {
             MovementPressed();
+            SprintingHeld();
         }
         protected virtual void FixedUpdate()
         {
@@ -48,15 +49,25 @@ namespace MetroidVaniaTools
 
         public virtual bool MovementPressed()
         {
-             if (Input.GetAxis("Horizontal") != 0)
+            if (Input.GetAxis("Horizontal") != 0)
             {
                 //horizontalInput = Input.GetAxis("Horizontal");
                 return true;
             }
             else
                 return false;
-            
-        }     
+
+        }
+        protected virtual bool SprintingHeld()
+        {
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                return true;
+            }
+            else
+                return false;
+
+        }
 
         protected virtual void Movement()
         {
@@ -68,12 +79,12 @@ namespace MetroidVaniaTools
                 anim.SetBool("Moving", true);
                 CheckDirection();
                 if (Mathf.Abs(Input.GetAxisRaw("Horizontal")) < 0.01f)
-                {                    
-                    horizontalVelocity *= Mathf.Pow(1f - horizontalDampingWhenStopping, Time.deltaTime * 10f);                    
+                {
+                    horizontalVelocity *= Mathf.Pow(1f - horizontalDampingWhenStopping, Time.deltaTime * 10f);
                 }
                 else if (Mathf.Sign(Input.GetAxisRaw("Horizontal")) != Mathf.Sign(horizontalVelocity))
-                {                    
-                    horizontalVelocity *= Mathf.Pow(1f - horizontalDampingWhenTurning, Time.deltaTime * 10f);                   
+                {
+                    horizontalVelocity *= Mathf.Pow(1f - horizontalDampingWhenTurning, Time.deltaTime * 10f);
                 }
                 else
                 {
@@ -140,22 +151,18 @@ namespace MetroidVaniaTools
                     horizontalVelocity = -maxSpeed;
                 }
             }
-            
+
         }
 
         protected virtual void SpeedMultiplier()
         {
-            if (input.SprintingHeld())
+            if (SprintingHeld())
             {
                 horizontalVelocity *= sprintMultiplier;
             }
             if (character.isCrouching)
             {
                 horizontalVelocity *= crouchMultiplier;
-            }
-            if (character.isWallSliding)
-            {
-                horizontalVelocity = 0;
             }
             if (!character.isFacingLeft && CollisionCheck(Vector2.right, .02f, jump.collisionLayer) ||
                 character.isFacingLeft && CollisionCheck(Vector2.left, .02f, jump.collisionLayer))
@@ -165,4 +172,3 @@ namespace MetroidVaniaTools
         }
     }
 }
-
