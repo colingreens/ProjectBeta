@@ -130,7 +130,10 @@ namespace MetroidVaniaTools
                 return true;
             }
             else
+            {
                 return false;
+            }
+                
         }
         protected virtual void IsJumping()
         {

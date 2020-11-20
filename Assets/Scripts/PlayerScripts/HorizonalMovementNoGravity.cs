@@ -46,22 +46,30 @@ namespace MetroidVaniaTools
                 CheckDirection();
                 rb.AddForce(Vector2.right * horizontal * moveSpeed);                
             }
-
+            anim.SetFloat("Velocity", Mathf.Abs(rb.velocity.x));
         }
 
         protected virtual void ModifyPhysics()
         {
             bool changingDirections = (direction.x > 0 && rb.velocity.x < 0) || (direction.x < 0 && rb.velocity.x > 0);
-            print(direction.x);
-            
-            if (Mathf.Abs(direction.x) < 0.4f || changingDirections)
+
+            if (character.isGrounded)
             {
-                rb.drag = linearDrag;
+                if (Mathf.Abs(direction.x) < 0.4f || changingDirections)
+                {
+                    rb.drag = linearDrag;
+                }
+                else
+                {
+                    rb.drag = 0f;
+                }
+                rb.gravityScale = 0;
             }
             else
             {
-                rb.drag = 0f;
+                rb.drag = linearDrag * 0.15f;
             }
+            
         }
 
         protected virtual void CheckDirection()
