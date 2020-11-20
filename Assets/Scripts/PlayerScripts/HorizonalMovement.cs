@@ -15,8 +15,6 @@ namespace MetroidVaniaTools
         [SerializeField]
         protected float crouchMultiplier;
         [SerializeField]
-        protected float horizontalAcceleration;
-        [SerializeField]
         [Range(0, 1)]
         protected float horizontalDampingBasic;
         [SerializeField]
@@ -139,8 +137,7 @@ namespace MetroidVaniaTools
                 {
                     horizontalVelocity = -maxSpeed;
                 }
-            }
-            
+            }            
         }
 
         protected virtual void SpeedMultiplier()

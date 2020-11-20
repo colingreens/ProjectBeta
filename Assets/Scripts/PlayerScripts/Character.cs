@@ -20,7 +20,7 @@ namespace MetroidVaniaTools
         protected Collider2D col;
         protected Rigidbody2D rb;
         protected Animator anim;
-        protected HorizonalMovement movement;
+        protected HorizonalMovementNoGravity movement;
         protected Jump jump;
         protected InputManager input;
 
@@ -39,7 +39,7 @@ namespace MetroidVaniaTools
             col = GetComponent<Collider2D>();
             rb = GetComponent<Rigidbody2D>();
             anim = GetComponent<Animator>();
-            movement = GetComponent<HorizonalMovement>();
+            movement = GetComponent<HorizonalMovementNoGravity>();
             jump = GetComponent<Jump>();
             facingLeft = new Vector2(-transform.localScale.x, transform.localScale.y);
             input = GetComponent<InputManager>();
