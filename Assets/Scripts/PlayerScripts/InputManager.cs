@@ -14,6 +14,9 @@ namespace MetroidVaniaTools
         protected KeyCode sprintingHeld;
         [SerializeField]
         protected KeyCode jumpKey;
+        [SerializeField]
+        protected KeyCode changeWeaponPressed;
+
 
         // Update is called once per frame
         void Update()
@@ -25,6 +28,7 @@ namespace MetroidVaniaTools
             JumpHeld();
             FireOnePressed();
             FireOneHeld();
+            ChangeWeaponPressed();
         }
 
         public virtual bool CrouchHeld()
@@ -90,6 +94,15 @@ namespace MetroidVaniaTools
         public virtual bool FireOneHeld()
         {
             if (Input.GetButton("Fire1"))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+        public virtual bool ChangeWeaponPressed()
+        {
+            if (Input.GetKeyDown(changeWeaponPressed))
             {
                 return true;
             }
