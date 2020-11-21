@@ -24,6 +24,7 @@ namespace MetroidVaniaTools
             JumpPressed();
             JumpHeld();
             FireOnePressed();
+            FireOneHeld();
         }
 
         public virtual bool CrouchHeld()
@@ -78,7 +79,17 @@ namespace MetroidVaniaTools
 
         public virtual bool FireOnePressed()
         {
-            if (Input.GetButtonDown("Fire1"))
+            if (Input.GetButtonUp("Fire1"))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public virtual bool FireOneHeld()
+        {
+            if (Input.GetButton("Fire1"))
             {
                 return true;
             }

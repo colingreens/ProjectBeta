@@ -13,12 +13,16 @@ namespace MetroidVaniaTools
         [SerializeField]
         protected Transform gunRotation;
 
+        [HideInInspector]
         public List<GameObject> currentPool = new List<GameObject>();
+        [HideInInspector]
+        public List<GameObject> bulletsToReset = new List<GameObject>();
         public GameObject currentProjectile;
         public WeaponTypes currentWeapon;
         public float currentTimeTillChangeArms;
 
         private GameObject projectileParentFolder;
+        private float currentTimeBetweenShots;
 
         protected override void Initilization()
         {
@@ -42,18 +46,38 @@ namespace MetroidVaniaTools
         protected virtual void FixedUpdate()
         {
             NegateTimeTillChangeArms();
+            FireWeaponHeld();
         }
 
         protected virtual void FireWeapon()
         {
-            aimManager.aimingGun.transform.GetChild(0).position = aimManager.whereToAim.transform.position;
-            aimManager.aimingOffHand.transform.GetChild(0).position = aimManager.whereToPlaceHand.transform.position;
-            currentTimeTillChangeArms = currentWeapon.lifeTime;
-            aimManager.ChangeArms();
-            currentProjectile = objectPooler.GetObject(currentPool);
+            CheckAimAndArms();            
+            currentProjectile = objectPooler.GetObject(currentPool, currentWeapon, this, projectileParentFolder);
             if (currentProjectile != null)
             {
                 Invoke("PlaceProjectile", .1f);
+            }
+            currentTimeBetweenShots = currentWeapon.timeBetweenShots;
+        }
+
+        protected virtual void FireWeaponHeld()
+        {
+            if (input.FireOneHeld())
+            {
+                if (currentWeapon.automatic)
+                {
+                    CheckAimAndArms();
+                    currentTimeBetweenShots -= Time.deltaTime;
+                    if (currentTimeBetweenShots < 0)
+                    {
+                        currentProjectile = objectPooler.GetObject(currentPool, currentWeapon, this, projectileParentFolder);
+                        if (currentProjectile != null)
+                        {
+                            Invoke("PlaceProjectile", .1f);
+                        }
+                        currentTimeBetweenShots = currentWeapon.timeBetweenShots;
+                    }
+                }
             }
         }
 
@@ -76,6 +100,14 @@ namespace MetroidVaniaTools
                 currentProjectile.GetComponent<Projectile>().left = true;
             }
             currentProjectile.GetComponent<Projectile>().fired = true;
+        }
+
+        protected virtual void CheckAimAndArms()
+        {
+            aimManager.aimingGun.transform.GetChild(0).position = aimManager.whereToAim.transform.position;
+            aimManager.aimingOffHand.transform.GetChild(0).position = aimManager.whereToPlaceHand.transform.position;
+            currentTimeTillChangeArms = currentWeapon.lifeTime;
+            aimManager.ChangeArms();
         }
     }
 }

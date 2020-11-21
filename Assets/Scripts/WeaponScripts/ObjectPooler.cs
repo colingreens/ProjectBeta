@@ -45,13 +45,38 @@ namespace MetroidVaniaTools
             projectileParentFolder.name = weapon.name;
         }
 
-        public virtual GameObject GetObject(List<GameObject> currentPool)
+        public virtual GameObject GetObject(List<GameObject> currentPool, WeaponTypes weapon, Weapon weaponScript, GameObject projectileParentFolder)
         {
             for (int i = 0; i < currentPool.Count; i++)
             {
                 if (!currentPool[i].activeInHierarchy)
                 {
+                    if (weapon.canResetPool && weaponScript.bulletsToReset.Count < weapon.amountToPool)
+                    {
+                        weaponScript.bulletsToReset.Add(currentPool[i]);
+                    }
                     return currentPool[i];
+                }
+            }
+            foreach (var item in currentPool)
+            {
+                if (weapon.canExpandPool)
+                {
+                    currentItem = Instantiate(weapon.projectile);
+                    currentItem.SetActive(false);
+                    currentPool.Add(currentItem);
+                    currentItem.transform.SetParent(projectileParentFolder.transform);
+                    return currentItem;
+                }
+                if (weapon.canResetPool)
+                {
+                    currentItem = weaponScript.bulletsToReset[0];
+                    weaponScript.bulletsToReset.RemoveAt(0);
+                    currentItem.SetActive(false);
+                    weaponScript.bulletsToReset.Add(currentItem);
+                    currentItem.GetComponent<Projectile>().DestroyProjectile();
+                    return currentItem;
+
                 }
             }
             return null;

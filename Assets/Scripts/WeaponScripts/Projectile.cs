@@ -58,7 +58,7 @@ namespace MetroidVaniaTools
             }
         }
 
-        protected virtual void DestroyProjectile()
+        public virtual void DestroyProjectile()
         {
             projectileLifeTime = weapon.lifeTime;
             gameObject.SetActive(false);
