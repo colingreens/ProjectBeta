@@ -23,6 +23,7 @@ namespace MetroidVaniaTools
         protected HorizonalMovementNoGravity movement;
         protected Jump jump;
         protected InputManager input;
+        protected ObjectPooler objectPooler;
 
         private Vector2 facingLeft;
 
@@ -43,6 +44,7 @@ namespace MetroidVaniaTools
             jump = GetComponent<Jump>();
             facingLeft = new Vector2(-transform.localScale.x, transform.localScale.y);
             input = GetComponent<InputManager>();
+            objectPooler = ObjectPooler.Instance;
         }
 
         protected virtual void Flip()

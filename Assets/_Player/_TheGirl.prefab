@@ -81,6 +81,7 @@ GameObject:
   - component: {fileID: 4084928826307521021}
   - component: {fileID: 4084928826307521022}
   - component: {fileID: 4084928826307521023}
+  - component: {fileID: 4084928826307521024}
   m_Layer: 0
   m_Name: _TheGirl
   m_TagString: Untagged
@@ -221,7 +222,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 506634949042462228}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 179e12cca1bc25941aaa1807ada62d44, type: 3}
   m_Name: 
@@ -295,7 +296,7 @@ MonoBehaviour:
   isDashing: 0
   isWallSliding: 0
   moveSpeed: 12
-  maxSpeed: 8
+  maxSpeed: 6
   linearDrag: 6
   direction: {x: 0, y: 0}
 --- !u!114 &4084928826307521023
@@ -315,10 +316,8 @@ MonoBehaviour:
   isCrouching: 0
   isDashing: 0
   isWallSliding: 0
-  jumpForce: 5
+  jumpForce: 15
   distanceToCollider: 0.08
-  maxJumpSpeed: 15
-  maxFallSpeed: 500
   jumpPressedBufferTime: 0.2
   groundedBufferTime: 0.25
   gravity: 1
@@ -329,6 +328,29 @@ MonoBehaviour:
   isJumping: 0
   jumpPressedRemember: 0
   groundedRemember: 0
+--- !u!114 &4084928826307521024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 506634949042462228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9af4e64507f9987468d6f7caa70be3e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isFacingLeft: 0
+  isGrounded: 0
+  isCrouching: 0
+  isDashing: 0
+  isWallSliding: 0
+  weaponTypes:
+  - {fileID: 11400000, guid: f9ff5e27cb67f1b4587ff8cec1df45be, type: 2}
+  gunBarrel: {fileID: 4591271192096380882}
+  gunRotation: {fileID: 4410597497403343915}
+  currentPool: []
+  currentProjectile: {fileID: 0}
 --- !u!1 &1267600067204740742
 GameObject:
   m_ObjectHideFlags: 0

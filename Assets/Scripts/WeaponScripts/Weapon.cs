@@ -1,0 +1,64 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace MetroidVaniaTools
+{
+    public class Weapon : Abilities
+    {
+        [SerializeField]
+        protected List<WeaponTypes> weaponTypes;
+        [SerializeField]
+        protected Transform gunBarrel;
+        [SerializeField]
+        protected Transform gunRotation;
+
+        public List<GameObject> currentPool = new List<GameObject>();
+        public GameObject currentProjectile;
+
+        private GameObject projectileParentFolder;
+
+        protected override void Initilization()
+        {
+            base.Initilization();
+            foreach (var weapon in weaponTypes)
+            {
+                projectileParentFolder = new GameObject();
+                objectPooler.CreatePool(weapon, currentPool, projectileParentFolder);
+            }
+        }
+
+        protected virtual void Update()
+        {
+            if (input.FireOnePressed())
+            {
+                FireWeapon();
+            }
+        }
+
+        protected virtual void FireWeapon()
+        {
+            currentProjectile = objectPooler.GetObject(currentPool);
+            if (currentProjectile != null)
+            {
+                Invoke("PlaceProjectile", .1f);
+            }
+        }
+
+        protected virtual void PlaceProjectile()
+        {
+            currentProjectile.transform.position = gunBarrel.position;
+            currentProjectile.transform.rotation = gunRotation.rotation;
+            currentProjectile.SetActive(true);
+            if (!character.isFacingLeft)
+            {
+                currentProjectile.GetComponent<Projectile>().left = false;
+            }
+            else
+            {
+                currentProjectile.GetComponent<Projectile>().left = true;
+            }
+            currentProjectile.GetComponent<Projectile>().fired = true;
+        }
+    }
+}
