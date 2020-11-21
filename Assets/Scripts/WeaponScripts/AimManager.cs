@@ -15,6 +15,13 @@ namespace MetroidVaniaTools
         public Transform whereToPlaceHand;
         public Transform origin;
         public Bounds bounds;
+        public float yDirectionAimAdjust;
+
+        private Vector3 mouse;
+        private Vector3 camOffSetDistance;
+        private Camera cam;
+        
+
 
         protected override void Initilization()
         {
@@ -22,12 +29,20 @@ namespace MetroidVaniaTools
             aimingGun.enabled = false;
             aimingOffHand.enabled = false;
             bounds.center = origin.position;
+            cam = Camera.main;
         }
 
         protected virtual void FixedUpdate()
         {
-            ChangeArms();
+            DirectionalAim();
             bounds.center = origin.position;
+        }
+
+        public virtual void DirectionalAim()
+        {
+            camOffSetDistance = cam.WorldToScreenPoint(character.transform.localPosition);
+            mouse = Input.mousePosition;
+            whereToAim.transform.position = new Vector2(mouse.x - camOffSetDistance.x, mouse.y - camOffSetDistance.y - yDirectionAimAdjust);            
         }
 
         public virtual void ChangeArms()
@@ -39,7 +54,7 @@ namespace MetroidVaniaTools
                 notAimingGun.enabled = false;
                 notAimingOffHand.enabled = false;
             }
-            if (weapon.currentTimeTillChangeArms < 0)
+            if (weapon.currentTimeTillChangeArms < 0)            
             {
                 aimingGun.enabled = false;
                 aimingOffHand.enabled = false;
@@ -50,7 +65,8 @@ namespace MetroidVaniaTools
 
         private void OnDrawGizmos()
         {
-            Gizmos.DrawWireCube(origin.position, bounds.size);
+            //Gizmos.DrawWireCube(origin.position, bounds.size);
+            //Gizmos.DrawLine(bounds.center, whereToAim.transform.position);
         }
     }
 }

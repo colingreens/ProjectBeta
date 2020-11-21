@@ -146,4 +146,4 @@ MonoBehaviour:
   weapon: {fileID: 11400000, guid: f9ff5e27cb67f1b4587ff8cec1df45be, type: 2}
   fired: 0
   left: 0
-  projectileLifeTime: 0
+  projectileLifeTime: 0.3

@@ -9,7 +9,7 @@ namespace MetroidVaniaTools
         [SerializeField]
         protected List<WeaponTypes> weaponTypes;
         [SerializeField]
-        protected Transform gunBarrel;
+        public Transform gunBarrel;
         [SerializeField]
         protected Transform gunRotation;
 
@@ -41,33 +41,20 @@ namespace MetroidVaniaTools
 
         protected virtual void FixedUpdate()
         {
-            PointGun();
             NegateTimeTillChangeArms();
         }
 
         protected virtual void FireWeapon()
         {
+            aimManager.aimingGun.transform.GetChild(0).position = aimManager.whereToAim.transform.position;
+            aimManager.aimingOffHand.transform.GetChild(0).position = aimManager.whereToPlaceHand.transform.position;
             currentTimeTillChangeArms = currentWeapon.lifeTime;
+            aimManager.ChangeArms();
             currentProjectile = objectPooler.GetObject(currentPool);
             if (currentProjectile != null)
             {
                 Invoke("PlaceProjectile", .1f);
             }
-        }
-
-        protected virtual void PointGun()
-        {
-            if (!character.isFacingLeft)
-            {
-                aimManager.whereToAim.position = new Vector2(aimManager.bounds.max.x, aimManager.bounds.center.y);
-            }
-            else
-            {
-                aimManager.whereToAim.position = new Vector2(aimManager.bounds.min.x, aimManager.bounds.center.y);
-            }
-
-            aimManager.aimingGun.transform.GetChild(0).position = aimManager.whereToAim.position;
-            aimManager.aimingOffHand.transform.GetChild(0).position = aimManager.whereToPlaceHand.position;
         }
 
         protected virtual void NegateTimeTillChangeArms()
