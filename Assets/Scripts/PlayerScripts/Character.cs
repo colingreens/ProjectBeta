@@ -25,6 +25,7 @@ namespace MetroidVaniaTools
         protected InputManager input;
         protected ObjectPooler objectPooler;
         protected AimManager aimManager;
+        protected Weapon weapon;
 
         private Vector2 facingLeft;
 
@@ -47,6 +48,7 @@ namespace MetroidVaniaTools
             input = GetComponent<InputManager>();
             objectPooler = ObjectPooler.Instance;
             aimManager = GetComponent<AimManager>();
+            weapon = GetComponent<Weapon>();
         }
 
         protected virtual void Flip()

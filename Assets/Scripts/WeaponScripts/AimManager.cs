@@ -16,7 +16,6 @@ namespace MetroidVaniaTools
         public Transform origin;
         public Bounds bounds;
 
-
         protected override void Initilization()
         {
             base.Initilization();
@@ -25,12 +24,28 @@ namespace MetroidVaniaTools
             bounds.center = origin.position;
         }
 
+        protected virtual void FixedUpdate()
+        {
+            ChangeArms();
+            bounds.center = origin.position;
+        }
+
         public virtual void ChangeArms()
         {
-            notAimingGun.enabled = !notAimingGun.enabled;
-            notAimingOffHand.enabled = !notAimingOffHand.enabled;
-            aimingGun.enabled = !aimingGun.enabled;
-            aimingOffHand.enabled = !aimingOffHand.enabled;
+            if (weapon.currentTimeTillChangeArms > 0 )
+            {
+                aimingGun.enabled = true;
+                aimingOffHand.enabled = true;
+                notAimingGun.enabled = false;
+                notAimingOffHand.enabled = false;
+            }
+            if (weapon.currentTimeTillChangeArms < 0)
+            {
+                aimingGun.enabled = false;
+                aimingOffHand.enabled = false;
+                notAimingGun.enabled = true;
+                notAimingOffHand.enabled = true;
+            }
         }
 
         private void OnDrawGizmos()

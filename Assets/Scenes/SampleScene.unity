@@ -1150,7 +1150,7 @@ MonoBehaviour:
   origin: {fileID: 7323246572493023181}
   bounds:
     m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 2.35, y: 2.35, z: 0}
 --- !u!4 &4130290964258935164 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 497301881064892052, guid: 78c20cfb568eefe4d899192474044fde,
@@ -1233,6 +1233,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -0.984
+      objectReference: {fileID: 0}
+    - target: {fileID: 4084928826307521024, guid: 78c20cfb568eefe4d899192474044fde,
+        type: 3}
+      propertyPath: currentTimeTillChangeArms
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4410597497403343915, guid: 78c20cfb568eefe4d899192474044fde,
         type: 3}
