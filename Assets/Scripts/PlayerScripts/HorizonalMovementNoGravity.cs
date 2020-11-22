@@ -7,10 +7,14 @@ namespace MetroidVaniaTools
     public class HorizonalMovementNoGravity : Abilities
     {
         [Header("Horizontal Movement")]
-        public float moveSpeed = 10f;
-        public float maxSpeed = 8f;
-        public float linearDrag = 4f;
-        public Vector2 direction;
+        [SerializeField]
+        protected float moveSpeed = 10f;
+        [SerializeField]
+        protected float maxSpeed = 8f;
+        [SerializeField]
+        protected float linearDrag = 4f;
+
+        protected Vector2 direction;
 
         protected override void Initilization()
         {
@@ -79,12 +83,26 @@ namespace MetroidVaniaTools
                 }
                 rb.gravityScale = 0;
             }
-            else
-            {                
+            if (!character.isGrounded && !character.isWallSliding)
+            {
                 rb.drag = linearDrag * 0.15f;
+                rb.gravityScale = jump.gravity;
+                if (rb.velocity.y < 0)
+                {
+                    rb.gravityScale = jump.gravity * jump.fallMultipler;
+                }
+                else if (rb.velocity.y > 0 && !input.JumpHeld())
+                {
+                    rb.gravityScale = jump.gravity * (jump.fallMultipler / 2);
+                }
+            }
+            if (!character.isGrounded && character.isWallSliding)
+            {
+                rb.gravityScale = jump.gravity * 0.1f;
             }
             if (grapplingHook.connected)
             {
+                //rb.drag = linearDrag;
                 if (CollisionCheck(Vector2.right, .1f, jump.collisionLayer) ||
                     CollisionCheck(Vector2.left, .1f, jump.collisionLayer) ||
                     CollisionCheck(Vector2.down, .1f, jump.collisionLayer) ||
@@ -93,13 +111,12 @@ namespace MetroidVaniaTools
                     {
                         return;
                     }
-                rb.drag = linearDrag * 0.15f;
-
+                
                 if (grapplingHook.hookTrail.transform.position.y > grapplingHook.objectConnectedTo.transform.position.y)
                 {
                     //possibly slow down here
                 }
-                rb.rotation -= rb.velocity.x;
+                //rb.rotation -= rb.velocity.x;
             }
 
         }

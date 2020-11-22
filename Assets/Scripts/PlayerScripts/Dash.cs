@@ -20,6 +20,7 @@ namespace MetroidVaniaTools
         private bool canDash;
         private float dashCountDown;
         private CapsuleCollider2D CapsuleCollider2D;
+        private Vector2 deltaPosition;
 
 
         protected override void Initilization()
@@ -39,6 +40,7 @@ namespace MetroidVaniaTools
 
             if (input.DashPressed() && canDash)
             {
+                deltaPosition = transform.position;
                 dashCountDown = dashCooldownTime;
                 character.isDashing = true;
                 CapsuleCollider2D.direction = CapsuleDirection2D.Horizontal;
@@ -64,12 +66,12 @@ namespace MetroidVaniaTools
                 if(!character.isFacingLeft)
                 {
                     DashCollision(Vector2.right, .5f, dashingLayers);
-                    rb.AddForce(Vector2.right * dashForce);
+                    rb.AddForce(Vector2.right * dashForce, ForceMode2D.Impulse);
                 }
                 else
                 {
                     DashCollision(Vector2.left, .5f, dashingLayers);
-                    rb.AddForce(Vector2.left * dashForce);
+                    rb.AddForce(Vector2.left * dashForce, ForceMode2D.Impulse);
                 }
             }
         }
@@ -110,6 +112,16 @@ namespace MetroidVaniaTools
             FallSpeed(1);
             movement.enabled = true;
             rb.velocity = new Vector2(1, rb.velocity.y);
+            RaycastHit2D[] hits = new RaycastHit2D[10];
+            yield return new WaitForSeconds(.1f);
+            hits = Physics2D.CapsuleCastAll(new Vector2(col.bounds.center.x, col.bounds.center.y + .05f), 
+                new Vector2(col.bounds.size.x, col.bounds.size.y - .1f), 
+                CapsuleDirection2D.Vertical, 0, Vector2.zero, 0, 
+                jump.collisionLayer);
+            if (hits.Length > 0)
+            {
+                transform.position = deltaPosition;
+            }
 
         }
 

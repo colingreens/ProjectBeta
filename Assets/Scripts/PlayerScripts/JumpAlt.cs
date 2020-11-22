@@ -9,21 +9,20 @@ namespace MetroidVaniaTools
         [SerializeField]
         protected float jumpForce;
         [SerializeField]
+        protected float wallJumpMultiplier;
+        [SerializeField]
         protected float distanceToCollider;
         [SerializeField]
         protected float jumpPressedBufferTime;
         [SerializeField]
         protected float groundedBufferTime;
-        [SerializeField]
-        protected float gravity;
-        [SerializeField]
-        protected float fallMultipler;
+        
         public LayerMask collisionLayer;
+        public float gravity; //used in modifyphysics in horizontal movement script
+        public float fallMultipler; //used in modifyphysics in horizontal movement script
 
-        public bool isJumping;
-
-        public float jumpPressedRemember;
-        public float groundedRemember;
+        protected float jumpPressedRemember;
+        protected float groundedRemember;
 
         // Update is called once per frame
         void Update()
@@ -34,8 +33,8 @@ namespace MetroidVaniaTools
         protected virtual void FixedUpdate()
         {
 
-            GroundCheck();            
-            ModifyPhysics();
+            GroundCheck();
+            WallCheck();
         }
 
         protected virtual void CheckForJump()
@@ -58,30 +57,35 @@ namespace MetroidVaniaTools
                 jumpPressedRemember = 0;
                 groundedRemember = 0;
             }
+            if (jumpPressedRemember > 0 && character.isWallSliding)
+            {
+                WallJump();
+                jumpPressedRemember = 0;
+            }
                 
         }
 
         protected virtual void Jump()
         {
-                rb.velocity = new Vector2(rb.velocity.x, 0);
-                rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            rb.velocity = new Vector2(rb.velocity.x, 0);
+            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            character.isJumping = true;
         }
 
-        protected virtual void ModifyPhysics()  //TODO: Refactor into character script. 
+        protected virtual void WallJump()
         {
-            if (!character.isGrounded)
+            rb.velocity = new Vector2(rb.velocity.x, 0);
+            if (character.isFacingLeft)
             {
-                rb.gravityScale = gravity;
-                if (rb.velocity.y < 0 )
-                {
-                    rb.gravityScale = gravity * fallMultipler;
-                }
-                else if (rb.velocity.y > 0 && !input.JumpHeld())
-                {
-                    rb.gravityScale = gravity * (fallMultipler / 2);
-                }
+                rb.AddForce(Vector2.right * jumpForce, ForceMode2D.Impulse);
+                rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             }
-            
+            if (!character.isFacingLeft)
+            {
+                rb.AddForce(Vector2.left * jumpForce, ForceMode2D.Impulse);
+                rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            }
+
         }
 
 
@@ -91,6 +95,7 @@ namespace MetroidVaniaTools
             {
                 anim.SetBool("Grounded", true);
                 character.isGrounded = true;
+                character.isJumping = false;
             }
             else
             {
@@ -98,6 +103,19 @@ namespace MetroidVaniaTools
                 character.isGrounded = false;
             }
             anim.SetFloat("VerticalSpeed", rb.velocity.y);
+        }
+
+        protected virtual void WallCheck()
+        {
+            if (CollisionCheck(Vector2.left, distanceToCollider, collisionLayer) ||
+                CollisionCheck(Vector2.right, distanceToCollider, collisionLayer))
+            {
+                character.isWallSliding = true;
+            }
+            else
+            {
+                character.isWallSliding = false;
+            }
         }
     }
 }

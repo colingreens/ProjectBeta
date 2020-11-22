@@ -16,12 +16,14 @@ namespace MetroidVaniaTools
         public bool isDashing;
         [HideInInspector]
         public bool isWallSliding;
+        [HideInInspector]
+        public bool isJumping;
 
         protected Collider2D col;
         protected Rigidbody2D rb;
         protected Animator anim;
         protected HorizonalMovementNoGravity movement;
-        protected Jump jump;
+        protected JumpAlt jump;
         protected InputManager input;
         protected ObjectPooler objectPooler;
         protected AimManager aimManager;
@@ -44,7 +46,7 @@ namespace MetroidVaniaTools
             rb = GetComponent<Rigidbody2D>();
             anim = GetComponent<Animator>();
             movement = GetComponent<HorizonalMovementNoGravity>();
-            jump = GetComponent<Jump>();
+            jump = GetComponent<JumpAlt>();
             facingLeft = new Vector2(-transform.localScale.x, transform.localScale.y);
             input = GetComponent<InputManager>();
             objectPooler = ObjectPooler.Instance;

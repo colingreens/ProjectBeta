@@ -11,7 +11,7 @@ namespace MetroidVaniaTools
         public float projectileSpeed;
         public int amountToPool;
         public float lifeTime;
-        public bool automatic;
+        public bool automatic;        
         public float timeBetweenShots;
         public bool canExpandPool;
         public bool canResetPool;
