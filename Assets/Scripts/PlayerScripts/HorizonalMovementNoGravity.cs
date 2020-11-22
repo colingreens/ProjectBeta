@@ -26,6 +26,7 @@ namespace MetroidVaniaTools
         protected virtual void FixedUpdate()
         {
             MoveCharacter(direction.x);
+            RemoveFromGrapple();
             ModifyPhysics();
         }
         public virtual bool MovementPressed()
@@ -49,6 +50,19 @@ namespace MetroidVaniaTools
             anim.SetFloat("Velocity", Mathf.Abs(rb.velocity.x));
         }
 
+        protected virtual void RemoveFromGrapple()
+        {
+            if (grapplingHook.removed)
+            {
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.identity, Time.deltaTime * 500);
+                if (transform.rotation == Quaternion.identity)
+                {
+                    grapplingHook.removed = false;
+                    rb.freezeRotation = true;
+                }
+            }
+        }
+
         protected virtual void ModifyPhysics()
         {
             bool changingDirections = (direction.x > 0 && rb.velocity.x < 0) || (direction.x < 0 && rb.velocity.x > 0);
@@ -66,10 +80,28 @@ namespace MetroidVaniaTools
                 rb.gravityScale = 0;
             }
             else
-            {
+            {                
                 rb.drag = linearDrag * 0.15f;
             }
-            
+            if (grapplingHook.connected)
+            {
+                if (CollisionCheck(Vector2.right, .1f, jump.collisionLayer) ||
+                    CollisionCheck(Vector2.left, .1f, jump.collisionLayer) ||
+                    CollisionCheck(Vector2.down, .1f, jump.collisionLayer) ||
+                    CollisionCheck(Vector2.up, .1f, jump.collisionLayer) ||
+                    character.isGrounded)
+                    {
+                        return;
+                    }
+                rb.drag = linearDrag * 0.15f;
+
+                if (grapplingHook.hookTrail.transform.position.y > grapplingHook.objectConnectedTo.transform.position.y)
+                {
+                    //possibly slow down here
+                }
+                rb.rotation -= rb.velocity.x;
+            }
+
         }
 
         protected virtual void CheckDirection()

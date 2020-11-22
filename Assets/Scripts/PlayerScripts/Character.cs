@@ -26,6 +26,7 @@ namespace MetroidVaniaTools
         protected ObjectPooler objectPooler;
         protected AimManager aimManager;
         protected Weapon weapon;
+        protected GrapplingHook grapplingHook;
 
         private Vector2 facingLeft;
 
@@ -49,6 +50,7 @@ namespace MetroidVaniaTools
             objectPooler = ObjectPooler.Instance;
             aimManager = GetComponent<AimManager>();
             weapon = GetComponent<Weapon>();
+            grapplingHook = GetComponent<GrapplingHook>();
         }
 
         protected virtual void Flip()
