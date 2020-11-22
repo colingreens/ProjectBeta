@@ -127,9 +127,13 @@ namespace MetroidVaniaTools
         }
         public virtual bool DownHeld()
         {
-            if (Input.GetKey(downKey))
+            if (Input.GetButton("Vertical"))
             {
-                return true;
+                if (Input.GetAxisRaw("Vertical") < 0)
+                {
+                    return true;
+                }
+                return false;
             }
             else
                 return false;

@@ -84,6 +84,7 @@ namespace MetroidVaniaTools
                     rb.drag = 0f;
                 }
                 rb.gravityScale = 0;
+                return;
             }
             if (!character.isGrounded && !character.isWallSliding)
             {

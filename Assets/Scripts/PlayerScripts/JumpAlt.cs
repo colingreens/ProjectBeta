@@ -9,13 +9,12 @@ namespace MetroidVaniaTools
         [SerializeField]
         protected float jumpForce;
         [SerializeField]
-        protected float wallJumpMultiplier;
-        [SerializeField]
         protected float distanceToCollider;
         [SerializeField]
         protected float jumpPressedBufferTime;
         [SerializeField]
         protected float groundedBufferTime;
+       
         
         public LayerMask collisionLayer;
         public float gravity; //used in modifyphysics in horizontal movement script
@@ -32,7 +31,6 @@ namespace MetroidVaniaTools
 
         protected virtual void FixedUpdate()
         {
-
             GroundCheck();
             WallCheck();
         }
@@ -43,13 +41,7 @@ namespace MetroidVaniaTools
             if (character.isGrounded)
             {
                 groundedRemember = groundedBufferTime;
-            }
-            if (currentPlatform != null && currentPlatform.GetComponent<OneWayPlatform>() && input.DownHeld())
-            {
-                character.isJumpingThroughPlatform = true;
-                Invoke("NotJumpingThroughPlatform", .1f);
-                //
-            }
+            }         
 
             jumpPressedRemember -= Time.deltaTime;
             if (input.JumpPressed())
@@ -59,6 +51,13 @@ namespace MetroidVaniaTools
 
             if (jumpPressedRemember > 0 && groundedRemember > 0)
             {
+                if (currentPlatform != null && currentPlatform.GetComponent<OneWayPlatform>() && input.DownHeld())
+                {
+                    character.isJumpingThroughPlatform = true;
+                    JumpDown();
+                    Invoke("NotJumpingThroughPlatform", .1f);
+                    return;
+                }
                 Jump();
                 jumpPressedRemember = 0;
                 groundedRemember = 0;
@@ -92,6 +91,13 @@ namespace MetroidVaniaTools
                 rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             }
 
+        }
+
+        protected virtual void JumpDown()
+        {
+            rb.velocity = new Vector2(rb.velocity.x, 0);
+            rb.AddForce(Vector2.down * jumpForce, ForceMode2D.Impulse);
+            character.isJumping = true;
         }
 
 

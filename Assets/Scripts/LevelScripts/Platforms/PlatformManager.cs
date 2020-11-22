@@ -29,7 +29,7 @@ namespace MetroidVaniaTools
         {
             RaycastHit2D hit = Physics2D.BoxCast(new Vector2(platformCollider.bounds.center.x, platformCollider.bounds.max.y),
                 new Vector2(platformCollider.bounds.size.x - 0.1f, 0.5f),
-                0, Vector2.up, 0.05f, playerLayer);
+                0, Vector2.up, 0.08f, playerLayer);
             if (hit)
             {
                 return true;

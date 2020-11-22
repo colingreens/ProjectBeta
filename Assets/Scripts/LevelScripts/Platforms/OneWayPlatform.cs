@@ -14,7 +14,6 @@ namespace MetroidVaniaTools
         protected override void Initialization()
         {
             base.Initialization();
-
         }
 
         protected virtual void OnCollisionStay2D(Collision2D collision)
@@ -26,6 +25,7 @@ namespace MetroidVaniaTools
                     platformCollider.isTrigger = true;
                 }
                 if (collision.gameObject.transform.position.y > transform.position.y && (type == OneWayPlatforms.Both || type == OneWayPlatforms.GoingDown) && character.isJumpingThroughPlatform)
+
                 {
                     platformCollider.isTrigger = true;
                 }
