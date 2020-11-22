@@ -18,6 +18,8 @@ namespace MetroidVaniaTools
         public bool isWallSliding;
         [HideInInspector]
         public bool isJumping;
+        [HideInInspector]
+        public bool isJumpingThroughPlatform;
 
         protected Collider2D col;
         protected Rigidbody2D rb;
@@ -29,6 +31,7 @@ namespace MetroidVaniaTools
         protected AimManager aimManager;
         protected Weapon weapon;
         protected GrapplingHook grapplingHook;
+        protected GameObject currentPlatform;
 
         private Vector2 facingLeft;
 
@@ -74,6 +77,7 @@ namespace MetroidVaniaTools
             {
                 if ((1 << hits[i].collider.gameObject.layer & collision) != 0)
                 {
+                    currentPlatform = hits[i].collider.gameObject;
                     return true;
                 }
             }

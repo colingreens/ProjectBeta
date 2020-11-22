@@ -13,6 +13,8 @@ namespace MetroidVaniaTools
         protected float maxSpeed = 8f;
         [SerializeField]
         protected float linearDrag = 4f;
+        [SerializeField]
+        protected float afterJumpLinearDragMultiplier = .5f;
 
         protected Vector2 direction;
 
@@ -85,7 +87,7 @@ namespace MetroidVaniaTools
             }
             if (!character.isGrounded && !character.isWallSliding)
             {
-                rb.drag = linearDrag * 0.15f;
+                rb.drag = linearDrag * afterJumpLinearDragMultiplier;
                 rb.gravityScale = jump.gravity;
                 if (rb.velocity.y < 0)
                 {

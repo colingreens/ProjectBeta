@@ -44,6 +44,12 @@ namespace MetroidVaniaTools
             {
                 groundedRemember = groundedBufferTime;
             }
+            if (currentPlatform != null && currentPlatform.GetComponent<OneWayPlatform>() && input.DownHeld())
+            {
+                character.isJumpingThroughPlatform = true;
+                Invoke("NotJumpingThroughPlatform", .1f);
+                //
+            }
 
             jumpPressedRemember -= Time.deltaTime;
             if (input.JumpPressed())
@@ -116,6 +122,11 @@ namespace MetroidVaniaTools
             {
                 character.isWallSliding = false;
             }
+        }
+
+        protected virtual void NotJumpingThroughPlatform()
+        {
+            character.isJumpingThroughPlatform = false;
         }
     }
 }
