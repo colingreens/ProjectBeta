@@ -32,6 +32,8 @@ namespace MetroidVaniaTools
         protected Weapon weapon;
         protected GrapplingHook grapplingHook;
         protected GameObject currentPlatform;
+        protected GameManager gameManager;
+        protected GameObject player;
 
         private Vector2 facingLeft;
 
@@ -50,12 +52,14 @@ namespace MetroidVaniaTools
             anim = GetComponent<Animator>();
             movement = GetComponent<HorizonalMovementNoGravity>();
             jump = GetComponent<JumpAlt>();
-            facingLeft = new Vector2(-transform.localScale.x, transform.localScale.y);
             input = GetComponent<InputManager>();
             objectPooler = ObjectPooler.Instance;
             aimManager = GetComponent<AimManager>();
             weapon = GetComponent<Weapon>();
             grapplingHook = GetComponent<GrapplingHook>();
+            gameManager = FindObjectOfType<GameManager>();
+
+            facingLeft = new Vector2(-transform.localScale.x, transform.localScale.y);
         }
 
         protected virtual void Flip()
@@ -97,6 +101,11 @@ namespace MetroidVaniaTools
         protected virtual void FallSpeed(float speed)
         {
             rb.velocity = new Vector2(rb.velocity.x, (rb.velocity.y * speed)); 
+        }
+
+        public void InitializePlayer()
+        {
+            player = FindObjectOfType<Character>().gameObject;
         }
     }
 }

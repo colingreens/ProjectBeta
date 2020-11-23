@@ -14,7 +14,6 @@ namespace MetroidVaniaTools
         [SerializeField]
         protected float speed;
 
-
         protected bool needsToMove = true;
         protected bool moving;
         protected bool pingPoingGoingDown;
