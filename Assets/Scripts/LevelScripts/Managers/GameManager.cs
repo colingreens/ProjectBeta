@@ -19,7 +19,6 @@ namespace MetroidVaniaTools
         protected GameObject player;
         protected Character character;
         protected LevelManager levelManager;
-        protected CinemachineVirtualCamera virtualCamera;
 
         // Start is called before the first frame update
         void Start()
@@ -31,13 +30,12 @@ namespace MetroidVaniaTools
         {
             player = FindObjectOfType<Character>().gameObject;
             character = player.GetComponent<Character>();
-            levelManager = FindObjectOfType<LevelManager>();
-            var cam = FindObjectOfType<CinemachineVirtualCamera>().gameObject;
-            virtualCamera = cam.GetComponent<CinemachineVirtualCamera>();
+            levelManager = FindObjectOfType<LevelManager>();            
             xMin = levelManager.levelSize.min.x;
             xMax = levelManager.levelSize.max.x;
             yMin = levelManager.levelSize.min.y;
             yMax = levelManager.levelSize.max.y;
+            SetCamera();
         }
 
         protected virtual void CreatePlayer(GameObject initialPlayer, Vector3 spawnLocation)
@@ -52,8 +50,13 @@ namespace MetroidVaniaTools
             }
             Instantiate(initialPlayer, new Vector3(spawnLocation.x, spawnLocation.y), Quaternion.identity);
             initialPlayer.GetComponent<Character>().InitializePlayer();
-            virtualCamera.Follow = initialPlayer.transform;
-            virtualCamera.LookAt = initialPlayer.transform;
+        }
+
+        protected virtual void SetCamera()
+        {
+
+            levelManager.virtualCamera.Follow = character.transform;
+            levelManager.virtualCamera.LookAt = character.transform;
         }
     }
 }

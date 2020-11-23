@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 namespace MetroidVaniaTools
 {
@@ -8,6 +9,7 @@ namespace MetroidVaniaTools
     {
         public Bounds levelSize;
         public GameObject initialPlayer;
+        public CinemachineVirtualCamera virtualCamera;
 
         [SerializeField]
         protected List<Transform> playerSpawnPoints;
