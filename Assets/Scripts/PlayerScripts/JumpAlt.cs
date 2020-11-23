@@ -105,12 +105,17 @@ namespace MetroidVaniaTools
         {
             if (CollisionCheck(Vector2.down, distanceToCollider, collisionLayer) && !isJumping)
             {
+                if (currentPlatform.GetComponent<MoveablePlatform>())
+                {
+                    transform.parent = currentPlatform.transform;
+                }
                 anim.SetBool("Grounded", true);
                 character.isGrounded = true;
                 character.isJumping = false;
             }
             else
             {
+                transform.parent = null;
                 anim.SetBool("Grounded", false);
                 character.isGrounded = false;
             }
