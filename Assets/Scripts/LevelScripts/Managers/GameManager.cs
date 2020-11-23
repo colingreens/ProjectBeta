@@ -35,7 +35,7 @@ namespace MetroidVaniaTools
             xMax = levelManager.levelSize.max.x;
             yMin = levelManager.levelSize.min.y;
             yMax = levelManager.levelSize.max.y;
-            SetCamera();
+            levelManager.SetCamera();
         }
 
         protected virtual void CreatePlayer(GameObject initialPlayer, Vector3 spawnLocation)
@@ -50,13 +50,6 @@ namespace MetroidVaniaTools
             }
             Instantiate(initialPlayer, new Vector3(spawnLocation.x, spawnLocation.y), Quaternion.identity);
             initialPlayer.GetComponent<Character>().InitializePlayer();
-        }
-
-        protected virtual void SetCamera()
-        {
-
-            levelManager.virtualCamera.Follow = character.transform;
-            levelManager.virtualCamera.LookAt = character.transform;
         }
     }
 }

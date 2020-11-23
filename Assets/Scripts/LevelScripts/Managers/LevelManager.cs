@@ -21,11 +21,23 @@ namespace MetroidVaniaTools
             CreatePlayer(initialPlayer, startingLocation);            
         }
 
+        protected virtual void OnDisable()
+        {
+            PlayerPrefs.SetInt("FacingLeft", character.isFacingLeft ? 1 : 0);
+        }
+
         protected virtual void OnDrawGizmos()
         {
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireCube(levelSize.center, levelSize.size);
         }
+
+        public virtual void SetCamera()
+        {
+            virtualCamera.Follow = character.transform;
+            virtualCamera.LookAt = character.transform;
+        }
+    
     }
 }
 
