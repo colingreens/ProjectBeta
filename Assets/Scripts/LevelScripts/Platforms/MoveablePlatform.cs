@@ -13,6 +13,8 @@ namespace MetroidVaniaTools
         public List<Vector3> numberOfPaths = new List<Vector3>();
         [SerializeField]
         protected float speed;
+
+
         protected bool needsToMove = true;
         protected bool moving;
         protected bool pingPoingGoingDown;
