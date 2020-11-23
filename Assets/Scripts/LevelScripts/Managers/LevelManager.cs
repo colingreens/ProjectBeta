@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.SceneManagement;
 
 namespace MetroidVaniaTools
 {
@@ -17,13 +18,33 @@ namespace MetroidVaniaTools
         private Vector3 startingLocation;
         protected virtual void Awake()
         {
-            startingLocation = playerSpawnPoints[0].position;
-            CreatePlayer(initialPlayer, startingLocation);            
+            if (playerSpawnPoints.Count <= PlayerPrefs.GetInt("SpawnReference"))
+            {
+                startingLocation = playerSpawnPoints[0].position;
+            }
+            else
+            {
+                startingLocation = playerSpawnPoints[PlayerPrefs.GetInt("SpawnReference")].position;
+                CreatePlayer(initialPlayer, startingLocation);
+            }
+                       
         }
 
         protected virtual void OnDisable()
         {
             PlayerPrefs.SetInt("FacingLeft", character.isFacingLeft ? 1 : 0);
+        }
+        public virtual void SetCamera()
+        {
+            virtualCamera.Follow = character.transform;
+            virtualCamera.LookAt = character.transform;
+        }
+
+        public virtual void NextScene(SceneReference scene, int spawnReference)
+        {
+            PlayerPrefs.SetInt("FacingLeft", character.isFacingLeft ? 1 : 0);
+            PlayerPrefs.SetInt("SpawnReference", spawnReference);
+            SceneManager.LoadScene(scene);
         }
 
         protected virtual void OnDrawGizmos()
@@ -32,11 +53,7 @@ namespace MetroidVaniaTools
             Gizmos.DrawWireCube(levelSize.center, levelSize.size);
         }
 
-        public virtual void SetCamera()
-        {
-            virtualCamera.Follow = character.transform;
-            virtualCamera.LookAt = character.transform;
-        }
+        
     
     }
 }
