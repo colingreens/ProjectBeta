@@ -33,7 +33,7 @@ namespace MetroidVaniaTools
         {
             MoveCharacter(direction.x);
             RemoveFromGrapple();
-            ModifyPhysics();
+            ModifyPhysics();    // pull into a physics manager
         }
         public virtual bool MovementPressed()
         {
