@@ -405,7 +405,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 4
   m_Material: {fileID: 6200000, guid: 9cc325ba71fd8584d937a1cbd9e60bae, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 0
@@ -610,14 +610,14 @@ MonoBehaviour:
   isWallSliding: 0
   isJumping: 0
   isJumpingThroughPlatform: 0
-  jumpForce: 15
+  jumpForce: 60
   distanceToCollider: 0.08
   jumpPressedBufferTime: 0.2
   groundedBufferTime: 0.25
   collisionLayer:
     serializedVersion: 2
     m_Bits: 1280
-  gravity: 1
+  gravity: 4
   fallMultipler: 6
 --- !u!114 &4084928826307521024
 MonoBehaviour:

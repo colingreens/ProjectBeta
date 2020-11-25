@@ -27,9 +27,13 @@ namespace MetroidVaniaTools
         [SerializeField]
         protected LayerMask collidersToTurnAroundOn;
 
+        protected bool wait;
+        protected float originalWaitTime = .1f;
+        protected float currentWaitTime;
+
         private Vector2 direction;
         private float horizontalDirection; //-1 = left 0 = still 1 = right
-        private bool spawning;
+        private bool spawning = true;
         
 
         protected override void Initilization()
@@ -40,6 +44,7 @@ namespace MetroidVaniaTools
                 enemyCharacter.isFacingLeft = true;
                 transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
             }
+            currentWaitTime = originalWaitTime;
             Invoke("Spawning", .1f);
 
         }
@@ -49,6 +54,10 @@ namespace MetroidVaniaTools
             Movement();
             MoveCharacter(horizontalDirection);
             CheckDirection();
+            CheckGround();
+            EdgeOfFloor();
+            HandleWait();
+
         }
 
         protected virtual void Movement()
@@ -112,6 +121,28 @@ namespace MetroidVaniaTools
                 }
             }
         }
+
+        protected virtual void EdgeOfFloor()
+        {
+            if (rayHitNumber == 1 && avoidFalling && !wait && type == MovementType.Normal)
+            {
+                currentWaitTime = originalWaitTime;
+                wait = true;
+                enemyCharacter.isFacingLeft = !enemyCharacter.isFacingLeft;
+                transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
+            }
+        }
+
+        protected virtual void HandleWait()
+        {
+            currentWaitTime -= Time.deltaTime;
+            if (currentWaitTime <= 0)
+            {
+                wait = false;
+                currentWaitTime = 0;
+            }
+        }
+
         protected virtual void ModifyPhysics()
         {
             bool changingDirections = (direction.x > 0 && rb.velocity.x < 0) || (direction.x < 0 && rb.velocity.x > 0);

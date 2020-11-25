@@ -13,6 +13,7 @@ namespace MetroidVaniaTools
 
         protected Rigidbody2D rb;
         protected Collider2D col;
+        protected int rayHitNumber;
 
         private Vector2 facingLeft;
         
@@ -54,6 +55,29 @@ namespace MetroidVaniaTools
                 }
             }
             return false;
+        }
+
+        protected virtual void CheckGround()
+        {
+            Ray2D[] groundRays = new Ray2D[3];
+            groundRays[0].origin = new Vector2(transform.position.x - (transform.localScale.x * .5f), transform.position.y - .05f);
+            groundRays[1].origin = new Vector2(transform.position.x , transform.position.y - .05f);
+            groundRays[0].origin = new Vector2(transform.position.x + (transform.localScale.x * .5f), transform.position.y - .05f);
+            RaycastHit2D[] hits = new RaycastHit2D[3];
+
+            for (int i = 0; i < 3; i++)
+            {
+                hits[i] = Physics2D.Raycast(groundRays[i].origin, -transform.up, Mathf.Abs(transform.localScale.x * .5f));
+            }
+            int numberofHits = 0;
+            foreach (var hit in hits)
+            {
+                if (hit)
+                {
+                    numberofHits++;
+                }
+            }
+            rayHitNumber = numberofHits;
         }
     }
 }
