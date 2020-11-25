@@ -8,9 +8,9 @@ namespace MetroidVaniaTools
     {
         protected EnemyCharacter enemyCharacter;
 
-        protected override void Initilization()
+        protected override void Initialization()
         {
-            base.Initilization();
+            base.Initialization();
             enemyCharacter = GetComponent<EnemyCharacter>();
         }
     }

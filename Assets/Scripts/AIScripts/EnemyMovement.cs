@@ -7,118 +7,154 @@ namespace MetroidVaniaTools
     public class EnemyMovement : AIManagers
     {
         [SerializeField]
-        protected enum MovementType { Normal }
+        protected enum MovementType { Normal, HugWalls, Flying }
         [SerializeField]
         protected MovementType type;
         [SerializeField]
         protected bool spawnFacingLeft;
         [SerializeField]
-        protected bool turnaroundOnCollision;
+        protected bool turnAroundOnCollision;
         [SerializeField]
         protected bool avoidFalling;
         [SerializeField]
-        protected float moveSpeed = 10f;
+        protected bool jump;
+        public bool standStill;
         [SerializeField]
-        protected float maxSpeed = 8f;
+        protected float timeTillMaxSpeed;
         [SerializeField]
-        protected float linearDrag = 4f;
+        protected float maxSpeed;
         [SerializeField]
-        protected float afterJumpLinearDragMultiplier = .5f;
+        protected float jumpVerticalForce;
+        [SerializeField]
+        protected float jumpHorizontalForce;
+        [SerializeField]
+        protected float minDistance;
         [SerializeField]
         protected LayerMask collidersToTurnAroundOn;
+        [HideInInspector]
+        public bool turn;
+
+        private bool spawning = true;
+        private float acceleration;
+        private float direction;
+        private float runTime;
 
         protected bool wait;
+        protected bool wasJumping;
         protected float originalWaitTime = .1f;
         protected float currentWaitTime;
+        protected float currentSpeed;
 
-        private Vector2 direction;
-        private float horizontalDirection; //-1 = left 0 = still 1 = right
-        private bool spawning = true;
-        
-
-        protected override void Initilization()
+        protected override void Initialization()
         {
-            base.Initilization();
+            base.Initialization();
             if (spawnFacingLeft)
             {
                 enemyCharacter.isFacingLeft = true;
                 transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
             }
             currentWaitTime = originalWaitTime;
-            Invoke("Spawning", .1f);
-
+            timeTillDoAction = originalTimeTillDoAction;
+            Invoke("Spawning", .01f);
         }
 
         protected virtual void FixedUpdate()
         {
             Movement();
-            MoveCharacter(horizontalDirection);
-            CheckDirection();
             CheckGround();
             EdgeOfFloor();
+            HugWalls();
+            Jumping();
+            FollowPlayer();
             HandleWait();
-
         }
 
         protected virtual void Movement()
         {
+            if (type == MovementType.Flying)
+            {
+                rb.gravityScale = 0;
+            }
             if (!enemyCharacter.isFacingLeft)
             {
-                horizontalDirection = 1;
-                if (CollisionCheck(Vector2.right, .5f, collidersToTurnAroundOn) && turnaroundOnCollision && !spawning)
+                direction = 1;
+                if (CollisionCheck(Vector2.right, .5f, collidersToTurnAroundOn) && turnAroundOnCollision && !wasJumping && !spawning || (enemyCharacter.followPlayer && player.transform.position.x < transform.position.x))
                 {
                     enemyCharacter.isFacingLeft = true;
-                    transform.localScale = new Vector2(transform.localScale.x *-1, transform.localScale.y);
-                    horizontalDirection = -1;
+                    transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
+                    if (standStill)
+                    {
+                        rb.velocity = new Vector2(-jumpHorizontalForce, rb.velocity.y);
+                    }
                 }
             }
             else
             {
-                horizontalDirection = -1;
-                if (CollisionCheck(Vector2.left, .5f, collidersToTurnAroundOn) && turnaroundOnCollision && !spawning)
+                direction = -1;
+                if (CollisionCheck(Vector2.left, .5f, collidersToTurnAroundOn) && turnAroundOnCollision && !wasJumping && !spawning || (enemyCharacter.followPlayer && player.transform.position.x > transform.position.x))
                 {
                     enemyCharacter.isFacingLeft = false;
                     transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
-                    horizontalDirection = 1;
+                    if (standStill)
+                    {
+                        rb.velocity = new Vector2(jumpHorizontalForce, rb.velocity.y);
+                    }
+                }
+            }
+            acceleration = maxSpeed / timeTillMaxSpeed;
+            runTime += Time.deltaTime;
+            currentSpeed = direction * acceleration * runTime;
+            CheckSpeed();
+            if (!standStill && !enemyCharacter.followPlayer)
+            {
+                rb.velocity = new Vector2(currentSpeed, rb.velocity.y);
+            }
+        }
+
+        protected virtual void FollowPlayer()
+        {
+            if (enemyCharacter.followPlayer)
+            {
+                bool tooClose = new bool();
+                if (Mathf.Abs(transform.position.x - player.transform.position.x) < minDistance)
+                {
+                    tooClose = true;
+                }
+                else
+                {
+                    tooClose = false;
+                }
+                if (!enemyCharacter.isFacingLeft)
+                {
+                    Vector2 distanceToPlayer = (new Vector3(transform.position.x - 2, transform.position.y) - player.transform.position).normalized * minDistance + player.transform.position;
+                    transform.position = Vector2.MoveTowards(transform.position, distanceToPlayer, currentSpeed * Time.deltaTime);
+                    if (tooClose)
+                    {
+                        rb.velocity = new Vector2(0, rb.velocity.y);
+                    }
+                }
+                else
+                {
+                    Vector2 distanceToPlayer = (new Vector3(transform.position.x + 2, transform.position.y) - player.transform.position).normalized * minDistance + player.transform.position;
+                    transform.position = Vector2.MoveTowards(transform.position, distanceToPlayer, -currentSpeed * Time.deltaTime);
+                    if (tooClose)
+                    {
+                        rb.velocity = new Vector2(0, rb.velocity.y);
+                    }
                 }
             }
         }
 
-        protected virtual void MoveCharacter(float horizontal)  
-        {
-            CheckDirection();
-            rb.AddForce(Vector2.right * horizontal * moveSpeed);
-            
-            //anim.SetFloat("Velocity", Mathf.Abs(rb.velocity.x));
-        } 
 
-        protected virtual void CheckDirection()
+        protected virtual void CheckSpeed()
         {
-
-            if (direction.x > 0)
+            if (currentSpeed > maxSpeed)
             {
-                if (enemyCharacter.isFacingLeft)
-                {
-                    enemyCharacter.isFacingLeft = false;
-                    Flip();
-                }
-                if (direction.x > maxSpeed)
-                {
-                    direction.x = maxSpeed;
-                }
+                currentSpeed = maxSpeed;
             }
-            if (direction.x < 0)
+            if (currentSpeed < -maxSpeed)
             {
-                if (!enemyCharacter.isFacingLeft)
-                {
-                    enemyCharacter.isFacingLeft = true;
-                    Flip();
-                }
-                if (direction.x < -maxSpeed)
-                {
-                    direction.x = -maxSpeed;
-
-                }
+                currentSpeed = -maxSpeed;
             }
         }
 
@@ -133,6 +169,140 @@ namespace MetroidVaniaTools
             }
         }
 
+        protected virtual void Jumping()
+        {
+            if (type == MovementType.Normal)
+            {
+                if (rayHitNumber > 0 && jump)
+                {
+                    timeTillDoAction -= Time.deltaTime;
+                    if (timeTillDoAction <= 0)
+                    {
+                        rb.AddForce(Vector2.up * jumpVerticalForce);
+                        if (!enemyCharacter.isFacingLeft)
+                        {
+                            rb.velocity = new Vector2(jumpHorizontalForce, rb.velocity.y);
+                        }
+                        else
+                        {
+                            rb.velocity = new Vector2(-jumpHorizontalForce, rb.velocity.y);
+                        }
+                    }
+                }
+                if (rayHitNumber > 0 && rb.velocity.y < 0)
+                {
+                    wasJumping = true;
+                    if (standStill)
+                    {
+                        rb.velocity = new Vector2(0, rb.velocity.y);
+                    }
+                    timeTillDoAction = originalTimeTillDoAction;
+                    Invoke("NoLongerInTheAir", .5f);
+                }
+            }
+        }
+
+        protected virtual void NoLongerInTheAir()
+        {
+            wasJumping = false;
+        }
+
+        protected virtual void Spawning()
+        {
+            spawning = false;
+        }
+
+        protected virtual void HugWalls()
+        {
+            if (type == MovementType.HugWalls)
+            {
+                turnAroundOnCollision = false;
+                float newZValue = transform.localEulerAngles.z;
+                rb.gravityScale = 0;
+                if (rayHitNumber == 1 && !wait)
+                {
+                    wait = true;
+                    currentWaitTime = originalWaitTime;
+                    rb.velocity = Vector2.zero;
+                    if (!enemyCharacter.isFacingLeft)
+                    {
+                        transform.localEulerAngles = new Vector3(0, 0, newZValue - 90);
+                    }
+                    else
+                    {
+                        transform.localEulerAngles = new Vector3(0, 0, newZValue + 90);
+                    }
+                }
+                if (turn && !wait)
+                {
+                    wait = true;
+                    currentWaitTime = originalWaitTime;
+                    rb.velocity = Vector2.zero;
+                    if (!enemyCharacter.isFacingLeft)
+                    {
+                        transform.eulerAngles = new Vector3(0, 0, newZValue + 90);
+                        if (Mathf.Round(transform.eulerAngles.z) == 0)
+                        {
+                            transform.position = new Vector2(transform.position.x, transform.position.y - (transform.localScale.x * .5f));
+                        }
+                        if (Mathf.Round(transform.eulerAngles.z) == 90)
+                        {
+                            transform.position = new Vector2(transform.position.x + (transform.localScale.x * .5f), transform.position.y);
+                        }
+                        if (Mathf.Round(transform.eulerAngles.z) == 180)
+                        {
+                            transform.position = new Vector2(transform.position.x, transform.position.y + (transform.localScale.x * .5f));
+                        }
+                        if (Mathf.Round(transform.eulerAngles.z) == 270)
+                        {
+                            transform.position = new Vector2(transform.position.x - (transform.localScale.x * .5f), transform.position.y);
+                        }
+                    }
+                    else
+                    {
+                        transform.eulerAngles = new Vector3(0, 0, newZValue - 90);
+                        if (Mathf.Round(transform.eulerAngles.z) == 0)
+                        {
+                            transform.position = new Vector2(transform.position.x, transform.position.y + (transform.localScale.x * .5f));
+                        }
+                        if (Mathf.Round(transform.eulerAngles.z) == 90)
+                        {
+                            transform.position = new Vector2(transform.position.x - (transform.localScale.x * .5f), transform.position.y);
+                        }
+                        if (Mathf.Round(transform.eulerAngles.z) == 180)
+                        {
+                            transform.position = new Vector2(transform.position.x, transform.position.y - (transform.localScale.x * .5f));
+                        }
+                        if (Mathf.Round(transform.eulerAngles.z) == 270)
+                        {
+                            transform.position = new Vector2(transform.position.x + (transform.localScale.x * .5f), transform.position.y);
+                        }
+                    }
+                }
+                if (Mathf.Round(transform.eulerAngles.z) == 0)
+                {
+                    rb.velocity = new Vector2(currentSpeed, 0);
+                }
+                if (Mathf.Round(transform.eulerAngles.z) == 90)
+                {
+                    rb.velocity = new Vector2(0, currentSpeed);
+                }
+                if (Mathf.Round(transform.eulerAngles.z) == 180)
+                {
+                    rb.velocity = new Vector2(-currentSpeed, 0);
+                }
+                if (Mathf.Round(transform.eulerAngles.z) == 270)
+                {
+                    rb.velocity = new Vector2(0, -currentSpeed);
+                }
+                if (rayHitNumber == 0 && !wait)
+                {
+                    transform.localEulerAngles = Vector3.zero;
+                    rb.gravityScale = 1;
+                }
+            }
+        }
+
         protected virtual void HandleWait()
         {
             currentWaitTime -= Time.deltaTime;
@@ -141,43 +311,6 @@ namespace MetroidVaniaTools
                 wait = false;
                 currentWaitTime = 0;
             }
-        }
-
-        protected virtual void ModifyPhysics()
-        {
-            bool changingDirections = (direction.x > 0 && rb.velocity.x < 0) || (direction.x < 0 && rb.velocity.x > 0);
-
-            if (enemyCharacter.isGrounded)
-            {
-                if (Mathf.Abs(direction.x) < 0.4f || changingDirections)
-                {
-                    rb.drag = linearDrag;
-                }
-                else
-                {
-                    rb.drag = 0f;
-                }
-                rb.gravityScale = 0;
-                return;
-            }
-            //if (!enemyCharacter.isGrounded)
-            //{
-            //    rb.drag = linearDrag * afterJumpLinearDragMultiplier;
-            //    rb.gravityScale = jump.gravity;
-            //    if (rb.velocity.y < 0)
-            //    {
-            //        rb.gravityScale = jump.gravity * jump.fallMultipler;
-            //    }
-            //    else if (rb.velocity.y > 0 && !input.JumpHeld())
-            //    {
-            //        rb.gravityScale = jump.gravity * (jump.fallMultipler / 2);
-            //    }
-            //}
-        }
-
-        protected virtual void Spawning()
-        {
-            spawning = false;
         }
     }
 }
