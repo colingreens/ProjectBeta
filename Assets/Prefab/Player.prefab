@@ -13,8 +13,6 @@ GameObject:
   - component: {fileID: 3500294951798640299}
   - component: {fileID: 3500294951798640300}
   - component: {fileID: 3500294951798640301}
-  - component: {fileID: 3500294951798640296}
-  - component: {fileID: 3500294951798640295}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -148,49 +146,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFacingLeft: 0
   isGrounded: 0
---- !u!114 &3500294951798640296
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3500294951798640302}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 668cde4564e35554d9bfe8f54a9ec114, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isFacingLeft: 0
-  isGrounded: 0
-  timeTillMaxSpeed: 0.75
-  maxSpeed: 6
-  sprintMultiplier: 2
---- !u!114 &3500294951798640295
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3500294951798640302}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 703d12de07f5fee4fbf78e7562615ca1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isFacingLeft: 0
-  isGrounded: 0
-  limitAirJumps: 1
-  jumpForce: 150
-  holdForce: 150
-  buttonHoldTime: 0.5
-  maxJumps: 3
-  distanceToCollider: 0.05
-  maxJumpSpeed: 10
-  maxFallSpeed: -10
-  acceptedFallSpeed: -5
-  collisionLayer:
-    serializedVersion: 2
-    m_Bits: 256
+  isCrouching: 0
+  isDashing: 0
+  isWallSliding: 0
+  isJumping: 0
+  isJumpingThroughPlatform: 0
 --- !u!1 &3500294953305638297
 GameObject:
   m_ObjectHideFlags: 0

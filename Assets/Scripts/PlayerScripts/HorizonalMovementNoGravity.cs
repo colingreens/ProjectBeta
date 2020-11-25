@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace MetroidVaniaTools
 {
-    public class HorizonalMovementNoGravity : Abilities
+    public class HorizonalMovementNoGravity : Abilities 
     {
         [Header("Horizontal Movement")]
         [SerializeField]
