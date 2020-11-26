@@ -2,7 +2,7 @@
 
 namespace MetroidVaniaTools
 {
-    public abstract class Character : MonoBehaviour
+    public class Character : MonoBehaviour
     {
         [HideInInspector]
         public bool isFacingLeft;
@@ -71,12 +71,14 @@ namespace MetroidVaniaTools
             if (isFacingLeft || (!isFacingLeft && isWallSliding))
             {
                 transform.localScale = facingLeft;
-                facingDirection = -1;
+                facingDirection = 1;
+                isFacingLeft = false;
             }
             if (!isFacingLeft || (isFacingLeft && isWallSliding))
             {
                 transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y);
-                facingDirection = 1;
+                facingDirection = -1;
+                isFacingLeft = true;
             }           
         }
       

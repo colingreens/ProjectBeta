@@ -86,11 +86,10 @@ namespace MetroidVaniaTools
 
         private void CheckIfCanJump()
         {
-            if ((isGrounded && rb.velocity.y <= 0) || isWallSliding)
+            if ((collisionController.GroundCheck() && rb.velocity.y <= .4) || isWallSliding)
             {
                 amountOfJumpsLeft = amountOfJumps;
             }
-
             if (amountOfJumpsLeft <= 0)
             {
                 canJump = false;

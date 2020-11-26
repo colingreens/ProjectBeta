@@ -573,6 +573,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1216175808, guid: 245a4d24df08e454792ebc662fa2857f, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3500294951798640297, guid: 245a4d24df08e454792ebc662fa2857f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -648,22 +652,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1216175804}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a5f2161c1de96843865ae3b57309e35, type: 3}
+  m_Script: {fileID: 11500000, guid: e13421a043fcb1b48a950602d33f6c11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isFacingLeft: 0
-  isGrounded: 0
-  isCrouching: 0
-  isDashing: 0
-  isWallSliding: 0
-  isJumping: 0
-  isJumpingThroughPlatform: 0
-  distanceToCollider: 0.08
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 256
+  movementSpeed: 10
 --- !u!114 &1216175806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -673,7 +667,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1216175804}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bdfb04aaa608fa44830f28b51c7b268, type: 3}
+  m_Script: {fileID: 11500000, guid: 87d5d12adf1d7fd47a84f2bfd480ce5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isFacingLeft: 0
@@ -683,76 +677,6 @@ MonoBehaviour:
   isWallSliding: 0
   isJumping: 0
   isJumpingThroughPlatform: 0
-  airDragMultiplier: 0.95
---- !u!114 &1216175807
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1216175804}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbe9e98294949e44c9e5b90d755cbb5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isFacingLeft: 0
-  isGrounded: 0
-  isCrouching: 0
-  isDashing: 0
-  isWallSliding: 0
-  isJumping: 0
-  isJumpingThroughPlatform: 0
-  amountOfJumps: 1
-  jumpForce: 16
-  variableJumpHeightMultiplier: 0.5
-  wallHopForce: 0
-  wallJumpForce: 0
-  wallHopDirection: {x: 0, y: 0}
-  wallJumpDirection: {x: 0, y: 0}
---- !u!114 &1216175808
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1216175804}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d21459e51f3d5041b67914e78238012, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isFacingLeft: 0
-  isGrounded: 0
-  isCrouching: 0
-  isDashing: 0
-  isWallSliding: 0
-  isJumping: 0
-  isJumpingThroughPlatform: 0
-  _movementSpeed: 0
-  _movementForceInAir: 0
-  _wallSlideSpeed: 0
---- !u!114 &1216175809
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1216175804}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 201d0b58af43ae548a6e09a698112a15, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  crouchHeld: 0
-  dashPressed: 0
-  sprintingHeld: 0
-  jumpKey: 32
-  changeWeaponPressed: 0
-  upKey: 0
-  downKey: 0
-  leftKey: 0
-  rightKey: 0
 --- !u!1 &1870856917
 GameObject:
   m_ObjectHideFlags: 0

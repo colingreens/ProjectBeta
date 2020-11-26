@@ -11,10 +11,14 @@ namespace MetroidVaniaTools
         [SerializeField]
         private LayerMask _whatIsWall;
 
+        private void Start()
+        {
+          
+        }
+
         private void FixedUpdate()
         {
-            GroundCheck();
-            WallCheck();
+            
         }
 
         public virtual bool CollisionCheck(Vector2 direction, float distance, LayerMask collision)
@@ -32,7 +36,7 @@ namespace MetroidVaniaTools
             return false;
         }
 
-       private void GroundCheck()
+       public bool GroundCheck()
         {
             if (CollisionCheck(Vector2.down, _distanceToCollider, _whatIsGround) && !isJumping)
             {
@@ -40,13 +44,15 @@ namespace MetroidVaniaTools
                 //{
                 //    transform.parent = currentPlatform.transform;
                 //}                
-                character.isGrounded = true;
-                character.isJumping = false;
+                isGrounded = true;
+                isJumping = false;
+                return true;
             }
             else
             {
                 transform.parent = null;
-                character.isGrounded = false;
+                isGrounded = false;
+                return false;
             }            
         }
 

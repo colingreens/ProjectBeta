@@ -144,7 +144,7 @@ namespace MetroidVaniaTools
         }
         public virtual bool RightPressed()
         {
-            if (Input.GetButton("Vertical"))
+            if (Input.GetButtonDown("Vertical"))
             {
                 if (Input.GetAxisRaw("Vertical") < 0)
                 {
@@ -170,7 +170,7 @@ namespace MetroidVaniaTools
         }
         public virtual bool LeftPressed()
         {
-            if (Input.GetButton("Vertical"))
+            if (Input.GetButtonDown("Vertical"))
             {
                 if (Input.GetAxisRaw("Vertical") < 0)
                 {

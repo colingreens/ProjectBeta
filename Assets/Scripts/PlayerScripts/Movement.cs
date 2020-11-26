@@ -11,7 +11,7 @@ namespace MetroidVaniaTools
         [SerializeField]
         private float _movementForceInAir;
         [SerializeField]
-        private float _wallSlideSpeed;
+        private float _wallSlideSpeed;     
 
         // Update is called once per frame
         protected virtual void Update()
@@ -53,12 +53,12 @@ namespace MetroidVaniaTools
 
         private void ApplyMovement()
         {
-
-            if (isGrounded)
+            
+            if (collisionController.GroundCheck())
             {
                 rb.velocity = new Vector2(_movementSpeed * horizontalInputDirection, rb.velocity.y);
             }
-            else if (!isGrounded && !isWallSliding && horizontalInputDirection != 0)
+            else if (!collisionController.GroundCheck() && !isWallSliding && horizontalInputDirection != 0)
             {
                 Vector2 forceToAdd = new Vector2(_movementForceInAir * horizontalInputDirection, 0);
                 rb.AddForce(forceToAdd);
@@ -67,7 +67,7 @@ namespace MetroidVaniaTools
                 {
                     rb.velocity = new Vector2(_movementSpeed * horizontalInputDirection, rb.velocity.y);
                 }
-            }            
+            }
 
             if (isWallSliding)
             {
