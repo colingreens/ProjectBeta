@@ -7,7 +7,7 @@ public class BardentPlayerController: MonoBehaviour
 
     private float movementInputDirection;
 
-    private int amountOfJumpsLeft;
+    
     private int facingDirection = 1;
 
     private bool isFacingRight = true;
@@ -20,21 +20,17 @@ public class BardentPlayerController: MonoBehaviour
     private Rigidbody2D rb;
     private Animator anim;
 
-    public int amountOfJumps = 1;
+   
 
     public float movementSpeed = 10.0f;
-    public float jumpForce = 16.0f;
     public float groundCheckRadius;
     public float wallCheckDistance;
     public float wallSlideSpeed;
     public float movementForceInAir;
     public float airDragMultiplier = 0.95f;
-    public float variableJumpHeightMultiplier = 0.5f;
-    public float wallHopForce;
-    public float wallJumpForce;
+   
 
-    public Vector2 wallHopDirection;
-    public Vector2 wallJumpDirection;
+  
 
     public Transform groundCheck;
     public Transform wallCheck;
@@ -46,9 +42,7 @@ public class BardentPlayerController: MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        amountOfJumpsLeft = amountOfJumps;
-        wallHopDirection.Normalize();
-        wallJumpDirection.Normalize();
+        
     }
 
     // Update is called once per frame
@@ -57,14 +51,12 @@ public class BardentPlayerController: MonoBehaviour
         CheckInput();
         CheckMovementDirection();
         UpdateAnimations();
-        CheckIfCanJump();
         CheckIfWallSliding();
     }
 
     private void FixedUpdate()
     {
-        ApplyMovement();
-        CheckSurroundings();
+        ApplyMovement();        
     }
 
     private void CheckIfWallSliding()
@@ -79,30 +71,9 @@ public class BardentPlayerController: MonoBehaviour
         }
     }
 
-    private void CheckSurroundings()
-    {
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
+    
 
-        isTouchingWall = Physics2D.Raycast(wallCheck.position, transform.right, wallCheckDistance, whatIsGround);
-    }
-
-    private void CheckIfCanJump()
-    {
-        if ((isGrounded && rb.velocity.y <= 0) || isWallSliding)
-        {
-            amountOfJumpsLeft = amountOfJumps;
-        }
-
-        if (amountOfJumpsLeft <= 0)
-        {
-            canJump = false;
-        }
-        else
-        {
-            canJump = true;
-        }
-
-    }
+    
 
     private void CheckMovementDirection()
     {
@@ -137,40 +108,11 @@ public class BardentPlayerController: MonoBehaviour
     {
         movementInputDirection = Input.GetAxisRaw("Horizontal");
 
-        if (Input.GetButtonDown("Jump"))
-        {
-            Jump();
-        }
-
-        if (Input.GetButtonUp("Jump"))
-        {
-            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * variableJumpHeightMultiplier);
-        }
+        
 
     }
 
-    private void Jump()
-    {
-        if (canJump && !isWallSliding)
-        {
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-            amountOfJumpsLeft--;
-        }
-        else if (isWallSliding && movementInputDirection == 0 && canJump) //Wall hop
-        {
-            isWallSliding = false;
-            amountOfJumpsLeft--;
-            Vector2 forceToAdd = new Vector2(wallHopForce * wallHopDirection.x * -facingDirection, wallHopForce * wallHopDirection.y);
-            rb.AddForce(forceToAdd, ForceMode2D.Impulse);
-        }
-        else if ((isWallSliding || isTouchingWall) && movementInputDirection != 0 && canJump)
-        {
-            isWallSliding = false;
-            amountOfJumpsLeft--;
-            Vector2 forceToAdd = new Vector2(wallJumpForce * wallJumpDirection.x * movementInputDirection, wallJumpForce * wallJumpDirection.y);
-            rb.AddForce(forceToAdd, ForceMode2D.Impulse);
-        }
-    }
+  
 
     private void ApplyMovement()
     {
@@ -211,12 +153,5 @@ public class BardentPlayerController: MonoBehaviour
             isFacingRight = !isFacingRight;
             transform.Rotate(0.0f, 180.0f, 0.0f);
         }
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
-
-        Gizmos.DrawLine(wallCheck.position, new Vector3(wallCheck.position.x + wallCheckDistance, wallCheck.position.y, wallCheck.position.z));
     }
 }

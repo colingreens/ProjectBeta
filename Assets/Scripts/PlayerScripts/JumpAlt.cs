@@ -103,7 +103,7 @@ namespace MetroidVaniaTools
 
         protected virtual void GroundCheck()
         {
-            if (CollisionCheck(Vector2.down, distanceToCollider, collisionLayer) && !isJumping)
+            if (collisionController.CollisionCheck(Vector2.down, distanceToCollider, collisionLayer) && !isJumping)
             {
                 if (currentPlatform.GetComponent<MoveablePlatform>())
                 {
@@ -124,8 +124,8 @@ namespace MetroidVaniaTools
 
         protected virtual void WallCheck()
         {
-            if (CollisionCheck(Vector2.left, distanceToCollider, collisionLayer) ||
-                CollisionCheck(Vector2.right, distanceToCollider, collisionLayer))
+            if (collisionController.CollisionCheck(Vector2.left, distanceToCollider, collisionLayer) ||
+                collisionController.CollisionCheck(Vector2.right, distanceToCollider, collisionLayer))
             {
                 character.isWallSliding = true;
             }

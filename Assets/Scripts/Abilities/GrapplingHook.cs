@@ -153,9 +153,9 @@ namespace MetroidVaniaTools
 
         protected virtual IEnumerator DisableMovement()
         {
-            movement.enabled = false;
+            canMove = false;
             yield return new WaitForSeconds(.1f);
-            movement.enabled = true;
+            canMove = true;
         }
         }
     }

@@ -47,13 +47,12 @@ namespace MetroidVaniaTools
             {
                 if (character.isCrouching)
                 {
-                    if (CollisionCheck(Vector2.up, playerCollider.size.y *.25f, layers))
+                    if (collisionController.CollisionCheck(Vector2.up, playerCollider.size.y *.25f, layers))
                     {
                         return;
                     }
                     StartCoroutine(CrouchDisabled());
-                }           
-                
+                } 
             }
         }
 
@@ -64,7 +63,7 @@ namespace MetroidVaniaTools
             playerCollider.size = originalCollider;
             yield return new WaitForSeconds(0.15f);
             isCrouching = false;
-            anim.SetBool("Crouching", false);
+            
         }
     }
 }

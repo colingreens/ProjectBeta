@@ -20,6 +20,10 @@ namespace MetroidVaniaTools
         protected KeyCode upKey;
         [SerializeField]
         protected KeyCode downKey;
+        [SerializeField]
+        protected KeyCode leftKey;
+        [SerializeField]
+        protected KeyCode rightKey;
 
 
         // Update is called once per frame
@@ -126,6 +130,58 @@ namespace MetroidVaniaTools
                 return false;
         }
         public virtual bool DownHeld()
+        {
+            if (Input.GetButton("Vertical"))
+            {
+                if (Input.GetAxisRaw("Vertical") < 0)
+                {
+                    return true;
+                }
+                return false;
+            }
+            else
+                return false;
+        }
+        public virtual bool RightPressed()
+        {
+            if (Input.GetButton("Vertical"))
+            {
+                if (Input.GetAxisRaw("Vertical") < 0)
+                {
+                    return true;
+                }
+                return false;
+            }
+            else
+                return false;
+        }
+        public virtual bool RightHeld()
+        {
+            if (Input.GetButton("Vertical"))
+            {
+                if (Input.GetAxisRaw("Vertical") < 0)
+                {
+                    return true;
+                }
+                return false;
+            }
+            else
+                return false;
+        }
+        public virtual bool LeftPressed()
+        {
+            if (Input.GetButton("Vertical"))
+            {
+                if (Input.GetAxisRaw("Vertical") < 0)
+                {
+                    return true;
+                }
+                return false;
+            }
+            else
+                return false;
+        }
+        public virtual bool LeftHeld()
         {
             if (Input.GetButton("Vertical"))
             {

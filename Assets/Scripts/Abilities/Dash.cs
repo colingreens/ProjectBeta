@@ -62,7 +62,7 @@ namespace MetroidVaniaTools
             if (character.isDashing)
             {
                 FallSpeed(0);
-                movement.enabled = false;
+                canMove = false;
                 if(!character.isFacingLeft)
                 {
                     DashCollision(Vector2.right, .5f, dashingLayers);
@@ -110,14 +110,14 @@ namespace MetroidVaniaTools
             anim.SetBool("Dashing", false);
             character.isDashing = false;
             FallSpeed(1);
-            movement.enabled = true;
+            canMove = true;
             rb.velocity = new Vector2(1, rb.velocity.y);
             RaycastHit2D[] hits = new RaycastHit2D[10];
             yield return new WaitForSeconds(.1f);
-            hits = Physics2D.CapsuleCastAll(new Vector2(col.bounds.center.x, col.bounds.center.y + .05f), 
-                new Vector2(col.bounds.size.x, col.bounds.size.y - .1f), 
-                CapsuleDirection2D.Vertical, 0, Vector2.zero, 0, 
-                jump.collisionLayer);
+            hits = Physics2D.CapsuleCastAll(new Vector2(col.bounds.center.x, col.bounds.center.y + .05f),
+                new Vector2(col.bounds.size.x, col.bounds.size.y - .1f),
+                CapsuleDirection2D.Vertical, 0, Vector2.zero, 0//,
+                );//jump.collisionLayer);
             if (hits.Length > 0)
             {
                 transform.position = deltaPosition;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace MetroidVaniaTools
 {
-    public class HorizonalMovementNoGravity : Abilities 
+    public class HorizonalMovementNoGravity : Abilities, IMovement
     {
         [Header("Horizontal Movement")]
         [SerializeField]
@@ -33,7 +33,7 @@ namespace MetroidVaniaTools
         {
             MoveCharacter(direction.x);
             RemoveFromGrapple();
-            ModifyPhysics();    // pull into a physics manager
+            //ModifyPhysics();    // pull into a physics manager
         }
         public virtual bool MovementPressed()
         {
@@ -69,60 +69,60 @@ namespace MetroidVaniaTools
             }
         }
 
-        protected virtual void ModifyPhysics()
-        {
-            bool changingDirections = (direction.x > 0 && rb.velocity.x < 0) || (direction.x < 0 && rb.velocity.x > 0);
+        //protected virtual void ModifyPhysics()
+        //{
+        //    bool changingDirections = (direction.x > 0 && rb.velocity.x < 0) || (direction.x < 0 && rb.velocity.x > 0);
 
-            if (character.isGrounded)
-            {
-                if (Mathf.Abs(direction.x) < 0.4f || changingDirections)
-                {
-                    rb.drag = linearDrag;
-                }
-                else
-                {
-                    rb.drag = 0f;
-                }
-                rb.gravityScale = 0;
-                return;
-            }
-            if (!character.isGrounded && !character.isWallSliding)
-            {
-                rb.drag = linearDrag * afterJumpLinearDragMultiplier;
-                rb.gravityScale = jump.gravity;
-                if (rb.velocity.y < 0)
-                {
-                    rb.gravityScale = jump.gravity * jump.fallMultipler;
-                }
-                else if (rb.velocity.y > 0 && !input.JumpHeld())
-                {
-                    rb.gravityScale = jump.gravity * (jump.fallMultipler / 2);
-                }
-            }
-            if (!character.isGrounded && character.isWallSliding)
-            {
-                rb.gravityScale = jump.gravity * 0.1f;
-            }
-            if (grapplingHook.connected)
-            {
-                //rb.drag = linearDrag;
-                if (CollisionCheck(Vector2.right, .1f, jump.collisionLayer) ||
-                    CollisionCheck(Vector2.left, .1f, jump.collisionLayer) ||
-                    CollisionCheck(Vector2.down, .1f, jump.collisionLayer) ||
-                    CollisionCheck(Vector2.up, .1f, jump.collisionLayer) ||
-                    character.isGrounded)
-                    {
-                        return;
-                    }
+        //    if (character.isGrounded)
+        //    {
+        //        if (Mathf.Abs(direction.x) < 0.4f || changingDirections)
+        //        {
+        //            rb.drag = linearDrag;
+        //        }
+        //        else
+        //        {
+        //            rb.drag = 0f;
+        //        }
+        //        rb.gravityScale = 0;
+        //        return;
+        //    }
+        //    if (!character.isGrounded && !character.isWallSliding)
+        //    {
+        //        rb.drag = linearDrag * afterJumpLinearDragMultiplier;
+        //        rb.gravityScale = jump.gravity;
+        //        if (rb.velocity.y < 0)
+        //        {
+        //            rb.gravityScale = jump.gravity * jump.fallMultipler;
+        //        }
+        //        else if (rb.velocity.y > 0 && !input.JumpHeld())
+        //        {
+        //            rb.gravityScale = jump.gravity * (jump.fallMultipler / 2);
+        //        }
+        //    }
+        //    if (!character.isGrounded && character.isWallSliding)
+        //    {
+        //        rb.gravityScale = jump.gravity * 0.1f;
+        //    }
+        //    if (grapplingHook.connected)
+        //    {
+        //        //rb.drag = linearDrag;
+        //        if (CollisionCheck(Vector2.right, .1f, jump.collisionLayer) ||
+        //            CollisionCheck(Vector2.left, .1f, jump.collisionLayer) ||
+        //            CollisionCheck(Vector2.down, .1f, jump.collisionLayer) ||
+        //            CollisionCheck(Vector2.up, .1f, jump.collisionLayer) ||
+        //            character.isGrounded)
+        //            {
+        //                return;
+        //            }
                 
-                if (grapplingHook.hookTrail.transform.position.y > grapplingHook.objectConnectedTo.transform.position.y)
-                {
-                    //possibly slow down here
-                }
-                //rb.rotation -= rb.velocity.x;
-            }
+        //        if (grapplingHook.hookTrail.transform.position.y > grapplingHook.objectConnectedTo.transform.position.y)
+        //        {
+        //            //possibly slow down here
+        //        }
+        //        //rb.rotation -= rb.velocity.x;
+        //    }
 
-        }
+        //}
 
         protected virtual void CheckDirection()
         {
