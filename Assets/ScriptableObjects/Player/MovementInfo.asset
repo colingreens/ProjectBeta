@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94ae94da75ca3e848b20d1a18dff57ed, type: 3}
+  m_Name: MovementInfo
+  m_EditorClassIdentifier: 
+  movementSpeed: 10
+  jumpForce: 16
+  groundCheckRadius: 0
+  wallCheckDistance: 0
+  wallSlideSpeed: 0
+  movementForceInAir: 0
+  airDragMultiplier: 0.95
+  variableJumpHeightMultiplier: 0.5
+  wallHopForce: 0
+  wallJumpForce: 0
+  wallHopDirection: {x: 0, y: 0}
+  wallJumpDirection: {x: 0, y: 0}
