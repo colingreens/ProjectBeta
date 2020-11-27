@@ -9,15 +9,17 @@ namespace MetroidVaniaTools
 {
 	public class PlayerMovement : MonoBehaviour
 	{
+		public MovementInfo movementInfo;
+		
 		// movement config
-		public float gravity = -25f;
-		public float runSpeed = 8f;
-		public float groundDamping = 20f; // how fast do we change direction? higher means faster
-		public float inAirDamping = 5f;
-		public float jumpHeight = 3f;
+		private float gravity;
+		private float runSpeed;
+		private float groundDamping;
+		private float inAirDamping;
+		private float jumpHeight;
 
 		[HideInInspector]
-		private float normalizedHorizontalSpeed = 0;
+        private float normalizedHorizontalSpeed = 0;
 
 		private CharacterController2D _controller;
 		private Animator _animator;
@@ -25,9 +27,9 @@ namespace MetroidVaniaTools
 		private Vector3 _velocity;
 
 
-		void Awake()
+		private void Awake()
 		{
-			_animator = GetComponent<Animator>();
+			//_animator = GetComponent<Animator>();
 			_controller = GetComponent<CharacterController2D>();
 
 			// listen to some events for illustration purposes
@@ -35,11 +37,19 @@ namespace MetroidVaniaTools
 			_controller.onTriggerEnterEvent += onTriggerEnterEvent;
 			_controller.onTriggerExitEvent += onTriggerExitEvent;
 		}
+        private void Start()
+        {
+			gravity = movementInfo.gravity;
+			runSpeed = movementInfo.runSpeed;
+			groundDamping = movementInfo.groundDamping;
+			inAirDamping = movementInfo.inAirDamping;
+			jumpHeight = movementInfo.jumpHeight;
+        }
 
 
-		#region Event Listeners
+        #region Event Listeners
 
-		void onControllerCollider(RaycastHit2D hit)
+        void onControllerCollider(RaycastHit2D hit)
 		{
 			// bail out on plain old ground hits cause they arent very interesting
 			if (hit.normal.y == 1f)
@@ -67,41 +77,51 @@ namespace MetroidVaniaTools
 		// the Update loop contains a very simple example of moving the character around and controlling the animation
 		void Update()
 		{
+			ApplyMovement();
+		}
+
+        private void FixedUpdate()
+        {
+			
+        }
+
+        private void ApplyMovement()
+        {
 			if (_controller.isGrounded)
 				_velocity.y = 0;
 
-			if (Input.GetKey(KeyCode.RightArrow))
+			if (Input.GetAxisRaw("Horizontal") > 0)
 			{
 				normalizedHorizontalSpeed = 1;
 				if (transform.localScale.x < 0f)
 					transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
 
-				if (_controller.isGrounded)
-					_animator.Play(Animator.StringToHash("Run"));
+				//if (_controller.isGrounded)
+				//	_animator.Play(Animator.StringToHash("Run"));
 			}
-			else if (Input.GetKey(KeyCode.LeftArrow))
+			else if (Input.GetAxisRaw("Horizontal") < 0)
 			{
 				normalizedHorizontalSpeed = -1;
 				if (transform.localScale.x > 0f)
 					transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
 
-				if (_controller.isGrounded)
-					_animator.Play(Animator.StringToHash("Run"));
+				//if (_controller.isGrounded)
+				//	_animator.Play(Animator.StringToHash("Run"));
 			}
 			else
 			{
 				normalizedHorizontalSpeed = 0;
 
-				if (_controller.isGrounded)
-					_animator.Play(Animator.StringToHash("Idle"));
+				//if (_controller.isGrounded)
+				//	_animator.Play(Animator.StringToHash("Idle"));
 			}
 
 
 			// we can only jump whilst grounded
-			if (_controller.isGrounded && Input.GetKeyDown(KeyCode.UpArrow))
+			if (_controller.isGrounded && Input.GetButtonDown("Jump"))
 			{
 				_velocity.y = Mathf.Sqrt(2f * jumpHeight * -gravity);
-				_animator.Play(Animator.StringToHash("Jump"));
+				//_animator.Play(Animator.StringToHash("Jump"));
 			}
 
 
@@ -114,7 +134,7 @@ namespace MetroidVaniaTools
 
 			// if holding down bump up our movement amount and turn off one way platform detection for a frame.
 			// this lets us jump down through one way platforms
-			if (_controller.isGrounded && Input.GetKey(KeyCode.DownArrow))
+			if (_controller.isGrounded && Input.GetAxisRaw("Vertical") < 0)
 			{
 				_velocity.y *= 3f;
 				_controller.ignoreOneWayPlatformsThisFrame = true;

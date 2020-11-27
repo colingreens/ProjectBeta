@@ -7,18 +7,13 @@ namespace MetroidVaniaTools
     public class BlankCharacter : MonoBehaviour
     {
         [SerializeField]
-        private PlayerBase playerBase;
+        private PlayerBase playerBase; //container for RB and Collider
 
-        // Start is called before the first frame update
-        void Start()
+        private void Awake()
         {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
+            playerBase.transform = GetComponent<Transform>();
+            playerBase.rigidBody = GetComponent<Rigidbody2D>();            
+            playerBase.collider = GetComponent<Collider2D>();
         }
     }
 }

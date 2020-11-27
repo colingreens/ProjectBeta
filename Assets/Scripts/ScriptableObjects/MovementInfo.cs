@@ -10,25 +10,10 @@ namespace MetroidVaniaTools
     [CreateAssetMenu(fileName = "MovementInfo", menuName = "Metroidvania/PlayerMovement")]
     public class MovementInfo : ScriptableObject
     {
-        public float movementSpeed = 10.0f;
-        public float jumpForce = 16.0f;
-        public float groundCheckRadius;
-        public float wallCheckDistance;
-        public float wallSlideSpeed;
-        public float movementForceInAir;
-        public float airDragMultiplier = 0.95f;
-        public float variableJumpHeightMultiplier = 0.5f;
-        public float wallHopForce;
-        public float wallJumpForce;
-
-        public int amountOfJumps;
-
-        public Vector2 wallHopDirection;
-        public Vector2 wallJumpDirection;
-
-        public Transform groundCheck;
-        public Transform wallCheck;
-
-        public LayerMask whatIsGround;
+        public float gravity = -25f;
+        public float runSpeed = 8f;
+        public float groundDamping = 20f; // how fast do we change direction? higher means faster
+        public float inAirDamping = 5f;
+        public float jumpHeight = 3f;
     }
 }

@@ -57,6 +57,11 @@ namespace MetroidVaniaTools
 		public event Action<Collider2D> onTriggerStayEvent;
 		public event Action<Collider2D> onTriggerExitEvent;
 
+		/// <summary>
+		/// Scriptable Object that holds players Transform, RigidBody and Collider
+		/// </summary>
+		public PlayerBase playerBase;
+
 
 		/// <summary>
 		/// when true, one way platforms will be ignored when moving vertically for a single frame
@@ -181,15 +186,15 @@ namespace MetroidVaniaTools
 
 		#region Monobehaviour
 
-		void Awake()
+		void Start()
 		{
 			// add our one-way platforms to our normal platform mask so that we can land on them from above
 			platformMask |= oneWayPlatformMask;
 
 			// cache some components
-			transform = GetComponent<Transform>();
-			boxCollider = GetComponent<BoxCollider2D>();
-			rigidBody2D = GetComponent<Rigidbody2D>();
+			transform = playerBase.transform;
+			boxCollider = playerBase.collider as BoxCollider2D;
+			rigidBody2D = playerBase.rigidBody;
 
 			// here, we trigger our properties that have setters with bodies
 			skinWidth = _skinWidth;
