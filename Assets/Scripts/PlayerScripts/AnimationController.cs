@@ -4,8 +4,10 @@ using UnityEngine;
 
 namespace MetroidVaniaTools
 {
-    public class AnimationController : Abilities, IAnimationController
+    public class AnimationController : MonoBehaviour, IAnimationController
     {
+        [SerializeField]
+        private PlayerCharacter character;
         // Start is called before the first frame update
         void Start()
         {

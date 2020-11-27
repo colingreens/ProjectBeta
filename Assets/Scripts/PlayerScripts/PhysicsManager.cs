@@ -2,8 +2,10 @@
 
 namespace MetroidVaniaTools
 {
-    public class PhysicsManager : Abilities, IPhysics
+    public class PhysicsManager : MonoBehaviour, IPhysics
     {
+        [SerializeField]
+        private PlayerCharacter character;
         [SerializeField]
         private float airDragMultiplier = 0.95f;
 
@@ -15,10 +17,10 @@ namespace MetroidVaniaTools
 
         private void ModifyPhysics()
         {
-            if (!isGrounded && !isWallSliding && horizontalInputDirection == 0)
-            {
-                rb.velocity = new Vector2(rb.velocity.x * airDragMultiplier, rb.velocity.y);
-            }
+            //if (!character.isGrounded && !character.isWallSliding &&  == 0)
+            //{
+            //    character.rb.velocity = new Vector2(character.rb.velocity.x * airDragMultiplier, character.rb.velocity.y);
+            //}
         }
     }
 }

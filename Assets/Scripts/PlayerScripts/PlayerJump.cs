@@ -4,8 +4,11 @@ using UnityEngine;
 
 namespace MetroidVaniaTools
 {
-    public class PlayerJump : Abilities, IJump
+    public class PlayerJump : MonoBehaviour, IJump
     {
+        [SerializeField]
+        private PlayerCharacter character;
+
         [SerializeField]
         private int amountOfJumps = 1;
         [SerializeField]
@@ -15,7 +18,7 @@ namespace MetroidVaniaTools
         [SerializeField]
         private float wallHopForce;
         [SerializeField]
-        private float wallJumpForce;
+        private float wallJumpForce;        
 
         private int amountOfJumpsLeft;
 
@@ -52,26 +55,26 @@ namespace MetroidVaniaTools
 
         private void Jump()
         {
-            if (input.JumpPressed())
+            if (character.input.JumpPressed())
             {
-                if (canJump && !isWallSliding)
+                if (character.canJump && !character.isWallSliding)
                 {
-                    rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                    character.rb.velocity = new Vector2(character.rb.velocity.x, jumpForce);
                     amountOfJumpsLeft--;
                 }
-                else if (isWallSliding && horizontalInputDirection == 0 && canJump) //Wall hop
+                else if (character.isWallSliding && character.horizontalInputDirection == 0 && character.canJump) //Wall hop
                 {
-                    isWallSliding = false;
+                    character.isWallSliding = false;
                     amountOfJumpsLeft--;
-                    Vector2 forceToAdd = new Vector2(wallHopForce * wallHopDirection.x * -facingDirection, wallHopForce * wallHopDirection.y);
-                    rb.AddForce(forceToAdd, ForceMode2D.Impulse);
+                    Vector2 forceToAdd = new Vector2(wallHopForce * wallHopDirection.x * -character.facingDirection, wallHopForce * wallHopDirection.y);
+                    character.rb.AddForce(forceToAdd, ForceMode2D.Impulse);
                 }
-                else if ((isWallSliding || isTouchingWall) && horizontalInputDirection != 0 && canJump)
+                else if ((character.isWallSliding || character.isTouchingWall) && character.horizontalInputDirection != 0 && character.canJump)
                 {
-                    isWallSliding = false;
+                    character.isWallSliding = false;
                     amountOfJumpsLeft--;
-                    Vector2 forceToAdd = new Vector2(wallJumpForce * wallJumpDirection.x * horizontalInputDirection, wallJumpForce * wallJumpDirection.y);
-                    rb.AddForce(forceToAdd, ForceMode2D.Impulse);
+                    Vector2 forceToAdd = new Vector2(wallJumpForce * wallJumpDirection.x * character.horizontalInputDirection, wallJumpForce * wallJumpDirection.y);
+                    character.rb.AddForce(forceToAdd, ForceMode2D.Impulse);
                 }
             }
             
@@ -79,24 +82,24 @@ namespace MetroidVaniaTools
 
         private void ExtraJump()
         {
-            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * variableJumpHeightMultiplier);
+            character.rb.velocity = new Vector2(character.rb.velocity.x, character.rb.velocity.y * variableJumpHeightMultiplier);
         }
 
 
 
         private void CheckIfCanJump()
         {
-            if ((collisionController.GroundCheck() && rb.velocity.y <= .4) || isWallSliding)
+            if ((character.collisionController.GroundCheck() && character.rb.velocity.y <= .4) || character.isWallSliding)
             {
                 amountOfJumpsLeft = amountOfJumps;
             }
             if (amountOfJumpsLeft <= 0)
             {
-                canJump = false;
+                character.canJump = false;
             }
             else
             {
-                canJump = true;
+                character.canJump = true;
             }
 
         }

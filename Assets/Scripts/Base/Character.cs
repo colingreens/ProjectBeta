@@ -19,29 +19,29 @@ namespace MetroidVaniaTools
         [HideInInspector]
         public bool isJumpingThroughPlatform;
         
-        protected IMovement movement;        
-        protected IJump jump;
-        protected IPhysics physics;
-        protected ICollisionController collisionController;
-        
-        protected GameManager gameManager;       
-        protected AimManager aimManager;
-        protected Collider2D col;
-        protected Rigidbody2D rb;
-        protected Animator anim;
-        protected InputManager input;
-        protected GameObject currentPlatform;        
-        protected GameObject player;
-        protected ObjectPooler objectPooler;
-        protected GrapplingHook grapplingHook;
-        protected Weapon weapon;
+        internal IMovement movement;        
+        internal IJump jump;
+        internal IPhysics physics;
+        internal ICollisionController collisionController;
 
-        protected bool canMove;
-        protected bool canJump;
-        protected bool isWalking;
-        protected bool isTouchingWall;
-        protected float horizontalInputDirection;
-        protected int facingDirection = 1;
+        internal GameManager gameManager;
+        internal AimManager aimManager;
+        internal Collider2D col;
+        internal Rigidbody2D rb;
+        internal Animator anim;
+        internal InputManager input;
+        internal GameObject currentPlatform;
+        internal GameObject player;
+        internal ObjectPooler objectPooler;
+        internal GrapplingHook grapplingHook;
+        internal Weapon weapon;
+
+        internal bool canMove;
+        internal bool canJump;
+        internal bool isWalking;
+        internal bool isTouchingWall;
+        internal int facingDirection = 1;
+        internal float horizontalInputDirection;
 
         private Vector2 facingLeft;
 
@@ -66,7 +66,7 @@ namespace MetroidVaniaTools
             facingLeft = new Vector2(-transform.localScale.x, transform.localScale.y);
         }
 
-        protected virtual void Flip()
+        internal virtual void Flip()
         {
             if (isFacingLeft || (!isFacingLeft && isWallSliding))
             {
