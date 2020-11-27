@@ -172,11 +172,11 @@ namespace MetroidVaniaTools
             }
         }
 
-        private void OnDrawGizmos()
-        {
-            Gizmos.DrawWireSphere(movementInfo.groundCheck.position, movementInfo.groundCheckRadius);
+        //private void OnDrawGizmos()
+        //{
+        //    Gizmos.DrawWireSphere(movementInfo.groundCheck.position, movementInfo.groundCheckRadius);
 
-            Gizmos.DrawLine(movementInfo.wallCheck.position, new Vector3(movementInfo.wallCheck.position.x + movementInfo.wallCheckDistance, movementInfo.wallCheck.position.y, movementInfo.wallCheck.position.z));
-        }
+        //    Gizmos.DrawLine(movementInfo.wallCheck.position, new Vector3(movementInfo.wallCheck.position.x + movementInfo.wallCheckDistance, movementInfo.wallCheck.position.y, movementInfo.wallCheck.position.z));
+        //}
     }
 }
