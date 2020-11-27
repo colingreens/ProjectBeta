@@ -2,8 +2,10 @@
 
 namespace MetroidVaniaTools
 {
-    public class CollisionController : Abilities, ICollisionController
+    public class CollisionController : MonoBehaviour, ICollisionController
     {
+        [SerializeField]
+        private PlayerCharacter character;
         [SerializeField]
         private float _distanceToCollider = 0.08f;
         [SerializeField]
@@ -24,12 +26,12 @@ namespace MetroidVaniaTools
         public virtual bool CollisionCheck(Vector2 direction, float distance, LayerMask collision)
         {
             RaycastHit2D[] hits = new RaycastHit2D[10];
-            int numHits = col.Cast(direction, hits, distance);
+            int numHits = character.col.Cast(direction, hits, distance);
             for (int i = 0; i < numHits; i++)
             {
                 if ((1 << hits[i].collider.gameObject.layer & collision) != 0)
                 {
-                    currentPlatform = hits[i].collider.gameObject;
+                    character.currentPlatform = hits[i].collider.gameObject;
                     return true;
                 }
             }
@@ -38,33 +40,33 @@ namespace MetroidVaniaTools
 
        public bool GroundCheck()
         {
-            if (CollisionCheck(Vector2.down, _distanceToCollider, _whatIsGround) && !isJumping)
+            if (CollisionCheck(Vector2.down, _distanceToCollider, _whatIsGround) && !character.isJumping)
             {
                 //if (currentPlatform.GetComponent<MoveablePlatform>())
                 //{
                 //    transform.parent = currentPlatform.transform;
                 //}                
-                isGrounded = true;
-                isJumping = false;
+                character.isGrounded = true;
+                character.isJumping = false;
                 return true;
             }
             else
             {
                 transform.parent = null;
-                isGrounded = false;
+                character.isGrounded = false;
                 return false;
             }            
         }
 
         private void WallCheck()
         {
-            if (CollisionCheck(Vector2.left, _distanceToCollider, _whatIsWall) && !isJumping
-                || CollisionCheck(Vector2.right, _distanceToCollider, _whatIsWall) && !isJumping)
+            if (CollisionCheck(Vector2.left, _distanceToCollider, _whatIsWall) && !character.isJumping
+                || CollisionCheck(Vector2.right, _distanceToCollider, _whatIsWall) && !character.isJumping)
             {
-                isTouchingWall = true;
+                character.isTouchingWall = true;
             }
             else
-                isTouchingWall = false;
+                character.isTouchingWall = false;
         }
     }
 }

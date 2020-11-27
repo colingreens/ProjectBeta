@@ -4,14 +4,18 @@ using UnityEngine;
 
 namespace MetroidVaniaTools
 {
-    public class Movement : Abilities, IMovement
+    public class Movement : MonoBehaviour, IMovement
     {
+        [SerializeField]
+        private PlayerCharacter character;
         [SerializeField]
         private float _movementSpeed;
         [SerializeField]
         private float _movementForceInAir;
         [SerializeField]
-        private float _wallSlideSpeed;     
+        private float _wallSlideSpeed;
+
+        private float inputDirection;
 
         // Update is called once per frame
         protected virtual void Update()
@@ -27,53 +31,53 @@ namespace MetroidVaniaTools
 
         private void CheckInput()
         {
-            horizontalInputDirection = Input.GetAxisRaw("Horizontal");
+            inputDirection = Input.GetAxisRaw("Horizontal");
         }
 
         private void CheckMovementDirection()
         {
-            if (isFacingLeft && horizontalInputDirection > 0)
+            if (character.isFacingLeft && inputDirection > 0)
             {
-                Flip();
+                character.Flip();
             }
-            else if (!isFacingLeft && horizontalInputDirection < 0)
+            else if (!character.isFacingLeft && inputDirection < 0)
             {
-                Flip();
+                character.Flip();
             }
 
-            if (rb.velocity.x != 0)
+            if (character.rb.velocity.x != 0)
             {
-                isWalking = true;
+                character.isWalking = true;
             }
             else
             {
-                isWalking = false;
+                character.isWalking = false;
             }
         }
 
         private void ApplyMovement()
         {
             
-            if (collisionController.GroundCheck())
+            if (character.collisionController.GroundCheck())
             {
-                rb.velocity = new Vector2(_movementSpeed * horizontalInputDirection, rb.velocity.y);
+                character.rb.velocity = new Vector2(_movementSpeed * inputDirection, character.rb.velocity.y);
             }
-            else if (!collisionController.GroundCheck() && !isWallSliding && horizontalInputDirection != 0)
+            else if (!character.collisionController.GroundCheck() && !character.isWallSliding && inputDirection != 0)
             {
-                Vector2 forceToAdd = new Vector2(_movementForceInAir * horizontalInputDirection, 0);
-                rb.AddForce(forceToAdd);
+                Vector2 forceToAdd = new Vector2(_movementForceInAir * inputDirection, 0);
+                character.rb.AddForce(forceToAdd);
 
-                if (Mathf.Abs(rb.velocity.x) > _movementSpeed)
+                if (Mathf.Abs(character.rb.velocity.x) > _movementSpeed)
                 {
-                    rb.velocity = new Vector2(_movementSpeed * horizontalInputDirection, rb.velocity.y);
+                    character.rb.velocity = new Vector2(_movementSpeed * inputDirection, character.rb.velocity.y);
                 }
             }
 
-            if (isWallSliding)
+            if (character.isWallSliding)
             {
-                if (rb.velocity.y < -_wallSlideSpeed)
+                if (character.rb.velocity.y < -_wallSlideSpeed)
                 {
-                    rb.velocity = new Vector2(rb.velocity.x, -_wallSlideSpeed);
+                    character.rb.velocity = new Vector2(character.rb.velocity.x, -_wallSlideSpeed);
                 }
             }
         }

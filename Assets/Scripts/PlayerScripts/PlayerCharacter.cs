@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace MetroidVaniaTools
-{
-    public class PlayerCharacter : Abilities
+{    
+    public class PlayerCharacter : Character
     {
+        protected Character character;
         protected override void Initilization()
         {
             base.Initilization();
+            character = GetComponent<Character>();
         }
     }
 }
