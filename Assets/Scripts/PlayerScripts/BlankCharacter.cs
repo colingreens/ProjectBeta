@@ -13,7 +13,7 @@ namespace MetroidVaniaTools
         {
             playerBase.transform = GetComponent<Transform>();
             playerBase.rigidBody = GetComponent<Rigidbody2D>();            
-            playerBase.collider = GetComponent<Collider2D>();
+            playerBase.collider = GetComponent<BoxCollider2D>();
         }
     }
 }
