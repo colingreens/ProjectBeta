@@ -2,7 +2,7 @@
 
 namespace MetroidVaniaTools
 {
-    [CreateAssetMenu(fileName = "PlayerBase", menuName = "Metroidvania/Player", order = 1)]    
+    [CreateAssetMenu(fileName = "PlayerBase", menuName = "Metroidvania/Player/PlayerBase", order = 1)]    
     public class PlayerBase : ScriptableObject
     {
         public Transform transform;

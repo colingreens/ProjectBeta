@@ -8,7 +8,7 @@ using UnityEngine;
 namespace MetroidVaniaTools 
 {
     [CreateAssetMenu(fileName = "MovementInfo", menuName = "Metroidvania/PlayerMovement")]
-    public class MovementInfo : ScriptableObject
+    public class MovementConfig : ScriptableObject
     {
         public float runSpeed = 8f;
         public float groundDamping = 20f; // how fast do we change direction? higher means faster

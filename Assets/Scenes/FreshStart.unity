@@ -447,10 +447,9 @@ GameObject:
   - component: {fileID: 782250381}
   - component: {fileID: 782250380}
   - component: {fileID: 782250379}
+  - component: {fileID: 782250382}
   - component: {fileID: 782250383}
   - component: {fileID: 782250378}
-  - component: {fileID: 782250382}
-  - component: {fileID: 782250384}
   - component: {fileID: 782250386}
   m_Layer: 11
   m_Name: PlayerCharacter
@@ -552,6 +551,7 @@ MonoBehaviour:
   extraJump: {fileID: 11400000, guid: 32d332fb3ac8c6a4a983a7ebd06052f9, type: 2}
   CanWallJump: 0
   wallJump: {fileID: 11400000, guid: 327868f589383ff42878d217ac30acf5, type: 2}
+  dashConfig: {fileID: 11400000, guid: 83aa05177fcdc0746ac24fb3f8741fe8, type: 2}
 --- !u!114 &782250383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -613,23 +613,6 @@ MonoBehaviour:
     m_RotationOrder: 4
   totalHorizontalRays: 6
   totalVerticalRays: 3
---- !u!114 &782250384
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 782250377}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df1f2dd9abd38924aa7b9c6fff28511b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  jump: {fileID: 11400000, guid: b8ed1902499824441a3c9fb711838168, type: 2}
-  CanDoubleJump: 0
-  extraJump: {fileID: 11400000, guid: 32d332fb3ac8c6a4a983a7ebd06052f9, type: 2}
-  CanWallJump: 0
-  wallJump: {fileID: 11400000, guid: 327868f589383ff42878d217ac30acf5, type: 2}
 --- !u!95 &782250386
 Animator:
   serializedVersion: 3
