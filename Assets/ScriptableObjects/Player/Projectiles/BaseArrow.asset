@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee4d5538ef5d3464791687832c551d1a, type: 3}
-  m_Name: WallSlideConfig
+  m_Script: {fileID: 11500000, guid: d07fc714ca48f804aaa3d7b8bdf82b0d, type: 3}
+  m_Name: BaseArrow
   m_EditorClassIdentifier: 
-  CanWallJump: 1
-  WallJumpForce: 4
-  HorizontalForce: 20
-  wallTouchGravity: -0.1
+  projectile: {fileID: 5801684833099320139, guid: 4095e4a88ad4a9f4aa8b76df54bc19ec,
+    type: 3}
+  velocity: 10
+  damage: 1
+  fireRate: 1

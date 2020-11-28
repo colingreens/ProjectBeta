@@ -21,7 +21,6 @@ namespace MetroidVaniaTools
 
 		private const int FacingRight = 1;
 		private const int FacingLeft = -1;
-		private int directionFacing;
 
 		private float runSpeed;
 		private float groundDamping;
@@ -136,7 +135,7 @@ namespace MetroidVaniaTools
 			if (isWallSliding && Input.GetButton("Horizontal") && Input.GetButtonDown("Jump"))
             {
 				_velocity.y = Mathf.Sqrt(2f * wallSlide.WallJumpForce * -jump.gravity);
-				_velocity.x = -1* directionFacing * wallSlide.HorizontalForce;
+				_velocity.x = -1* movementInfo.facingPosition * wallSlide.HorizontalForce;
 				
             }
             if (isWallSliding)
@@ -159,7 +158,7 @@ namespace MetroidVaniaTools
 			dashTimeLeft -= Time.deltaTime;
             if (dashConfig.canDash && Input.GetKeyDown(dashConfig.dashKey) && dashTimeLeft < 0)
             {
-				_velocity.x += directionFacing * 2f * dashConfig.dashDistance;
+				_velocity.x += movementInfo.facingPosition * 2f * dashConfig.dashDistance;
 				dashTimeLeft = dashConfig.dashCooldown;
 			}
         }
@@ -182,14 +181,14 @@ namespace MetroidVaniaTools
 			{
 				if (transform.localScale.x < 0f)
 					transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
-				directionFacing = FacingRight;
+				movementInfo.facingPosition = FacingRight;
 			}
 
 			if (normalizedHorizontalSpeed < 0)
 			{
 				if (transform.localScale.x > 0f)
 					transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
-				directionFacing = FacingLeft;
+				movementInfo.facingPosition = FacingLeft;
 			}
 		}
 	}
