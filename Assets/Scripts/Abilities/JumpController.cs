@@ -27,6 +27,7 @@ namespace MetroidVaniaTools
         private void Start()
         {
             _controller = GetComponent<CharacterController2D>();
+            _controller.onControllerCollidedEvent += OnControllerCollider;
         }
 
         private void Update()
@@ -34,13 +35,11 @@ namespace MetroidVaniaTools
             ApplyJump();
         }
 
-        private void FixedUpdate()
-        {
-            
-        }
-
         private void ApplyJump()
         {
+            if (_controller.isGrounded)
+                _velocity.y = 0;
+
             if (_controller.isGrounded && Input.GetButtonDown("Jump"))
             {
                 _velocity.y = Mathf.Sqrt(2f * jump.jumpHeight * -jump.gravity);
@@ -56,10 +55,20 @@ namespace MetroidVaniaTools
                 _velocity.y *= jump.VariableJumpHeightMultiplier;
                 _controller.ignoreOneWayPlatformsThisFrame = true;
             }
-            _controller.move(_velocity * Time.deltaTime);
+            //_controller.move(_velocity * Time.deltaTime);
 
             // grab our current _velocity to use as a base for all calculations
             _velocity = _controller.velocity;
+        }
+
+        void OnControllerCollider(RaycastHit2D hit)
+        {
+            // bail out on plain old ground hits cause they arent very interesting
+            if (hit.normal.y == 1f)
+                return;
+
+            // logs any collider hits if uncommented. it gets noisy so it is commented out for the demo
+            Debug.Log( "flags: " + _controller.collisionState + ", hit.normal: " + hit.normal );
         }
     }
 }

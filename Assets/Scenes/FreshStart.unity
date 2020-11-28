@@ -367,7 +367,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!1 &555991991
 GameObject:
@@ -447,10 +447,11 @@ GameObject:
   - component: {fileID: 782250381}
   - component: {fileID: 782250380}
   - component: {fileID: 782250379}
-  - component: {fileID: 782250378}
   - component: {fileID: 782250383}
+  - component: {fileID: 782250378}
   - component: {fileID: 782250382}
   - component: {fileID: 782250384}
+  - component: {fileID: 782250386}
   m_Layer: 11
   m_Name: PlayerCharacter
   m_TagString: Untagged
@@ -480,11 +481,11 @@ BoxCollider2D:
   m_GameObject: {fileID: 782250377}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 9cc325ba71fd8584d937a1cbd9e60bae, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.22206709, y: 0.30755508}
+  m_Offset: {x: -0.19307566, y: 0.30755508}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -495,7 +496,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.3138275, y: 1.6151102}
+  m_Size: {x: 0.60373974, y: 1.6151102}
   m_EdgeRadius: 0
 --- !u!50 &782250380
 Rigidbody2D:
@@ -515,7 +516,7 @@ Rigidbody2D:
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
-  m_SleepingMode: 1
+  m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!4 &782250381
@@ -546,6 +547,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementInfo: {fileID: 11400000, guid: 05e47134ccd79b442b3958eab0ef2581, type: 2}
+  jump: {fileID: 11400000, guid: b8ed1902499824441a3c9fb711838168, type: 2}
+  CanDoubleJump: 0
+  extraJump: {fileID: 11400000, guid: 32d332fb3ac8c6a4a983a7ebd06052f9, type: 2}
+  CanWallJump: 0
+  wallJump: {fileID: 11400000, guid: 327868f589383ff42878d217ac30acf5, type: 2}
 --- !u!114 &782250383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -558,7 +564,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f17a3c0fd83abc478cffe9bf99e7600, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerBase: {fileID: 11400000, guid: fba4ca06d6d6ebd429ff023d45d53e5c, type: 2}
+  player: {fileID: 11400000, guid: fba4ca06d6d6ebd429ff023d45d53e5c, type: 2}
   ignoreOneWayPlatformsThisFrame: 0
   _skinWidth: 0.02
   platformMask:
@@ -605,8 +611,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  totalHorizontalRays: 8
-  totalVerticalRays: 4
+  totalHorizontalRays: 6
+  totalVerticalRays: 3
 --- !u!114 &782250384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -614,7 +620,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 782250377}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: df1f2dd9abd38924aa7b9c6fff28511b, type: 3}
   m_Name: 
@@ -624,6 +630,25 @@ MonoBehaviour:
   extraJump: {fileID: 11400000, guid: 32d332fb3ac8c6a4a983a7ebd06052f9, type: 2}
   CanWallJump: 0
   wallJump: {fileID: 11400000, guid: 327868f589383ff42878d217ac30acf5, type: 2}
+--- !u!95 &782250386
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 782250377}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1398611199
 GameObject:
   m_ObjectHideFlags: 3

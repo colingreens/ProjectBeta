@@ -1,51 +1,39 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using UnityEngine;
 
 namespace MetroidVaniaTools
 {
-	public class PlayerMovement : MonoBehaviour
+	class DemoController : MonoBehaviour
 	{
-		[SerializeField]
-		private MovementInfo movementInfo;
-		[SerializeField]
-		private JumpConfig jump;
-		[SerializeField]
-		private bool CanDoubleJump;
-		[SerializeField]
-		private ExtraJumpConfig extraJump;
-		[SerializeField]
-		private bool CanWallJump;
-		[SerializeField]
-		private WallJumpConfig wallJump;
-
 		// movement config
-		//private float gravity;
-		private float runSpeed;
-		private float groundDamping;
-		private float inAirDamping;
+		public float gravity = -25f;
+		public float runSpeed = 8f;
+		public float groundDamping = 20f; // how fast do we change direction? higher means faster
+		public float inAirDamping = 5f;
+		public float jumpHeight = 3f;
 
 		[HideInInspector]
 		private float normalizedHorizontalSpeed = 0;
 
 		private CharacterController2D _controller;
-		private readonly Animator _animator;
-		//private RaycastHit2D _lastControllerColliderHit; what was this used for?
+		private Animator _animator;
+		private RaycastHit2D _lastControllerColliderHit;
 		private Vector3 _velocity;
 
 
-		private void Start()
+		void Awake()
 		{
-			//_animator = GetComponent<Animator>();
+			_animator = GetComponent<Animator>();
 			_controller = GetComponent<CharacterController2D>();
-
 
 			// listen to some events for illustration purposes
 			_controller.onControllerCollidedEvent += onControllerCollider;
-			_controller.onTriggerEnterEvent += OnTriggerEnterEvent;
-			_controller.onTriggerExitEvent += OnTriggerExitEvent;
-
-			runSpeed = movementInfo.runSpeed;
-			groundDamping = movementInfo.groundDamping;
-			inAirDamping = movementInfo.inAirDamping;
+			_controller.onTriggerEnterEvent += onTriggerEnterEvent;
+			_controller.onTriggerExitEvent += onTriggerExitEvent;
 		}
 
 
@@ -62,12 +50,13 @@ namespace MetroidVaniaTools
 		}
 
 
-		void OnTriggerEnterEvent(Collider2D col)
+		void onTriggerEnterEvent(Collider2D col)
 		{
 			Debug.Log("onTriggerEnterEvent: " + col.gameObject.name);
 		}
 
-		void OnTriggerExitEvent(Collider2D col)
+
+		void onTriggerExitEvent(Collider2D col)
 		{
 			Debug.Log("onTriggerExitEvent: " + col.gameObject.name);
 		}
@@ -78,11 +67,6 @@ namespace MetroidVaniaTools
 		// the Update loop contains a very simple example of moving the character around and controlling the animation
 		void Update()
 		{
-			ApplyMovement();
-		}
-
-		private void ApplyMovement()
-		{
 			if (_controller.isGrounded)
 				_velocity.y = 0;
 
@@ -92,8 +76,8 @@ namespace MetroidVaniaTools
 				if (transform.localScale.x < 0f)
 					transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
 
-				//if (_controller.isGrounded)
-					//_animator.Play(Animator.StringToHash("Run"));
+				if (_controller.isGrounded)
+					_animator.Play(Animator.StringToHash("Run"));
 			}
 			else if (Input.GetKey(KeyCode.LeftArrow))
 			{
@@ -101,23 +85,23 @@ namespace MetroidVaniaTools
 				if (transform.localScale.x > 0f)
 					transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
 
-				//if (_controller.isGrounded)
-					//_animator.Play(Animator.StringToHash("Run"));
+				if (_controller.isGrounded)
+					_animator.Play(Animator.StringToHash("Run"));
 			}
 			else
 			{
 				normalizedHorizontalSpeed = 0;
 
-				//if (_controller.isGrounded)
-					//_animator.Play(Animator.StringToHash("Idle"));
+				if (_controller.isGrounded)
+					_animator.Play(Animator.StringToHash("Idle"));
 			}
 
 
 			// we can only jump whilst grounded
 			if (_controller.isGrounded && Input.GetKeyDown(KeyCode.UpArrow))
 			{
-				_velocity.y = Mathf.Sqrt(2f * jump.jumpHeight * -jump.gravity);
-				//_animator.Play(Animator.StringToHash("Jump"));
+				_velocity.y = Mathf.Sqrt(2f * jumpHeight * -gravity);
+				_animator.Play(Animator.StringToHash("Jump"));
 			}
 
 
@@ -126,7 +110,7 @@ namespace MetroidVaniaTools
 			_velocity.x = Mathf.Lerp(_velocity.x, normalizedHorizontalSpeed * runSpeed, Time.deltaTime * smoothedMovementFactor);
 
 			// apply gravity before moving
-			_velocity.y += jump.gravity * Time.deltaTime;
+			_velocity.y += gravity * Time.deltaTime;
 
 			// if holding down bump up our movement amount and turn off one way platform detection for a frame.
 			// this lets us jump down through one way platforms
