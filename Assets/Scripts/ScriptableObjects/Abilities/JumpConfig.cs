@@ -7,6 +7,6 @@ namespace MetroidVaniaTools
     {
         public float gravity = -25f;
         public float jumpHeight = 3f;
-        public float VariableJumpHeightMultiplier = 0.5f;        
+        public float additionalJumpHeight = 0.5f;        
     }
 }

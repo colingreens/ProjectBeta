@@ -154,6 +154,9 @@ namespace MetroidVaniaTools
 		[NonSerialized]
 		public Vector3 velocity;
 		public bool isGrounded { get { return collisionState.below; } }
+		public bool isOnLeftWall { get { return collisionState.left; } }
+		public bool isOnRightWall { get { return collisionState.right; } }
+		public bool isWallAbove { get { return collisionState.right; } }
 
 		const float kSkinWidthFloatFudgeFactor = 0.001f;
 

@@ -10,11 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ee4d5538ef5d3464791687832c551d1a, type: 3}
-  m_Name: WallJump
+  m_Name: WallSlideConfig
   m_EditorClassIdentifier: 
-  CanWallHop: 0
-  CanWallJump: 0
-  WallHopForce: 1
-  WallJumpForce: 1
-  WallHopDirection: {x: 1, y: 1}
-  WallJumpDirectio: {x: 1, y: 1}
+  CanWallJump: 1
+  WallJumpForce: 60
+  HorizontalForce: 20

@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: JumpConfig
   m_EditorClassIdentifier: 
   gravity: -25
-  jumpHeight: 8
+  jumpHeight: 3
   VariableJumpHeightMultiplier: 0.5

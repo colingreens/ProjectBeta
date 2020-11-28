@@ -15,30 +15,26 @@ namespace MetroidVaniaTools
 		[SerializeField]
 		private bool CanWallJump;
 		[SerializeField]
-		private WallJumpConfig wallJump;
+		private WallSlideConfig wallSlide;
 		[SerializeField]
 		private DashConfig dashConfig;
 
 		private const int FacingRight = 1;
 		private const int FacingLeft = -1;
+		private int directionFacing;
 
-		// movement config
-		//private float gravity;
 		private float runSpeed;
 		private float groundDamping;
 		private float inAirDamping;
 		private float dashTimeLeft;
-
-		[HideInInspector]
 		private float normalizedHorizontalSpeed = 0;
+
+		private bool isWallSliding;		
 
 		private CharacterController2D _controller;
 		private readonly Animator _animator;
 
-		private int directionFacing; //Horizontal Facing Right = 1, Left = -1
-
-		private bool canDash;
-
+		
 
 		private Vector3 _velocity;
 
@@ -56,7 +52,6 @@ namespace MetroidVaniaTools
 			runSpeed = movementInfo.runSpeed;
 			groundDamping = movementInfo.groundDamping;
 			inAirDamping = movementInfo.inAirDamping;
-			canDash = dashConfig.canDash;
 			dashTimeLeft = dashConfig.dashCooldown;
 		}
 
@@ -106,47 +101,65 @@ namespace MetroidVaniaTools
 		private void GetOrientation()
         {
 			if (_controller.isGrounded)
+			{
 				_velocity.y = 0;
-
-			if (normalizedHorizontalSpeed > 0)
-            {
-				if (transform.localScale.x < 0f)
-					transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
-				directionFacing = FacingRight;
 			}
-
-            if (normalizedHorizontalSpeed < 0)
+            if (!_controller.isGrounded && (_controller.isOnLeftWall || _controller.isOnRightWall))
             {
-				if (transform.localScale.x > 0f)
-					transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
-				directionFacing = FacingLeft;
-			}			
-
+				_velocity.y = 0;
+				isWallSliding = true;
+            }
+            else
+            {
+				isWallSliding = false;
+			}
+			DirectionCheck();
 		}
 
 		private void GetVertical()
         {
-			// we can only jump whilst grounded
-			if (_controller.isGrounded && Input.GetButton("Jump"))
-			{
-				_velocity.y = Mathf.Sqrt(2f * jump.jumpHeight * -jump.gravity);
-				//_animator.Play(Animator.StringToHash("Jump"));
-			}
-			_velocity.y += jump.gravity * Time.deltaTime;
+            if (_controller.isGrounded)
+            {
+				if (Input.GetButtonDown("Jump"))
+				{
+					_velocity.y = Mathf.Sqrt(2f * jump.jumpHeight * -jump.gravity);
+					//_animator.Play(Animator.StringToHash("Jump"));
+				}
 
-			if (_controller.isGrounded && Input.GetButton("Jump"))
-			{
-				_velocity.y *= jump.VariableJumpHeightMultiplier;
-				_controller.ignoreOneWayPlatformsThisFrame = true;
+				if (Input.GetButton("Jump"))
+				{
+					_velocity.y += Mathf.Sqrt(2f * jump.additionalJumpHeight * -jump.gravity);
+					_controller.ignoreOneWayPlatformsThisFrame = true;
+				}
+				
+			}			
+			if (isWallSliding && Input.GetButton("Horizontal") && Input.GetButtonDown("Jump"))
+            {
+				_velocity.y = Mathf.Sqrt(2f * wallSlide.WallJumpForce * -jump.gravity);
+				_velocity.x = -1* directionFacing * wallSlide.HorizontalForce;
+				
+            }
+            if (isWallSliding)
+            {
+                
+				_velocity.y += wallSlide.wallTouchGravity * Time.deltaTime;
+				
+				
 			}
+            else
+            {
+				_velocity.y += jump.gravity * Time.deltaTime;
+			}
+			
+
 		}
 
 		private void GetDash()
         {
 			dashTimeLeft -= Time.deltaTime;
-            if (canDash && Input.GetKeyDown(dashConfig.dashKey) && dashTimeLeft < 0)
+            if (dashConfig.canDash && Input.GetKeyDown(dashConfig.dashKey) && dashTimeLeft < 0)
             {
-				_velocity.x += directionFacing * 2 * dashConfig.dashDistance;
+				_velocity.x += directionFacing * 2f * dashConfig.dashDistance;
 				dashTimeLeft = dashConfig.dashCooldown;
 			}
         }
@@ -161,6 +174,23 @@ namespace MetroidVaniaTools
 
 			// grab our current _velocity to use as a base for all calculations
 			_velocity = _controller.velocity;
+		}
+
+		private void DirectionCheck()
+        {
+			if (normalizedHorizontalSpeed > 0)
+			{
+				if (transform.localScale.x < 0f)
+					transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+				directionFacing = FacingRight;
+			}
+
+			if (normalizedHorizontalSpeed < 0)
+			{
+				if (transform.localScale.x > 0f)
+					transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+				directionFacing = FacingLeft;
+			}
 		}
 	}
 }
