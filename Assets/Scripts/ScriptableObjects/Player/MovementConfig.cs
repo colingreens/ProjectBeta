@@ -13,6 +13,7 @@ namespace MetroidVaniaTools
         public float runSpeed = 8f;
         public float groundDamping = 20f; // how fast do we change direction? higher means faster
         public float inAirDamping = 5f;
+        public float horizontalDirection = 0;
         public int facingPosition;
     }
 }

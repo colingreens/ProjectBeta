@@ -19,21 +19,16 @@ namespace MetroidVaniaTools
 		[SerializeField]
 		private DashConfig dashConfig;
 
-		private const int FacingRight = 1;
-		private const int FacingLeft = -1;
-
 		private float runSpeed;
 		private float groundDamping;
 		private float inAirDamping;
 		private float dashTimeLeft;
-		private float normalizedHorizontalSpeed = 0;
 
 		private bool isWallSliding;		
 
 		private CharacterController2D _controller;
-		private readonly Animator _animator;
-
-		
+		private OrientationController _orientationController;
+		private readonly Animator _animator;		
 
 		private Vector3 _velocity;
 
@@ -42,6 +37,7 @@ namespace MetroidVaniaTools
 		{
 			//_animator = GetComponent<Animator>();
 			_controller = GetComponent<CharacterController2D>();
+			_orientationController = GetComponent<OrientationController>();
 
 			// listen to some events for illustration purposes
 			_controller.onControllerCollidedEvent += onControllerCollider;
@@ -93,8 +89,7 @@ namespace MetroidVaniaTools
 
 		private void GetInput()
         {
-			normalizedHorizontalSpeed = Input.GetAxisRaw("Horizontal");
-
+			movementInfo.horizontalDirection = Input.GetAxisRaw("Horizontal");	
 		}
 
 		private void GetOrientation()
@@ -111,8 +106,7 @@ namespace MetroidVaniaTools
             else
             {
 				isWallSliding = false;
-			}
-			DirectionCheck();
+			}			
 		}
 
 		private void GetVertical()
@@ -167,29 +161,12 @@ namespace MetroidVaniaTools
 		{
 			// apply horizontal speed smoothing it. dont really do this with Lerp. Use SmoothDamp or something that provides more control
 			var smoothedMovementFactor = _controller.isGrounded ? groundDamping : inAirDamping; // how fast do we change direction?
-			_velocity.x = Mathf.Lerp(_velocity.x, normalizedHorizontalSpeed * runSpeed, Time.deltaTime * smoothedMovementFactor);
+			_velocity.x = Mathf.Lerp(_velocity.x, movementInfo.horizontalDirection * runSpeed, Time.deltaTime * smoothedMovementFactor);
 
 			_controller.move(_velocity * Time.deltaTime);
 
 			// grab our current _velocity to use as a base for all calculations
 			_velocity = _controller.velocity;
-		}
-
-		private void DirectionCheck()
-        {
-			if (normalizedHorizontalSpeed > 0)
-			{
-				if (transform.localScale.x < 0f)
-					transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
-				movementInfo.facingPosition = FacingRight;
-			}
-
-			if (normalizedHorizontalSpeed < 0)
-			{
-				if (transform.localScale.x > 0f)
-					transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
-				movementInfo.facingPosition = FacingLeft;
-			}
 		}
 	}
 }
