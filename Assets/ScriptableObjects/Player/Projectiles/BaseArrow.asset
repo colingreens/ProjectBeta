@@ -17,3 +17,4 @@ MonoBehaviour:
   velocity: 10
   damage: 1
   fireRate: 1
+  activeTime: 3

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace MetroidVaniaTools
 {
@@ -46,18 +41,11 @@ namespace MetroidVaniaTools
             if (canFire)
             {
                 isShooting = true;
-
-                //instaniate and shoot bullet
-                GameObject bulletActive = Instantiate(projectile.projectile);
-                bulletActive.transform.position = projectileSpawnPoint.position;
-                bulletActive.GetComponent<Rigidbody2D>().velocity = new Vector2(playerPosition.facingPosition * projectile.velocity, 0f);
+                projectile.Fire(playerPosition.facingPosition, projectileSpawnPoint);
                 canFire = false;
-
                 Invoke("ResetShot", projectile.fireRate);
             }
         }
-
-
 
         private void ResetShot()
         {

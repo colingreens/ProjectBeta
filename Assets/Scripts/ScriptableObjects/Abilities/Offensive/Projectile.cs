@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace MetroidVaniaTools
 {
@@ -14,5 +9,22 @@ namespace MetroidVaniaTools
         public float velocity;
         public int damage;
         public int fireRate;
+        public int activeTime;
+
+        public void Fire(int directionFacing, Transform spawnPosition)
+        {
+            var bulletActive = Instantiate(projectile);
+            bulletActive.transform.position = spawnPosition.position;
+            if (directionFacing < 0)
+            {
+                bulletActive.transform.rotation = Quaternion.Euler(180, 0, 180);
+            }
+            bulletActive.GetComponent<Rigidbody2D>().velocity = new Vector2(directionFacing * velocity, 0f);
+        }
+
+        public void Destroy()
+        {
+            Destroy(projectile);
+        }
     }
 }
