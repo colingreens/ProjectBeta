@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94ae94da75ca3e848b20d1a18dff57ed, type: 3}
   m_Name: EnemyMovementInfo
   m_EditorClassIdentifier: 
-  runSpeed: 5
+  runSpeed: 2
   groundDamping: 20
   inAirDamping: 5
   horizontalDirection: 0

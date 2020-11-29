@@ -24,6 +24,10 @@ namespace MetroidVaniaTools
 
         private void CheckDirection()
         {
+            if (movementInfo.horizontalDirection == 0)
+            {
+                return;
+            }
             if (movementInfo.horizontalDirection > 0)
             {
                 if (transform.localScale.x < 0f)

@@ -70,7 +70,6 @@ namespace MetroidVaniaTools
                 OnCantMove(hitComponent);
             }
         }
-
         protected abstract void OnCantMove<T>(T component)
         where T : Component;
 

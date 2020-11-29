@@ -384,6 +384,7 @@ GameObject:
   - component: {fileID: 488936049}
   - component: {fileID: 488936054}
   - component: {fileID: 488936056}
+  - component: {fileID: 488936055}
   m_Layer: 13
   m_Name: Enemy
   m_TagString: Untagged
@@ -523,7 +524,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 488936048}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4d431e8a382aab24a9e2bdcf989068bc, type: 3}
   m_Name: 
@@ -531,6 +532,22 @@ MonoBehaviour:
   projectileSpawnPoint: {fileID: 967091290}
   projectile: {fileID: 11400000, guid: 1f82203737f55174786f45940f0d0c08, type: 2}
   playerPosition: {fileID: 11400000, guid: c6ee0ef8e6525d34cb515410308fff81, type: 2}
+--- !u!114 &488936055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 488936048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 022a0bd01ad6c5e48866c95213990bfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _movementConfig: {fileID: 11400000, guid: c6ee0ef8e6525d34cb515410308fff81, type: 2}
+  jump: {fileID: 11400000, guid: b8ed1902499824441a3c9fb711838168, type: 2}
+  agroWakeRange: 10
+  agroLoseRange: 15
 --- !u!114 &488936056
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1001,11 +1018,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 782250378, guid: 4d865771c0cd6c84492e18fc93a20342, type: 3}
-      propertyPath: movementInfo
-      value: 
-      objectReference: {fileID: 11400000, guid: 05e47134ccd79b442b3958eab0ef2581,
-        type: 2}
     - target: {fileID: 6081671579949129185, guid: 4d865771c0cd6c84492e18fc93a20342,
         type: 3}
       propertyPath: m_LocalPosition.x
