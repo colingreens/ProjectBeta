@@ -11,10 +11,10 @@ namespace MetroidVaniaTools
         public int fireRate;
         public int activeTime;
 
-        public void Fire(int directionFacing, Transform spawnPosition)
+        public void Fire(int directionFacing, Vector3 position)
         {
             var bulletActive = Instantiate(projectile);
-            bulletActive.transform.position = spawnPosition.position;
+            bulletActive.transform.position = position;
             if (directionFacing < 0)
             {
                 bulletActive.transform.rotation = Quaternion.Euler(180, 0, 180);

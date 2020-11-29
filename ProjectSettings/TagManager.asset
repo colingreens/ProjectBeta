@@ -7,6 +7,7 @@ TagManager:
   - BaseProjectile
   - SecondaryProjectile
   - GrapplingHook
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - Hookable
   - Player
   - Projectile
-  - 
+  - Enemy
   - 
   - 
   - 

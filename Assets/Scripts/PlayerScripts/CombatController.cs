@@ -41,7 +41,7 @@ namespace MetroidVaniaTools
             if (canFire)
             {
                 isShooting = true;
-                projectile.Fire(playerPosition.facingPosition, projectileSpawnPoint);
+                projectile.Fire(playerPosition.facingPosition, projectileSpawnPoint.position);
                 canFire = false;
                 Invoke("ResetShot", projectile.fireRate);
             }
