@@ -12,7 +12,7 @@ namespace MetroidVaniaTools
         [SerializeField]
         private HealthConfig health;
 
-        public void GainHealth(int amount)
+        public void Heal(int amount)
         {
             if (health.CurrentHealthPoints < health.HealthPoints)
             {
@@ -21,8 +21,9 @@ namespace MetroidVaniaTools
             health.CurrentHealthPoints = health.CurrentHealthPoints > health.HealthPoints ? health.HealthPoints : health.CurrentHealthPoints;
         }
 
-        public void LoseHealth(int amount)
+        public void Damage(int amount)
         {
+            print(gameObject.name + $": {amount} damage");
             health.CurrentHealthPoints -= amount;
             if (health.CurrentHealthPoints < 1)
             {

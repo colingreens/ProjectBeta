@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace MetroidVaniaTools 
 {
-    [CreateAssetMenu(fileName = "MovementInfo", menuName = "Metroidvania/PlayerMovement")]
+    [CreateAssetMenu(fileName = "MovementConfig", menuName = "Metroidvania/Player/Movement", order = 2)]
     public class MovementConfig : ScriptableObject
     {
         public float runSpeed = 8f;

@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace MetroidVaniaTools
 {
+    [CreateAssetMenu(fileName = "HealthConfig", menuName = "Metroidvania/Player/Health", order = 3)]
     public class HealthConfig : ScriptableObject
     {
         public int HealthPoints = 3;

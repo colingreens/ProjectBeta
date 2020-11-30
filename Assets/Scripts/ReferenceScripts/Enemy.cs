@@ -53,7 +53,7 @@ namespace MetroidVaniaTools
             HealthController hitPlayer = component as HealthController;
 
             //Call the LoseFood function of hitPlayer passing it playerDamage, the amount of foodpoints to be subtracted.
-            hitPlayer.LoseHealth(damage);
+            hitPlayer.Damage(damage);
 
            //set amimator to attack
 

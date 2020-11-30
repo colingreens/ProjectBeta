@@ -16,6 +16,10 @@ namespace MetroidVaniaTools
         private int agroWakeRange = 5;
         [SerializeField]
         private int agroLoseRange = 8;
+        [SerializeField]
+        private Transform aimPoint;
+        [SerializeField]
+        private LayerMask playerLayer;
 
         private Transform target;
         private Rigidbody2D rigidBody;
@@ -27,6 +31,7 @@ namespace MetroidVaniaTools
             target = GameObject.FindGameObjectWithTag("Player").transform;
             rigidBody = GetComponent<Rigidbody2D>();
             startPosition = transform.position;
+            
 
         }
 
@@ -76,11 +81,27 @@ namespace MetroidVaniaTools
                 rigidBody.velocity = new Vector2(-_movementConfig.runSpeed, rigidBody.velocity.y);
                 _movementConfig.horizontalDirection = -1;
             }            
-        }        
+        }
 
-        private bool CanDetectTarget(float distance)
+        private bool CanDetectTarget(Vector3 position, float distance, LayerMask collisionLayer)
         {
-           
+            var endPoint = aimPoint.position + Vector3.right * distance;
+            var hit = Physics2D.Linecast(position, endPoint, collisionLayer);
+
+            if (hit.collider != null)
+            {
+                if (hit.collider.gameObject.CompareTag("Player"))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return false;
+            
+                
         }
     }
 }
