@@ -11,7 +11,6 @@ namespace MetroidVaniaTools
     {
         [SerializeField]
         private HealthConfig health;
-
         public void Heal(int amount)
         {
             if (health.CurrentHealthPoints < health.HealthPoints)
@@ -34,6 +33,7 @@ namespace MetroidVaniaTools
         public void KillPlayer()
         {
             gameObject.SetActive(false);
+            health.CurrentHealthPoints = health.HealthPoints;
         }
     }
 }

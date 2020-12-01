@@ -47,7 +47,7 @@ namespace MetroidVaniaTools
             float distToPlayer = Vector2.Distance(transform.position, target.position);
             float distToSpawn = Vector2.Distance(transform.position, startPosition);
 
-            if (distToPlayer < agroWakeRange)
+            if (CanDetectTarget(startPosition, distToSpawn, playerLayer))
             {
                 MoveToTarget(target.position);
             }
@@ -85,8 +85,9 @@ namespace MetroidVaniaTools
 
         private bool CanDetectTarget(Vector3 position, float distance, LayerMask collisionLayer)
         {
-            var endPoint = aimPoint.position + Vector3.right * distance;
+            var endPoint = aimPoint.position + Vector3.right * distance * _movementConfig.facingPosition;
             var hit = Physics2D.Linecast(position, endPoint, collisionLayer);
+            Debug.DrawLine(position, endPoint, Color.blue);
 
             if (hit.collider != null)
             {
