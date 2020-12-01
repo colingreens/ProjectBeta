@@ -11,16 +11,20 @@ namespace MetroidVaniaTools
     public abstract class MovingObject : MonoBehaviour
     {
         [SerializeField]
-        private PlayerBase playerBase;
-        [SerializeField]
         private float moveTime = 0.1f;
         [SerializeField]
         private LayerMask collisionLayer;
 
+        private BoxCollider2D boxCollider;
+        private Rigidbody2D rigidBody;
         private float inverseMoveTime;
 
         protected virtual void Start()
         {
+            boxCollider = GetComponent<Collider2D>() as BoxCollider2D;
+            rigidBody = GetComponent<Rigidbody2D>();
+
+
             inverseMoveTime = 1f / moveTime;
         }
 
@@ -28,9 +32,9 @@ namespace MetroidVaniaTools
         {
             Vector2 start = transform.position;
             var end = start + new Vector2(xDir, yDir);
-            playerBase.collider.enabled = false;
+            boxCollider.enabled = false;
             hit = Physics2D.Linecast(start, end, collisionLayer);
-            playerBase.collider.enabled = true;
+            boxCollider.enabled = true;
 
             if (hit.transform == null)
             {
@@ -45,8 +49,8 @@ namespace MetroidVaniaTools
             float sqrRemainingDistance = (transform.position - end).sqrMagnitude;
             while (sqrRemainingDistance > float.Epsilon)
             {
-                var newPosition = Vector3.MoveTowards(playerBase.rigidBody.position, end, inverseMoveTime * Time.deltaTime);
-                playerBase.rigidBody.MovePosition(newPosition);
+                var newPosition = Vector3.MoveTowards(rigidBody.position, end, inverseMoveTime * Time.deltaTime);
+                rigidBody.MovePosition(newPosition);
                 sqrRemainingDistance = (transform.position - end).sqrMagnitude;
 
                 yield return null;
@@ -55,9 +59,8 @@ namespace MetroidVaniaTools
 
         protected virtual void AttemptMove <T> (int xDir, int yDir)
             where T : Component //Generic T to specify the type of component we expect to interact with if blocked (Player for enemies, wall for player)
-        {
-            RaycastHit2D hit;
-            bool canMove = Move(xDir, yDir, out hit);
+        {            
+            bool canMove = Move(xDir, yDir, out var hit);
 
             if (hit.transform == null)
             {

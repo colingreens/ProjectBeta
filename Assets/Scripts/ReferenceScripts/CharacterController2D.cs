@@ -60,11 +60,6 @@ namespace MetroidVaniaTools
 		public event Action<Collider2D> onTriggerExitEvent;
 
 		/// <summary>
-		/// 
-		/// </summary>
-		public PlayerBase player;
-
-		/// <summary>
 		/// when true, one way platforms will be ignored when moving vertically for a single frame
 		/// </summary>
 		public bool ignoreOneWayPlatformsThisFrame;
