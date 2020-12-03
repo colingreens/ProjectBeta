@@ -12,6 +12,8 @@ namespace MetroidVaniaTools
         [SerializeField]
         private EnemyAIConfig _aiConfig;
         [SerializeField]
+        private PlayerPosition _playerPosition;
+        [SerializeField]
         private Transform _aimPoint;
 
         private Transform _target;
@@ -88,19 +90,19 @@ namespace MetroidVaniaTools
             {
                 //enemy to the left side of player so move right
                 _rigidBody.velocity = new Vector2(_movementConfig.runSpeed, _rigidBody.velocity.y);
-                _movementConfig.horizontalDirection = 1;
+                _playerPosition.horizontalDirection = 1;
             }
             else if (transform.position.x > position.x)
             {
                 //enemy to the left side of player so move right
                 _rigidBody.velocity = new Vector2(-_movementConfig.runSpeed, _rigidBody.velocity.y);
-                _movementConfig.horizontalDirection = -1;
+                _playerPosition.horizontalDirection = -1;
             }            
         }
 
         private bool CanDetectTarget(Vector3 position, float distance, LayerMask collisionLayer)
         {
-            var endPoint = _aimPoint.position + Vector3.right * distance * _movementConfig.facingPosition;
+            var endPoint = _aimPoint.position + Vector3.right * distance * _playerPosition.facingPosition;
             var hit = Physics2D.Linecast(position, endPoint, collisionLayer);
             Debug.DrawLine(position, endPoint, Color.blue);
 
@@ -123,7 +125,7 @@ namespace MetroidVaniaTools
             if (Vector2.Distance(transform.position, _startPosition) <= float.Epsilon)
             {
                 _rigidBody.velocity = new Vector2(0f, 0f);
-                _movementConfig.horizontalDirection = 0;
+                _playerPosition.horizontalDirection = 0;
                 currentState = AIState.Asleep;
             }
             else

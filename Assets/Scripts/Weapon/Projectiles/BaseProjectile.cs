@@ -7,7 +7,7 @@ namespace MetroidVaniaTools
     public class BaseProjectile : MonoBehaviour
     {
         [SerializeField]
-        private Projectile projectile;
+        private ProjectileConfig projectile;
         private BoxCollider2D collider;
 
         private void Start()

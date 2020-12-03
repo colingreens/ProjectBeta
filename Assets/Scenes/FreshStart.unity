@@ -549,13 +549,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _movementConfig: {fileID: 11400000, guid: c6ee0ef8e6525d34cb515410308fff81, type: 2}
-  jump: {fileID: 11400000, guid: b8ed1902499824441a3c9fb711838168, type: 2}
-  agroWakeRange: 10
-  agroLoseRange: 15
-  aimPoint: {fileID: 967091290}
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 2048
+  _aiConfig: {fileID: 0}
+  _aimPoint: {fileID: 0}
 --- !u!114 &488936056
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1130,5 +1125,6 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 3.1279979
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6081671579949129190, guid: 4d865771c0cd6c84492e18fc93a20342, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4d865771c0cd6c84492e18fc93a20342, type: 3}

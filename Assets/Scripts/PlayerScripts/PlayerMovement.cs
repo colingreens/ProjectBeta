@@ -7,6 +7,8 @@ namespace MetroidVaniaTools
 		[SerializeField]
 		private MovementConfig movementInfo;
 		[SerializeField]
+		private PlayerPosition positionInfo;
+		[SerializeField]
 		private JumpConfig jump;
 		[SerializeField]
 		private bool CanDoubleJump;
@@ -89,7 +91,7 @@ namespace MetroidVaniaTools
 
 		private void GetInput()
         {
-			movementInfo.horizontalDirection = Input.GetAxisRaw("Horizontal");	
+			positionInfo.horizontalDirection = Input.GetAxisRaw("Horizontal");	
 		}
 
 		private void GetOrientation()
@@ -129,7 +131,7 @@ namespace MetroidVaniaTools
 			if (isWallSliding && Input.GetButton("Horizontal") && Input.GetButtonDown("Jump"))
             {
 				_velocity.y = Mathf.Sqrt(2f * wallSlide.WallJumpForce * -jump.gravity);
-				_velocity.x = -1* movementInfo.facingPosition * wallSlide.HorizontalForce;
+				_velocity.x = -1* positionInfo.facingPosition * wallSlide.HorizontalForce;
 				
             }
             if (isWallSliding)
@@ -152,7 +154,7 @@ namespace MetroidVaniaTools
 			dashTimeLeft -= Time.deltaTime;
             if (dashConfig.canDash && Input.GetKeyDown(dashConfig.dashKey) && dashTimeLeft < 0)
             {
-				_velocity.x += movementInfo.facingPosition * 2f * dashConfig.dashDistance;
+				_velocity.x += positionInfo.facingPosition * 2f * dashConfig.dashDistance;
 				dashTimeLeft = dashConfig.dashCooldown;
 			}
         }
@@ -161,7 +163,7 @@ namespace MetroidVaniaTools
 		{
 			// apply horizontal speed smoothing it. dont really do this with Lerp. Use SmoothDamp or something that provides more control
 			var smoothedMovementFactor = _controller.isGrounded ? groundDamping : inAirDamping; // how fast do we change direction?
-			_velocity.x = Mathf.Lerp(_velocity.x, movementInfo.horizontalDirection * runSpeed, Time.deltaTime * smoothedMovementFactor);
+			_velocity.x = Mathf.Lerp(_velocity.x, positionInfo.horizontalDirection * runSpeed, Time.deltaTime * smoothedMovementFactor);
 
 			_controller.move(_velocity * Time.deltaTime);
 
