@@ -8,7 +8,7 @@ namespace MetroidVaniaTools
         private MovementConfig movementInfo;
         [SerializeField]
         private PlayerPosition positionInfo;
-        private Transform transform;
+        private Transform position;
 
         private const int FacingRight = 1;
         private const int FacingLeft = -1;
@@ -16,7 +16,7 @@ namespace MetroidVaniaTools
         // Start is called before the first frame update
         private void Start()
         {
-            transform = GetComponent<Transform>();
+            position = GetComponent<Transform>();
         }
 
         private void Update()
@@ -32,15 +32,15 @@ namespace MetroidVaniaTools
             }
             if (positionInfo.horizontalDirection > 0)
             {
-                if (transform.localScale.x < 0f)
-                    transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+                if (position.localScale.x < 0f)
+                    position.localScale = new Vector3(-position.localScale.x, position.localScale.y, position.localScale.z);
                 positionInfo.facingPosition = FacingRight;
             }
 
             if (positionInfo.horizontalDirection < 0)
             {
-                if (transform.localScale.x > 0f)
-                    transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+                if (position.localScale.x > 0f)
+                    position.localScale = new Vector3(-position.localScale.x, position.localScale.y, position.localScale.z);
                 positionInfo.facingPosition = FacingLeft;
             }
         }
