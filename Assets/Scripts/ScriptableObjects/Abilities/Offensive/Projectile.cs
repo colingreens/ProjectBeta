@@ -2,10 +2,10 @@
 
 namespace MetroidVaniaTools
 {
-    [CreateAssetMenu(fileName = "Arrow", menuName = "Metroidvania/Player/Abilities/Offensive/Arrow", order = 1)]
+    [CreateAssetMenu(fileName = "Projectile", menuName = "Metroidvania/Player/Abilities/Offensive/Projectile", order = 1)]
     public class Projectile : ScriptableObject
     {
-        public GameObject projectile;
+        public GameObject projectile; //the prefab
         public float velocity;
         public int damage;
         public int fireRate;
