@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace MetroidVaniaTools
 {
-    [CreateAssetMenu]
+    [CreateAssetMenu(fileName = "GameEvent", menuName = "Metroidvania/Event/GameEvent", order = 1)]
     public class GameEvent : ScriptableObject
     {
         private List<GameEventListener> listeners =

@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace MetroidVaniaTools
 {
+    [CreateAssetMenu(fileName = "InputEvent", menuName = "Metroidvania/Event/InputEvent", order = 1)]
     public class InputEvent : ScriptableObject
     {
         public KeyCode KeyCode;
