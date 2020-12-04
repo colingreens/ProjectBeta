@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace MetroidVaniaTools
 {
-    [CreateAssetMenu(fileName = "DashConfig", menuName = "Metroidvania/Player/Abilities/DashConfig", order = 1)]
+    [CreateAssetMenu(fileName = "DashConfig", menuName = "Metroidvania/Player/DashConfig", order = 5)]
     public class DashConfig : ScriptableObject
     {
         public float dashDistance;
