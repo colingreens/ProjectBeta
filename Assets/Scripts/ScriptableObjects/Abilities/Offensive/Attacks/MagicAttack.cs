@@ -2,12 +2,12 @@
 
 namespace MetroidVaniaTools
 {
-    public class MagicAttack : IAttack
+    public class MagicAttack : Attack
     {
         [SerializeField]
         private MagicConfig magicConfig;
 
-        public void Execute(CombatController combat)
+        public override void Execute(CombatController combat)
         {
             //Throw in Magic Logic
         }

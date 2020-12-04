@@ -2,13 +2,13 @@
 
 namespace MetroidVaniaTools
 {
-    public class MeleeAttack : IAttack
+    public class MeleeAttack : Attack
     {
         [SerializeField]
         private MeleeConfig meleeConfig;
-        public void Execute(CombatController combat)
+        public override void Execute(CombatController combat)
         {
-            //Melee Logic
+           //add melee logic
         }
     }
 }

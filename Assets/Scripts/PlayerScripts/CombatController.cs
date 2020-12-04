@@ -12,28 +12,22 @@ namespace MetroidVaniaTools
 
         [SerializeField]
         private Attack attack;
+        [SerializeField]
+        private InputEvent onAttack;
 
-        private void Update()
+        private void Start()
         {
-            CheckInput();
-        }
-
-        private void FixedUpdate()
-        {
-            Fire(attack);
+            onAttack.onKeyPress += CheckInput;
         }
 
         private void CheckInput()
         {
             if (isShooting)
                 return;
-            if (Input.GetButton("Fire1"))
-                canFire = true;
-            else
-                canFire = false;
+            canFire = true;
         }
 
-        private void Fire(IAttack attack)
+        private void Attack(IAttack attack)
         {
             if (canFire)
             {
