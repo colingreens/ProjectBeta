@@ -2,7 +2,7 @@
 
 namespace MetroidVaniaTools
 {
-    [CreateAssetMenu(fileName = "Projectile", menuName = "Metroidvania/Player/Abilities/Offensive/Projectile", order = 1)]
+    [CreateAssetMenu(fileName = "ProjectileConfig", menuName = "Metroidvania/Attacks/Config/Projectile", order = 1)]
     public class ProjectileConfig : ScriptableObject
     {
         public GameObject projectile; //the prefab
