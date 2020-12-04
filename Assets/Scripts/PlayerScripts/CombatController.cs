@@ -5,13 +5,15 @@ namespace MetroidVaniaTools
     public class CombatController : MonoBehaviour
     {
         public PlayerPosition playerPosition;
-        public Transform projectilePosition;        
+        public Transform projectilePosition;
 
         [HideInInspector]
         public float WeaponCoolDown = .1f;
 
         [SerializeField]
-        private Attack attack;
+        private Attack mainAttack;
+        [SerializeField]
+        private Attack offAttack;
         [SerializeField]
         private InputEvent onAttack;
 

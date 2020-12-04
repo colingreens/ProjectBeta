@@ -13,18 +13,18 @@ namespace MetroidVaniaTools
         private HealthConfig health;
         public void Heal(int amount)
         {
-            if (health.CurrentHealthPoints < health.HealthPoints)
+            if (health.CurrentHealthPoints.floatReference < health.HealthPoints.floatReference)
             {
-                health.CurrentHealthPoints += amount;
+                health.CurrentHealthPoints.floatReference += amount;
             }
-            health.CurrentHealthPoints = health.CurrentHealthPoints > health.HealthPoints ? health.HealthPoints : health.CurrentHealthPoints;
+            health.CurrentHealthPoints = health.CurrentHealthPoints.floatReference > health.HealthPoints.floatReference ? health.HealthPoints : health.CurrentHealthPoints;
         }
 
         public void Damage(int amount)
         {
             print(gameObject.name + $": {amount} damage");
-            health.CurrentHealthPoints -= amount;
-            if (health.CurrentHealthPoints < 1)
+            health.CurrentHealthPoints.floatReference -= amount;
+            if (health.CurrentHealthPoints.floatReference < 1)
             {
                 KillPlayer();
             }
