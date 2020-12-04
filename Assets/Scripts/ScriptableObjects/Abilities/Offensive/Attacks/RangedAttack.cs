@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
-using System;
 
 namespace MetroidVaniaTools
 {
+    [CreateAssetMenu(fileName = "RangedAttack", menuName = "Metroidvania/Attacks/Ranged", order = 2)]
     public class RangedAttack : Attack
     {
         [SerializeField]

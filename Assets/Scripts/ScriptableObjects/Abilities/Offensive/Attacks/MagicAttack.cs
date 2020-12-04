@@ -2,6 +2,7 @@
 
 namespace MetroidVaniaTools
 {
+    [CreateAssetMenu(fileName = "MagicAttack", menuName = "Metroidvania/Attacks/Magic", order = 3)]
     public class MagicAttack : Attack
     {
         [SerializeField]
