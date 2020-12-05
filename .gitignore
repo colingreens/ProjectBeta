@@ -10,6 +10,9 @@
 [Ll]ogs/
 [Mm]emoryCaptures/
 
+#ignore ReferenceScripts Folder
+/[Aa]ssets/Scripts/ReferenceScripts/*.*
+
 # Never ignore Asset meta data
 !/[Aa]ssets/**/*.meta
 
