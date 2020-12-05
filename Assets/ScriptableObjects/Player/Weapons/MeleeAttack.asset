@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 042d08139bd78b441b2744d0dc0d7990, type: 3}
   m_Name: MeleeAttack
   m_EditorClassIdentifier: 
-  meleeConfig: {fileID: 0}
+  meleeConfig: {fileID: 11400000, guid: b21fd812842dc5e4abb0f30ca6bcbd48, type: 2}

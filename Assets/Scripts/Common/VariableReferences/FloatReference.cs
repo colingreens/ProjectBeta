@@ -15,7 +15,7 @@ namespace MetroidVaniaTools
         // No setter for value intended.
         public float Value
         {
-            get { return useConstant ? constant : variable.value; }
+            get { return useConstant ? constant : variable.Value; }
         }
     }
 }

@@ -12,7 +12,7 @@ namespace MetroidVaniaTools
 
         public bool Value
         {
-            get { return useConstant ? constant : variable.value; }
+            get { return useConstant ? constant : variable.Value; }
         }
     }
 }

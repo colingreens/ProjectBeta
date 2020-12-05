@@ -13,14 +13,15 @@ namespace MetroidVaniaTools
         [SerializeField]
         private Ability dashAbility;
         [SerializeField]
-        private float dashCoolDown;
+        private FloatVariable dashCoolDown;
+
         private float dashTimeLeft; 
 
         // Start is called before the first frame update
         void Start()
         {
             onDashPress.onKeyPress += OnKeyEvent;
-            dashTimeLeft = dashCoolDown;
+            dashTimeLeft = dashCoolDown.Value;
         }
 
         // Update is called once per frame
@@ -34,7 +35,7 @@ namespace MetroidVaniaTools
             if (dashTimeLeft < float.Epsilon)
             {
                 Player.Velocity.x =+ Player.PositionInfo.facingPosition * dashAbility.Execute();
-                dashTimeLeft = dashCoolDown;
+                dashTimeLeft = dashCoolDown.Value;
             }
                        
         }

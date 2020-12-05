@@ -10,21 +10,21 @@ namespace MetroidVaniaTools
     public class HealthController : MonoBehaviour
     {
         [SerializeField]
-        private HealthConfig health;
+        private HealthConfig config;
         public void Heal(int amount)
         {
-            if (health.CurrentHealthPoints.floatReference < health.HealthPoints.floatReference)
+            if (config.CurrentHealthPoints.Value < config.HealthPoints.Value)
             {
-                health.CurrentHealthPoints.floatReference += amount;
+                config.CurrentHealthPoints.Value += amount;
             }
-            health.CurrentHealthPoints = health.CurrentHealthPoints.floatReference > health.HealthPoints.floatReference ? health.HealthPoints : health.CurrentHealthPoints;
+            config.CurrentHealthPoints = config.CurrentHealthPoints.Value > config.HealthPoints.Value ? config.HealthPoints : config.CurrentHealthPoints;
         }
 
         public void Damage(int amount)
         {
             print(gameObject.name + $": {amount} damage");
-            health.CurrentHealthPoints.floatReference -= amount;
-            if (health.CurrentHealthPoints.floatReference < 1)
+            config.CurrentHealthPoints.Value -= amount;
+            if (config.CurrentHealthPoints.Value < 1)
             {
                 KillPlayer();
             }
@@ -33,7 +33,7 @@ namespace MetroidVaniaTools
         public void KillPlayer()
         {
             gameObject.SetActive(false);
-            health.CurrentHealthPoints = health.HealthPoints;
+            config.CurrentHealthPoints = config.HealthPoints;
         }
     }
 }

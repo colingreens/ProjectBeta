@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f43b6967e746cb748adc4d3eac0452cf, type: 3}
   m_Name: MeleeConfig
   m_EditorClassIdentifier: 
-  Damage: 0
+  Damage: 1
