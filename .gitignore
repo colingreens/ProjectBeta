@@ -11,10 +11,10 @@
 [Mm]emoryCaptures/
 
 #ignore ReferenceScripts Folder
-[Aa]ssets/Scripts/ReferenceScripts/*.*
+Assets/Scripts/ReferenceScripts/*.*
 
 # Never ignore Asset meta data
-!/[Aa]ssets/**/*.meta
+Aassets/**/*.meta
 
 # Uncomment this line if you wish to ignore the asset store tools plugin
 # /[Aa]ssets/AssetStoreTools*
@@ -61,4 +61,3 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
-Assets/Scripts/ReferenceScripts/DemoController.cs
