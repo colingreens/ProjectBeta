@@ -4,10 +4,9 @@ namespace MetroidVaniaTools
 {
 	public class PlayerManager : MonoBehaviour
 	{
+		public PlayerPosition positionInfo;
 		[SerializeField]
-		private MovementConfig movementInfo;
-		[SerializeField]
-		private PlayerPosition positionInfo;
+		private MovementConfig movementInfo;		
 		[SerializeField]
 		private JumpConfig jump;
 		[SerializeField]
@@ -19,7 +18,10 @@ namespace MetroidVaniaTools
 		[SerializeField]
 		private WallSlideConfig wallSlide;
 		[SerializeField]
-		private DashConfig dashConfig;
+		private InputEvent onDashPress;
+		public DashConfig dashConfig;
+		[SerializeField]
+		private DashAbility dashAbility;
 
 		private float runSpeed;
 		private float groundDamping;
@@ -35,13 +37,14 @@ namespace MetroidVaniaTools
 
 		private void Start()
 		{
-			//_animator = GetComponent<Animator>();
 			_controller = GetComponent<CharacterController2D>();
 
 			// listen to some events for illustration purposes
 			_controller.onControllerCollidedEvent += onControllerCollider;
 			_controller.onTriggerEnterEvent += OnTriggerEnterEvent;
 			_controller.onTriggerExitEvent += OnTriggerExitEvent;
+
+			onDashPress.onKeyPress += GetDash;
 
 			runSpeed = movementInfo.runSpeed;
 			groundDamping = movementInfo.groundDamping;
@@ -82,7 +85,6 @@ namespace MetroidVaniaTools
 			GetInput();
 			GetOrientation();
 			GetVertical();
-			GetDash();
 			ApplyMovement();
 		}
 
@@ -148,17 +150,18 @@ namespace MetroidVaniaTools
 		private void GetDash()
         {
 			dashTimeLeft -= Time.deltaTime;
-            if (dashConfig.canDash && Input.GetKeyDown(dashConfig.dashKey) && dashTimeLeft < 0)
+			if (dashTimeLeft < 0)
             {
-				_velocity.x += positionInfo.facingPosition * 2f * dashConfig.dashDistance;
+				_velocity.x += dashAbility.Execute(this);
 				dashTimeLeft = dashConfig.dashCooldown;
 			}
-        }
+
+
+		}
 		
 		private void ApplyMovement()
 		{
-			// apply horizontal speed smoothing it. dont really do this with Lerp. Use SmoothDamp or something that provides more control
-			var smoothedMovementFactor = _controller.isGrounded ? groundDamping : inAirDamping; // how fast do we change direction?
+			var smoothedMovementFactor = _controller.isGrounded ? groundDamping : inAirDamping;
 			_velocity.x = Mathf.Lerp(_velocity.x, positionInfo.horizontalDirection * runSpeed, Time.deltaTime * smoothedMovementFactor);
 
 			_controller.move(_velocity * Time.deltaTime);

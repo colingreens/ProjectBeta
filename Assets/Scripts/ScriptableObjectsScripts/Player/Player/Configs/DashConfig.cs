@@ -7,7 +7,6 @@ namespace MetroidVaniaTools
     {
         public float dashDistance;
         public float dashCooldown;
-        public bool canDash;
         public KeyCode dashKey;
 
     }

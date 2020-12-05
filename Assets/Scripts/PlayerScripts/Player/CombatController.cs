@@ -20,17 +20,17 @@ namespace MetroidVaniaTools
 
         private void Start()
         {
-            onMainAttack.onKeyPress += onMainInputPress;
-            onOffAttack.onKeyPress += onOffHandInputPress;
+            onMainAttack.onKeyPress += MainInputPress;
+            onOffAttack.onKeyPress += OffHandInputPress;
         }
 
-        private void onMainInputPress()
+        private void MainInputPress()
         {
             if (isShooting)
                 return;
             Attack(mainAttack);
         }
-        private void onOffHandInputPress()
+        private void OffHandInputPress()
         {
             if (isShooting)
                 return;

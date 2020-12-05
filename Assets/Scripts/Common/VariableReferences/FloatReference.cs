@@ -13,7 +13,7 @@ namespace MetroidVaniaTools
         public float constant;
         public FloatVariable variable;
         // No setter for value intended.
-        public float value
+        public float Value
         {
             get { return useConstant ? constant : variable.value; }
         }

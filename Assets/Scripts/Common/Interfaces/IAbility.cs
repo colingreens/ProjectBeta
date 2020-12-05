@@ -2,6 +2,6 @@
 {
     public interface IAbility
     {
-        void Execute(PlayerManager playerManager);
+        float Execute(PlayerManager playerManager);
     }
 }
