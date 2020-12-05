@@ -28,9 +28,7 @@ namespace MetroidVaniaTools
 
 		private bool isWallSliding;		
 
-		private CharacterController2D _controller;
-		private OrientationController _orientationController;
-		private readonly Animator _animator;		
+		private CharacterController2D _controller;		
 
 		private Vector3 _velocity;
 
@@ -39,7 +37,6 @@ namespace MetroidVaniaTools
 		{
 			//_animator = GetComponent<Animator>();
 			_controller = GetComponent<CharacterController2D>();
-			_orientationController = GetComponent<OrientationController>();
 
 			// listen to some events for illustration purposes
 			_controller.onControllerCollidedEvent += onControllerCollider;
@@ -118,7 +115,6 @@ namespace MetroidVaniaTools
 				if (Input.GetButtonDown("Jump"))
 				{
 					_velocity.y = Mathf.Sqrt(2f * jump.jumpHeight * -jump.gravity);
-					//_animator.Play(Animator.StringToHash("Jump"));
 				}
 
 				if (Input.GetButton("Jump"))
