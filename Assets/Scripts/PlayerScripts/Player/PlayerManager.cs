@@ -2,7 +2,7 @@
 
 namespace MetroidVaniaTools
 {
-	public class PlayerMovement : MonoBehaviour
+	public class PlayerManager : MonoBehaviour
 	{
 		[SerializeField]
 		private MovementConfig movementInfo;
