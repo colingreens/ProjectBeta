@@ -2,6 +2,6 @@
 {
     public interface IAbility
     {
-        float Execute(PlayerManager playerManager);
+        void OnKeyEvent();
     }
 }

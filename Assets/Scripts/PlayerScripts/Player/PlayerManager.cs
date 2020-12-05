@@ -4,7 +4,9 @@ namespace MetroidVaniaTools
 {
 	public class PlayerManager : MonoBehaviour
 	{
-		public PlayerPosition positionInfo;
+		public Vector3 Velocity;
+		public PlayerPosition PositionInfo;
+
 		[SerializeField]
 		private MovementConfig movementInfo;		
 		[SerializeField]
@@ -16,26 +18,14 @@ namespace MetroidVaniaTools
 		[SerializeField]
 		private bool CanWallJump;
 		[SerializeField]
-		private WallSlideConfig wallSlide;
-		[SerializeField]
-		private InputEvent onDashPress;
-		[SerializeField]
-		private BoolVariable canDash;
-		[SerializeField]
-		private FloatVariable dashCoolDown;
-		[SerializeField]
-		private Ability dashAbility;
+		private WallSlideConfig wallSlide;		
 
 		private float runSpeed;
 		private float groundDamping;
 		private float inAirDamping;
-
 		private bool isWallSliding;		
 
-		private CharacterController2D _controller;		
-
-		private Vector3 _velocity;
-
+		private CharacterController2D _controller;
 
 		private void Start()
 		{
@@ -45,8 +35,6 @@ namespace MetroidVaniaTools
 			_controller.onControllerCollidedEvent += OnControllerCollider;
 			_controller.onTriggerEnterEvent += OnTriggerEnterEvent;
 			_controller.onTriggerExitEvent += OnTriggerExitEvent;
-
-			onDashPress.onKeyPress += OnDashEvent;
 
 			runSpeed = movementInfo.runSpeed;
 			groundDamping = movementInfo.groundDamping;
@@ -77,12 +65,6 @@ namespace MetroidVaniaTools
 			Debug.Log("onTriggerExitEvent: " + col.gameObject.name);
 		}
 
-		private void OnDashEvent()
-		{
-			_velocity.x =+ dashAbility.Execute(this);
-			Invoke(nameof(GeneralCoolDown(), WeaponCoolDown);
-		}
-
 		#endregion
 
 
@@ -97,18 +79,18 @@ namespace MetroidVaniaTools
 
 		private void GetInput()
         {
-			positionInfo.horizontalDirection = Input.GetAxisRaw("Horizontal");	
+			PositionInfo.horizontalDirection = Input.GetAxisRaw("Horizontal");	
 		}
 
 		private void GetOrientation()
         {
 			if (_controller.isGrounded)
 			{
-				_velocity.y = 0;
+				Velocity.y = 0;
 			}
             if (!_controller.isGrounded && (_controller.isOnLeftWall || _controller.isOnRightWall))
             {
-				_velocity.y = 0;
+				Velocity.y = 0;
 				isWallSliding = true;
             }
             else
@@ -123,28 +105,28 @@ namespace MetroidVaniaTools
             {
 				if (Input.GetButtonDown("Jump"))
 				{
-					_velocity.y = Mathf.Sqrt(2f * jump.jumpHeight * -jump.gravity);
+					Velocity.y = Mathf.Sqrt(2f * jump.jumpHeight * -jump.gravity);
 				}
 
 				if (Input.GetButton("Jump"))
 				{
-					_velocity.y += Mathf.Sqrt(2f * jump.additionalJumpHeight * -jump.gravity);
+					Velocity.y += Mathf.Sqrt(2f * jump.additionalJumpHeight * -jump.gravity);
 					_controller.ignoreOneWayPlatformsThisFrame = true;
 				}
 				
 			}			
 			if (isWallSliding && Input.GetButton("Horizontal") && Input.GetButtonDown("Jump"))
             {
-				_velocity.y = Mathf.Sqrt(2f * wallSlide.WallJumpForce * -jump.gravity);
-				_velocity.x = -1* positionInfo.facingPosition * wallSlide.HorizontalForce;
+				Velocity.y = Mathf.Sqrt(2f * wallSlide.WallJumpForce * -jump.gravity);
+				Velocity.x = -1* PositionInfo.facingPosition * wallSlide.HorizontalForce;
             }
             if (isWallSliding)
             {                
-				_velocity.y += wallSlide.wallTouchGravity * Time.deltaTime;	
+				Velocity.y += wallSlide.wallTouchGravity * Time.deltaTime;	
 			}
             else
             {
-				_velocity.y += jump.gravity * Time.deltaTime;
+				Velocity.y += jump.gravity * Time.deltaTime;
 			}
 			
 
@@ -153,12 +135,12 @@ namespace MetroidVaniaTools
 		private void ApplyMovement()
 		{
 			var smoothedMovementFactor = _controller.isGrounded ? groundDamping : inAirDamping;
-			_velocity.x = Mathf.Lerp(_velocity.x, positionInfo.horizontalDirection * runSpeed, Time.deltaTime * smoothedMovementFactor);
+			Velocity.x = Mathf.Lerp(Velocity.x, PositionInfo.horizontalDirection * runSpeed, Time.deltaTime * smoothedMovementFactor);
 
-			_controller.move(_velocity * Time.deltaTime);
+			_controller.move(Velocity * Time.deltaTime);
 
 			// grab our current _velocity to use as a base for all calculations
-			_velocity = _controller.velocity;
+			Velocity = _controller.velocity;
 		}
 
 		private void GeneralCoolDown(bool isCooledDown)

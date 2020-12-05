@@ -2,8 +2,8 @@
 
 namespace MetroidVaniaTools
 {
-    public abstract class Ability : ScriptableObject, IAbility
+    public abstract class Ability : ScriptableObject
     {
-        public abstract float Execute(PlayerManager playerManager);
+        public abstract float Execute();
     }
 }
