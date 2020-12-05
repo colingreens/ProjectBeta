@@ -13,36 +13,40 @@ namespace MetroidVaniaTools
         [SerializeField]
         private Attack offAttack;
         [SerializeField]
-        private InputEvent onAttack;
+        private InputEvent onMainAttack;
+        [SerializeField]
+        private InputEvent onOffAttack;
+
 
         private void Start()
         {
-            onAttack.onKeyPress += CheckInput;
+            onMainAttack.onKeyPress += onMainInputPress;
+            onOffAttack.onKeyPress += onOffHandInputPress;
         }
 
-        private void CheckInput()
+        private void onMainInputPress()
         {
             if (isShooting)
                 return;
-            canFire = true;
+            Attack(mainAttack);
+        }
+        private void onOffHandInputPress()
+        {
+            if (isShooting)
+                return;
+            Attack(offAttack);
         }
 
         private void Attack(IAttack attack)
         {
-            if (canFire)
-            {
-                attack.Execute(this);
-                Invoke(nameof(GlobalCoolDown), WeaponCoolDown);
-            }
-            canFire = false;
+             attack.Execute(this);
+             Invoke(nameof(GlobalCoolDown), WeaponCoolDown);
         }
         private void GlobalCoolDown()
         {
             isShooting = false;
-            canFire = true;
         }
 
         private bool isShooting;
-        private bool canFire;
     }
 }

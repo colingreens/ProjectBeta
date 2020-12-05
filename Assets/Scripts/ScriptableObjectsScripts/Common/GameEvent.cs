@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace MetroidVaniaTools
 {
-    [CreateAssetMenu(fileName = "GameEvent", menuName = "Metroidvania/Event/GameEvent", order = 1)]
+    [CreateAssetMenu(fileName = "GameEvent", menuName = "CustomSO/Event/GameEvent", order = 1)]
     public class GameEvent : ScriptableObject
     {
         private List<GameEventListener> listeners =
@@ -15,15 +15,15 @@ namespace MetroidVaniaTools
 
         public void Raise()
         {
-            foreach (var listener in listeners)
+            for (int i = listeners.Count - 1; i >= 0; --i)
             {
-                listener.OnEventRaised();
+                listeners[i].RaiseEvent();
             }
         }
 
         public void RegisterListener(GameEventListener listener)
         {
-            listeners.Remove(listener);
+            listeners.Add(listener);
         }
 
         public void UnregisterListener(GameEventListener listener)
