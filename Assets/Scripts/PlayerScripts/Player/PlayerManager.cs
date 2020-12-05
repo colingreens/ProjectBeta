@@ -19,14 +19,16 @@ namespace MetroidVaniaTools
 		private WallSlideConfig wallSlide;
 		[SerializeField]
 		private InputEvent onDashPress;
-		public DashConfig dashConfig;
 		[SerializeField]
-		private DashAbility dashAbility;
+		private BoolVariable canDash;
+		[SerializeField]
+		private FloatVariable dashCoolDown;
+		[SerializeField]
+		private Ability dashAbility;
 
 		private float runSpeed;
 		private float groundDamping;
 		private float inAirDamping;
-		private float dashTimeLeft;
 
 		private bool isWallSliding;		
 
@@ -40,22 +42,21 @@ namespace MetroidVaniaTools
 			_controller = GetComponent<CharacterController2D>();
 
 			// listen to some events for illustration purposes
-			_controller.onControllerCollidedEvent += onControllerCollider;
+			_controller.onControllerCollidedEvent += OnControllerCollider;
 			_controller.onTriggerEnterEvent += OnTriggerEnterEvent;
 			_controller.onTriggerExitEvent += OnTriggerExitEvent;
 
-			onDashPress.onKeyPress += GetDash;
+			onDashPress.onKeyPress += OnDashEvent;
 
 			runSpeed = movementInfo.runSpeed;
 			groundDamping = movementInfo.groundDamping;
 			inAirDamping = movementInfo.inAirDamping;
-			dashTimeLeft = dashConfig.dashCooldown;
 		}
 
 
 		#region Event Listeners
 
-		void onControllerCollider(RaycastHit2D hit)
+		void OnControllerCollider(RaycastHit2D hit)
 		{
 			// bail out on plain old ground hits cause they arent very interesting
 			if (hit.normal.y == 1f)
@@ -74,6 +75,12 @@ namespace MetroidVaniaTools
 		void OnTriggerExitEvent(Collider2D col)
 		{
 			Debug.Log("onTriggerExitEvent: " + col.gameObject.name);
+		}
+
+		private void OnDashEvent()
+		{
+			_velocity.x =+ dashAbility.Execute(this);
+			Invoke(nameof(GeneralCoolDown(), WeaponCoolDown);
 		}
 
 		#endregion
@@ -130,32 +137,16 @@ namespace MetroidVaniaTools
             {
 				_velocity.y = Mathf.Sqrt(2f * wallSlide.WallJumpForce * -jump.gravity);
 				_velocity.x = -1* positionInfo.facingPosition * wallSlide.HorizontalForce;
-				
             }
             if (isWallSliding)
-            {
-                
-				_velocity.y += wallSlide.wallTouchGravity * Time.deltaTime;
-				
-				
+            {                
+				_velocity.y += wallSlide.wallTouchGravity * Time.deltaTime;	
 			}
             else
             {
 				_velocity.y += jump.gravity * Time.deltaTime;
 			}
 			
-
-		}
-
-		private void GetDash()
-        {
-			dashTimeLeft -= Time.deltaTime;
-			if (dashTimeLeft < 0)
-            {
-				_velocity.x += dashAbility.Execute(this);
-				dashTimeLeft = dashConfig.dashCooldown;
-			}
-
 
 		}
 		
@@ -168,6 +159,11 @@ namespace MetroidVaniaTools
 
 			// grab our current _velocity to use as a base for all calculations
 			_velocity = _controller.velocity;
+		}
+
+		private void GeneralCoolDown(bool isCooledDown)
+		{
+			isCooledDown = true;
 		}
 	}
 }

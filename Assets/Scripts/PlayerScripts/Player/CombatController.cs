@@ -7,7 +7,7 @@ namespace MetroidVaniaTools
         public PlayerPosition playerPosition;
         public Transform projectilePosition;
         [HideInInspector]
-        public float WeaponCoolDown = .1f;
+        public float WeaponCoolDown = .1f; //global cooldown, can be set by weapon.
         [SerializeField]
         private Attack mainAttack;
         [SerializeField]

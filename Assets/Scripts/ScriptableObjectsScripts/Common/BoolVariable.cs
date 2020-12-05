@@ -5,6 +5,6 @@ namespace MetroidVaniaTools
     [CreateAssetMenu(fileName = "NewBoolVar", menuName = "CustomSO/Types/BoolVariable")]
     public class BoolVariable : ScriptableObject
     {
-        public bool value;
+        public bool Value;
     }
 }

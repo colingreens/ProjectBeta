@@ -5,6 +5,6 @@ namespace MetroidVaniaTools
     [CreateAssetMenu(fileName = "NewFloatVar", menuName = "CustomSO/Types/FloatVariable")]
     public class FloatVariable : ScriptableObject 
     {
-        public float value;
+        public float Value;
     }
 }
