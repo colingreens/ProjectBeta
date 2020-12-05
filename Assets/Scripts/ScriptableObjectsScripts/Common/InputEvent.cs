@@ -4,7 +4,7 @@ using UnityEngine;
 namespace MetroidVaniaTools
 {
     [CreateAssetMenu(fileName = "InputEvent", menuName = "Metroidvania/Event/InputEvent", order = 1)]
-    public class InputEvent : ScriptableObject
+    public class InputEvent : ScriptableObject, IInputEvent
     {
         public KeyCode KeyCode;
 
@@ -13,7 +13,7 @@ namespace MetroidVaniaTools
         {
             if (Input.GetKeyDown(KeyCode))
                 onKeyPress();
-	    }
+        }
     }
 }
 

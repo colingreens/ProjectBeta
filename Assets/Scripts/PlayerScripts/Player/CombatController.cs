@@ -6,10 +6,8 @@ namespace MetroidVaniaTools
     {
         public PlayerPosition playerPosition;
         public Transform projectilePosition;
-
         [HideInInspector]
         public float WeaponCoolDown = .1f;
-
         [SerializeField]
         private Attack mainAttack;
         [SerializeField]
