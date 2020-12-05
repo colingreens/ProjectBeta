@@ -2,7 +2,7 @@
 
 namespace MetroidVaniaTools
 {
-    [CreateAssetMenu]
+    [CreateAssetMenu(fileName = "NewFloatVar", menuName = "CustomSO/Types/FloatVariable")]
     public class FloatReference : ScriptableObject 
     {
         public float floatReference;
