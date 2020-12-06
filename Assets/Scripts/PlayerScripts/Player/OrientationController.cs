@@ -5,11 +5,10 @@ namespace MetroidVaniaTools
     public class OrientationController : MonoBehaviour
     {
         [SerializeField]
-        private MovementConfig movementInfo;
+        private FloatVariable horizontalDirection;
         [SerializeField]
-        private PlayerPosition positionInfo;
+        private FloatVariable facingDirection;
         private Transform position;
-
         private const int FacingRight = 1;
         private const int FacingLeft = -1;
 
@@ -26,22 +25,22 @@ namespace MetroidVaniaTools
 
         private void CheckDirection()
         {
-            if (positionInfo.horizontalDirection == 0)
+            if (horizontalDirection.Value == 0)
             {
                 return;
             }
-            if (positionInfo.horizontalDirection > 0)
+            if (horizontalDirection.Value > 0)
             {
                 if (position.localScale.x < 0f)
                     position.localScale = new Vector3(-position.localScale.x, position.localScale.y, position.localScale.z);
-                positionInfo.facingPosition = FacingRight;
+                facingDirection.Value = FacingRight;
             }
 
-            if (positionInfo.horizontalDirection < 0)
+            if (horizontalDirection.Value < 0)
             {
                 if (position.localScale.x > 0f)
                     position.localScale = new Vector3(-position.localScale.x, position.localScale.y, position.localScale.z);
-                positionInfo.facingPosition = FacingLeft;
+                facingDirection.Value = FacingLeft;
             }
         }
     }

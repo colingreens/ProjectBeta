@@ -6,7 +6,7 @@ namespace MetroidVaniaTools
 {
     public class Dash : MonoBehaviour
     {
-        public PlayerManager Player;
+        public CharacterManager Player;
 
         [SerializeField]
         private InputEvent onDashPress;        
