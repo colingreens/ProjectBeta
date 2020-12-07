@@ -6,7 +6,7 @@ namespace MetroidVaniaTools
 {
     public class Dash : MonoBehaviour
     {
-        public CharacterManager Player;
+        private CharacterManager Player;
 
         [SerializeField]
         private InputEvent onDashPress;        
@@ -14,12 +14,15 @@ namespace MetroidVaniaTools
         private Ability dashAbility;
         [SerializeField]
         private FloatVariable dashCoolDown;
+        [SerializeField]
+        private FloatVariable facingDirection;
 
         private float dashTimeLeft; 
 
         // Start is called before the first frame update
         void Start()
         {
+            Player = GetComponent<CharacterManager>();
             onDashPress.onKeyPress += OnKeyEvent;
             dashTimeLeft = dashCoolDown.Value;
         }
@@ -34,7 +37,7 @@ namespace MetroidVaniaTools
         {
             if (dashTimeLeft < float.Epsilon)
             {
-                Player.Velocity.x =+ Player.PositionInfo.facingPosition * dashAbility.Execute();
+                Player.Velocity.x =+ facingDirection.Value * dashAbility.Execute();
                 dashTimeLeft = dashCoolDown.Value;
             }
                        

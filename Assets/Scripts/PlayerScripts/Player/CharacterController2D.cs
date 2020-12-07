@@ -62,7 +62,7 @@ namespace MetroidVaniaTools
 		/// <summary>
 		/// when true, one way platforms will be ignored when moving vertically for a single frame
 		/// </summary>
-		public bool ignoreOneWayPlatformsThisFrame;
+		public BoolVariable ignoreOneWayPlatformsThisFrame;
 
 		[SerializeField]
 		[Range(0.001f, 0.3f)]
@@ -293,8 +293,7 @@ namespace MetroidVaniaTools
 				for (var i = 0; i < _raycastHitsThisFrame.Count; i++)
 					onControllerCollidedEvent(_raycastHitsThisFrame[i]);
 			}
-
-			ignoreOneWayPlatformsThisFrame = false;
+			ignoreOneWayPlatformsThisFrame.Value = false;
 		}
 
 

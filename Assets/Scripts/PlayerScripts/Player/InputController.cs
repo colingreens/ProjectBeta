@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace MetroidVaniaTools
 {
-    class InputManager : MonoBehaviour
+    class InputController : MonoBehaviour
     {
         [SerializeField]
         private List<IInputEvent> inputCollection;

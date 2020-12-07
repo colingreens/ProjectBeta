@@ -11,7 +11,7 @@ namespace MetroidVaniaTools
         public int fireRate;
         public int activeTime;
 
-        public void Fire(int directionFacing, Vector3 position)
+        public void Fire(float directionFacing, Vector3 position)
         {
             var bulletActive = Instantiate(projectile);
             bulletActive.transform.position = position;

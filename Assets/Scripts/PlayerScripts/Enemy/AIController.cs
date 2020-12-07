@@ -1,24 +1,21 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace MetroidVaniaTools
 {
     public class AIController : MonoBehaviour
     {
         [SerializeField]
-        private MovementConfig _movementConfig;
-        [SerializeField]
-        private EnemyAIConfig _aiConfig;
-        [SerializeField]
-        private PlayerPosition _playerPosition;
+        private EnemyAIConfig _aiConfig;        
         [SerializeField]
         private Transform _aimPoint;
 
         private Transform _target;
         private Rigidbody2D _rigidBody;
         private Vector2 _startPosition;
+
+        private float _runSpeed;
+        private float _horizontalDirection;
+        private float _facingDirection;
         private enum AIState
         {
             Asleep, Patrol, ChasePlayer, ReturnToSpawn
@@ -89,20 +86,20 @@ namespace MetroidVaniaTools
             if (transform.position.x < position.x)
             {
                 //enemy to the left side of player so move right
-                _rigidBody.velocity = new Vector2(_movementConfig.runSpeed, _rigidBody.velocity.y);
-                _playerPosition.horizontalDirection = 1;
+                _rigidBody.velocity = new Vector2(_runSpeed, _rigidBody.velocity.y);
+                _horizontalDirection = 1;
             }
             else if (transform.position.x > position.x)
             {
                 //enemy to the left side of player so move right
-                _rigidBody.velocity = new Vector2(-_movementConfig.runSpeed, _rigidBody.velocity.y);
-                _playerPosition.horizontalDirection = -1;
+                _rigidBody.velocity = new Vector2(-_runSpeed, _rigidBody.velocity.y);
+                _horizontalDirection = -1;
             }            
         }
 
         private bool CanDetectTarget(Vector3 position, float distance, LayerMask collisionLayer)
         {
-            var endPoint = _aimPoint.position + Vector3.right * distance * _playerPosition.facingPosition;
+            var endPoint = _aimPoint.position + Vector3.right * distance * _facingDirection;
             var hit = Physics2D.Linecast(position, endPoint, collisionLayer);
             Debug.DrawLine(position, endPoint, Color.blue);
 
@@ -125,7 +122,7 @@ namespace MetroidVaniaTools
             if (Vector2.Distance(transform.position, _startPosition) <= float.Epsilon)
             {
                 _rigidBody.velocity = new Vector2(0f, 0f);
-                _playerPosition.horizontalDirection = 0;
+                _horizontalDirection = 0;
                 currentState = AIState.Asleep;
             }
             else
