@@ -4,6 +4,7 @@ namespace MetroidVaniaTools
 {
     public class Jump : MonoBehaviour
     {
+        //we need to trim these variables
         [SerializeField]
         private FloatVariable gravity; //= -25f;
         [SerializeField]
