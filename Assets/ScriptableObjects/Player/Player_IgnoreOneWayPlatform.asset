@@ -9,11 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94ae94da75ca3e848b20d1a18dff57ed, type: 3}
-  m_Name: EnemyMovementInfo
+  m_Script: {fileID: 11500000, guid: 44f93f3cdc954784a85f7665a7adee7d, type: 3}
+  m_Name: Player_IgnoreOneWayPlatform
   m_EditorClassIdentifier: 
-  runSpeed: 2
-  groundDamping: 20
-  inAirDamping: 5
-  horizontalDirection: 0
-  facingPosition: 0
+  Value: 0

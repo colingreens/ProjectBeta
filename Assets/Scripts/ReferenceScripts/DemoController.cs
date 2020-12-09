@@ -112,7 +112,7 @@ namespace MetroidVaniaTools
 			if (_controller.isGrounded && Input.GetKey(KeyCode.DownArrow))
 			{
 				_velocity.y *= 3f;
-				_controller.ignoreOneWayPlatformsThisFrame = true;
+				_controller.ignoreOneWayPlatformsThisFrame.Value = true;
 			}
 
 			_controller.move(_velocity * Time.deltaTime);
