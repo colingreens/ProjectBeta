@@ -21,6 +21,8 @@ namespace MetroidVaniaTools
 		private BoolVariable isWallSliding;
 		[SerializeField]
 		private BoolVariable isGrounded;
+		[SerializeField]
+		private FloatVariable Gravity;
 
 		[SerializeField]
 		private CharacterController2D _controller;
@@ -65,9 +67,9 @@ namespace MetroidVaniaTools
 		// the Update loop contains a very simple example of moving the character around and controlling the animation
 		void Update()
 		{
-			GetInput();
-			GetOrientation();
+			GetInput();			
 			ApplyMovement();
+			GetOrientation();
 		}
 
 		private void GetInput()
@@ -77,6 +79,7 @@ namespace MetroidVaniaTools
 
 		private void GetOrientation()
         {
+			isGrounded.Value = _controller.isGrounded;
 			if (_controller.isGrounded)
 			{
 				Velocity.y = 0;
@@ -96,7 +99,7 @@ namespace MetroidVaniaTools
 		{
 			var smoothedMovementFactor = _controller.isGrounded ? groundDamping.Value : inAirDamping.Value;
 			Velocity.x = Mathf.Lerp(Velocity.x, horizontalDirection.Value * runSpeed.Value, Time.deltaTime * smoothedMovementFactor);
-
+			Velocity.y += Gravity.Value * Time.deltaTime;
 			_controller.move(Velocity * Time.deltaTime);
 			Velocity = _controller.velocity;
 		}

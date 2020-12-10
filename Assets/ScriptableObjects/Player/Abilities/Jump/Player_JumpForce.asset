@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d804d3df6dcd95a4c845186c6a5bc801, type: 3}
   m_Name: Player_JumpForce
   m_EditorClassIdentifier: 
-  Value: 3
+  Value: 6

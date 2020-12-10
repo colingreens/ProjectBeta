@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75946773c18a90b4e9aa1b4e0acf4687, type: 3}
   m_Name: Player_DashAbility
   m_EditorClassIdentifier: 
-  dashDistance: 0
+  dashDistance: 75

@@ -4,7 +4,7 @@ namespace MetroidVaniaTools
 {
     public class Jump : MonoBehaviour
     {
-        //we need to trim these variables
+
         [SerializeField]
         private FloatVariable gravity; //= -25f;
         [SerializeField]
@@ -47,9 +47,9 @@ namespace MetroidVaniaTools
                     Player.Velocity.y = Mathf.Sqrt(jumpForce.Value * -gravity.Value);
                 }
 
-                if (Input.GetButton("Jump"))
+                else if (Input.GetButton("Jump"))
                 {
-                    Player.Velocity.y += Mathf.Sqrt(additionalJumpHeight.Value * gravity.Value);
+                    Player.Velocity.y += Mathf.Sqrt(additionalJumpHeight.Value * -gravity.Value);
                     ignoreOneWayPlatformsThisFrame.Value = true;
                 }
 
@@ -62,10 +62,6 @@ namespace MetroidVaniaTools
             if (isWallSliding)
             {
                 Player.Velocity.y += wallHopForce.Value * Time.deltaTime;
-            }
-            else
-            {
-                Player.Velocity.y += gravity.Value * Time.deltaTime;
             }
         }
 
