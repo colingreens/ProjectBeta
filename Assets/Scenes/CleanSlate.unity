@@ -243,6 +243,10 @@ GameObject:
   - component: {fileID: 959043740}
   - component: {fileID: 959043739}
   - component: {fileID: 959043738}
+  - component: {fileID: 959043747}
+  - component: {fileID: 959043746}
+  - component: {fileID: 959043745}
+  - component: {fileID: 959043744}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -444,6 +448,77 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &959043744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 959043737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c0983a1b3e3cf04fb4fe4d34e6ee2f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  horizontalDirection: {fileID: 11400000, guid: c5bd5bddf4f74f44eabda0b0ed3e87ee,
+    type: 2}
+  facingDirection: {fileID: 11400000, guid: 4bf63ef9668e8e24e84c4800f01d89f0, type: 2}
+--- !u!114 &959043745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 959043737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eba6661ac53ddfb439e3d151751bc830, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onDashPress: {fileID: 11400000, guid: 8ee0b6cecc8437a42baea5fd217e3ff0, type: 2}
+  dashAbility: {fileID: 11400000, guid: 4cfab5b1dd9431041a5f867a6cafc0f9, type: 2}
+  dashCoolDown: {fileID: 11400000, guid: 72503cb56ff4dfd45b932ebfbdec5870, type: 2}
+  facingDirection: {fileID: 11400000, guid: 4bf63ef9668e8e24e84c4800f01d89f0, type: 2}
+--- !u!114 &959043746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 959043737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38a8b5101f14f7f40bf354c4e8d9cbf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gravity: {fileID: 11400000, guid: 02985593a1524ef42863d8b124470f3c, type: 2}
+  jumpForce: {fileID: 11400000, guid: 9ef2eadc3f17c084396f96162096668e, type: 2}
+  additionalJumpHeight: {fileID: 11400000, guid: d8134df9c81916340ba849c58bcbdd2e,
+    type: 2}
+  CanDoubleJump: 0
+  CanWallJump: 1
+  wallJumpForce: {fileID: 11400000, guid: 58efc8d981cce544fa4f8f60d53e7880, type: 2}
+  wallHorizontalForce: {fileID: 11400000, guid: b2cfc622b2119b74baa80ce21eb9d232,
+    type: 2}
+  wallHopForce: {fileID: 11400000, guid: 04e93dadb3355534fa496f2a1f903260, type: 2}
+  isGrounded: {fileID: 11400000, guid: 409defb2a9d446d40826e6371bbf192d, type: 2}
+  facingDirection: {fileID: 11400000, guid: 4bf63ef9668e8e24e84c4800f01d89f0, type: 2}
+  ignoreOneWayPlatformsThisFrame: {fileID: 11400000, guid: 2479cf768515d914bb74f884e5a12ce9,
+    type: 2}
+--- !u!114 &959043747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 959043737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 524ba6cf759c40e47909f6a07ff0c8d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputCollection:
+  - {fileID: 11400000, guid: 8ee0b6cecc8437a42baea5fd217e3ff0, type: 2}
 --- !u!1 &1490124001
 GameObject:
   m_ObjectHideFlags: 0
@@ -586,7 +661,7 @@ PrefabInstance:
     - target: {fileID: 4861175301250614336, guid: e01b4100abc5a364aac1dcecd31e3313,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1458.7109
+      value: -3488.711
       objectReference: {fileID: 0}
     - target: {fileID: 4861175301623462526, guid: e01b4100abc5a364aac1dcecd31e3313,
         type: 3}
@@ -601,7 +676,7 @@ PrefabInstance:
     - target: {fileID: 4861175301623462526, guid: e01b4100abc5a364aac1dcecd31e3313,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1458.7109
+      value: -3488.711
       objectReference: {fileID: 0}
     - target: {fileID: 4861175301623462527, guid: e01b4100abc5a364aac1dcecd31e3313,
         type: 3}

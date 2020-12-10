@@ -6,7 +6,7 @@ namespace MetroidVaniaTools
     class InputController : MonoBehaviour
     {
         [SerializeField]
-        private List<IInputEvent> inputCollection;
+        private List<InputEvent> inputCollection;
 
         private void Update()
         {
