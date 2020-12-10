@@ -263,14 +263,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Velocity: {x: 0, y: 0, z: 0}
-  horizontalDirection: {fileID: 0}
-  facingDirection: {fileID: 0}
-  runSpeed: {fileID: 0}
-  groundDamping: {fileID: 0}
-  inAirDamping: {fileID: 0}
-  isWallSliding: {fileID: 0}
-  isGrounded: {fileID: 0}
-  _controller: {fileID: 0}
+  horizontalDirection: {fileID: 11400000, guid: c5bd5bddf4f74f44eabda0b0ed3e87ee,
+    type: 2}
+  facingDirection: {fileID: 11400000, guid: 4bf63ef9668e8e24e84c4800f01d89f0, type: 2}
+  runSpeed: {fileID: 11400000, guid: 9cb134865984a2940bcc9d280e490232, type: 2}
+  groundDamping: {fileID: 11400000, guid: b520d6ad42796984ab70a8a205450ac9, type: 2}
+  inAirDamping: {fileID: 11400000, guid: e5f67e7cb2a8aed4e839657939454619, type: 2}
+  isWallSliding: {fileID: 11400000, guid: 00bde269b8c6ccf4983257e7dae48222, type: 2}
+  isGrounded: {fileID: 11400000, guid: 409defb2a9d446d40826e6371bbf192d, type: 2}
+  _controller: {fileID: 959043739}
 --- !u!114 &959043739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -585,7 +586,7 @@ PrefabInstance:
     - target: {fileID: 4861175301250614336, guid: e01b4100abc5a364aac1dcecd31e3313,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -338.71094
+      value: -1458.7109
       objectReference: {fileID: 0}
     - target: {fileID: 4861175301623462526, guid: e01b4100abc5a364aac1dcecd31e3313,
         type: 3}
@@ -600,7 +601,7 @@ PrefabInstance:
     - target: {fileID: 4861175301623462526, guid: e01b4100abc5a364aac1dcecd31e3313,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -338.71094
+      value: -1458.7109
       objectReference: {fileID: 0}
     - target: {fileID: 4861175301623462527, guid: e01b4100abc5a364aac1dcecd31e3313,
         type: 3}

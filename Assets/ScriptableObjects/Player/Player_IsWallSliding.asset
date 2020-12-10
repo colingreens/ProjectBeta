@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d804d3df6dcd95a4c845186c6a5bc801, type: 3}
-  m_Name: Player_HorizontalDirection
+  m_Script: {fileID: 11500000, guid: 44f93f3cdc954784a85f7665a7adee7d, type: 3}
+  m_Name: Player_IsWallSliding
   m_EditorClassIdentifier: 
   Value: 0
