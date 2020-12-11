@@ -54,6 +54,11 @@ namespace MetroidVaniaTools
                 }
 
             }
+            WallSlide();
+        }
+
+        private void WallSlide()
+        {
             if (isWallSliding && Input.GetButton("Horizontal") && Input.GetButtonDown("Jump"))
             {
                 Player.Velocity.y = Mathf.Sqrt(wallJumpForce.Value * -gravity.Value);
@@ -64,6 +69,5 @@ namespace MetroidVaniaTools
                 Player.Velocity.y += wallHopForce.Value * Time.deltaTime;
             }
         }
-
     }
 }
