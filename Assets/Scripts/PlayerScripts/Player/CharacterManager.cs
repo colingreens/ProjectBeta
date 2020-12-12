@@ -4,23 +4,16 @@ namespace MetroidVaniaTools
 {
 	public class CharacterManager : MonoBehaviour
 	{
-		[HideInInspector]
-		public Vector3 Velocity;
-
 		[SerializeField]
-		private FloatVariable horizontalDirection;
+		private FloatVariable runSpeed;
 		[SerializeField]
-		private FloatVariable facingDirection;
-		[SerializeField]
-		private FloatVariable runSpeed; //= 8f;
-		[SerializeField]
-		private FloatVariable groundDamping; //= 20f; // how fast do we change direction? higher means faster
+		private FloatVariable groundDamping;
 		[SerializeField]
 		private FloatVariable inAirDamping;
 		[SerializeField]
-		private BoolVariable isWallSliding;
+		private VelocityVariable velocity;
 		[SerializeField]
-		private BoolVariable isGrounded;
+		private FloatVariable horizontalDirection;
 		[SerializeField]
 		private FloatVariable Gravity;
 
@@ -29,8 +22,6 @@ namespace MetroidVaniaTools
 
 		private void Start()
 		{
-			_controller = GetComponent<CharacterController2D>();
-
 			// listen to some events for illustration purposes
 			_controller.onControllerCollidedEvent += OnControllerCollider;
 			_controller.onTriggerEnterEvent += OnTriggerEnterEvent;
@@ -69,39 +60,20 @@ namespace MetroidVaniaTools
 		{
 			GetInput();			
 			ApplyMovement();
-			GetOrientation();
 		}
 
 		private void GetInput()
         {
 			horizontalDirection.Value = Input.GetAxisRaw("Horizontal");	
 		}
-
-		private void GetOrientation()
-        {
-			isGrounded.Value = _controller.isGrounded;
-			if (_controller.isGrounded)
-			{
-				Velocity.y = 0;
-			}
-            if (!_controller.isGrounded && (_controller.isOnLeftWall || _controller.isOnRightWall))
-            {
-				Velocity.y = 0;
-				isWallSliding.Value = true;
-            }
-            else
-            {
-				isWallSliding.Value = false;
-			}			
-		}
 		
 		private void ApplyMovement()
 		{
 			var smoothedMovementFactor = _controller.isGrounded ? groundDamping.Value : inAirDamping.Value;
-			Velocity.x = Mathf.Lerp(Velocity.x, horizontalDirection.Value * runSpeed.Value, Time.deltaTime * smoothedMovementFactor);
-			Velocity.y += Gravity.Value * Time.deltaTime;
-			_controller.move(Velocity * Time.deltaTime);
-			Velocity = _controller.velocity;
+			velocity.Value.x = Mathf.Lerp(velocity.Value.x, horizontalDirection.Value * runSpeed.Value, Time.deltaTime * smoothedMovementFactor);
+			velocity.Value.y += Gravity.Value * Time.deltaTime;
+			_controller.move(velocity.Value * Time.deltaTime);
+			velocity.Value = _controller.velocity;
 		}
 	}
 }

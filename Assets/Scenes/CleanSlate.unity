@@ -590,15 +590,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d28ff53e4fa66a4299edae43ad5a174, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Velocity: {x: 0, y: 0, z: 0}
-  horizontalDirection: {fileID: 11400000, guid: c5bd5bddf4f74f44eabda0b0ed3e87ee,
-    type: 2}
-  facingDirection: {fileID: 11400000, guid: 4bf63ef9668e8e24e84c4800f01d89f0, type: 2}
   runSpeed: {fileID: 11400000, guid: 9cb134865984a2940bcc9d280e490232, type: 2}
   groundDamping: {fileID: 11400000, guid: b520d6ad42796984ab70a8a205450ac9, type: 2}
   inAirDamping: {fileID: 11400000, guid: e5f67e7cb2a8aed4e839657939454619, type: 2}
-  isWallSliding: {fileID: 11400000, guid: 00bde269b8c6ccf4983257e7dae48222, type: 2}
-  isGrounded: {fileID: 11400000, guid: 409defb2a9d446d40826e6371bbf192d, type: 2}
+  velocity: {fileID: 11400000, guid: 1505896b46d66cd4480143ca7aa7aebd, type: 2}
+  horizontalDirection: {fileID: 11400000, guid: c5bd5bddf4f74f44eabda0b0ed3e87ee,
+    type: 2}
   Gravity: {fileID: 11400000, guid: 02985593a1524ef42863d8b124470f3c, type: 2}
   _controller: {fileID: 959043739}
 --- !u!114 &959043739
@@ -804,6 +801,7 @@ MonoBehaviour:
   dashAbility: {fileID: 11400000, guid: 4cfab5b1dd9431041a5f867a6cafc0f9, type: 2}
   dashCoolDown: {fileID: 11400000, guid: 72503cb56ff4dfd45b932ebfbdec5870, type: 2}
   facingDirection: {fileID: 11400000, guid: 4bf63ef9668e8e24e84c4800f01d89f0, type: 2}
+  velocity: {fileID: 11400000, guid: 1505896b46d66cd4480143ca7aa7aebd, type: 2}
 --- !u!114 &959043746
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -816,20 +814,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38a8b5101f14f7f40bf354c4e8d9cbf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravity: {fileID: 11400000, guid: 02985593a1524ef42863d8b124470f3c, type: 2}
-  jumpForce: {fileID: 11400000, guid: 9ef2eadc3f17c084396f96162096668e, type: 2}
-  additionalJumpHeight: {fileID: 11400000, guid: d8134df9c81916340ba849c58bcbdd2e,
-    type: 2}
-  CanDoubleJump: 0
-  CanWallJump: 1
-  wallJumpForce: {fileID: 11400000, guid: 58efc8d981cce544fa4f8f60d53e7880, type: 2}
+  jumpForce: {fileID: 0}
+  CanWallJump: {fileID: 0}
   wallHorizontalForce: {fileID: 11400000, guid: b2cfc622b2119b74baa80ce21eb9d232,
     type: 2}
-  wallHopForce: {fileID: 11400000, guid: 04e93dadb3355534fa496f2a1f903260, type: 2}
   isGrounded: {fileID: 11400000, guid: 409defb2a9d446d40826e6371bbf192d, type: 2}
   facingDirection: {fileID: 11400000, guid: 4bf63ef9668e8e24e84c4800f01d89f0, type: 2}
   ignoreOneWayPlatformsThisFrame: {fileID: 11400000, guid: 2479cf768515d914bb74f884e5a12ce9,
     type: 2}
+  gravity: {fileID: 11400000, guid: 02985593a1524ef42863d8b124470f3c, type: 2}
+  velocity: {fileID: 11400000, guid: 1505896b46d66cd4480143ca7aa7aebd, type: 2}
 --- !u!114 &959043747
 MonoBehaviour:
   m_ObjectHideFlags: 0
