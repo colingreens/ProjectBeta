@@ -26,11 +26,10 @@ namespace MetroidVaniaTools
 
         private void Update()
         {
-            CheckDirection();
-            GetOrientation();
+            SetDirection();
         }
 
-        private void CheckDirection()
+        private void SetDirection()
         {
             if (horizontalDirection.Value == 0)
             {
@@ -48,24 +47,6 @@ namespace MetroidVaniaTools
                 if (position.localScale.x > 0f)
                     position.localScale = new Vector3(-position.localScale.x, position.localScale.y, position.localScale.z);
                 facingDirection.Value = FacingLeft;
-            }
-        }
-
-        private void GetOrientation()
-        {
-            isGrounded.Value = _controller.isGrounded;
-            if (_controller.isGrounded)
-            {
-                Velocity.y = 0;
-            }
-            if (!_controller.isGrounded && (_controller.isOnLeftWall || _controller.isOnRightWall))
-            {
-                Velocity.y = 0;
-                isWallSliding.Value = true;
-            }
-            else
-            {
-                isWallSliding.Value = false;
             }
         }
     }

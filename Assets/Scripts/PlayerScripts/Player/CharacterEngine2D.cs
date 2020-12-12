@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace MetroidVaniaTools
 {
-	public class CharacterController2D : MonoBehaviour
+	public class CharacterEngine2D : MonoBehaviour
 	{
 		#region internal types
 

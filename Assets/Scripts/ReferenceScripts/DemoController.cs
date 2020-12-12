@@ -14,7 +14,7 @@ namespace MetroidVaniaTools
 		[HideInInspector]
 		private float normalizedHorizontalSpeed = 0;
 
-		private CharacterController2D _controller;
+		private CharacterEngine2D _controller;
 		private Animator _animator;
 		private RaycastHit2D _lastControllerColliderHit;
 		private Vector3 _velocity;
@@ -23,7 +23,7 @@ namespace MetroidVaniaTools
 		void Awake()
 		{
 			_animator = GetComponent<Animator>();
-			_controller = GetComponent<CharacterController2D>();
+			_controller = GetComponent<CharacterEngine2D>();
 
 			// listen to some events for illustration purposes
 			_controller.onControllerCollidedEvent += onControllerCollider;

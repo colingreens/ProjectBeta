@@ -2,7 +2,12 @@
 
 namespace MetroidVaniaTools
 {
-	public class CharacterManager : MonoBehaviour
+	[RequireComponent(typeof(CharacterEngine2D))]
+	[RequireComponent(typeof(OrientationController))]
+	[RequireComponent(typeof(CombatController))]
+	[RequireComponent(typeof(HealthController))]
+	[RequireComponent(typeof(InputController))]
+	public class CharacterController : MonoBehaviour
 	{
 		[SerializeField]
 		private FloatVariable runSpeed;
@@ -15,10 +20,14 @@ namespace MetroidVaniaTools
 		[SerializeField]
 		private FloatVariable horizontalDirection;
 		[SerializeField]
-		private FloatVariable Gravity;
+		private FloatVariable gravity;
+		[SerializeField]
+		private BoolVariable isGrounded;
+		[SerializeField]
+		private BoolVariable isWallSliding;
 
 		[SerializeField]
-		private CharacterController2D _controller;
+		private CharacterEngine2D _controller;
 
 		private void Start()
 		{
@@ -58,8 +67,9 @@ namespace MetroidVaniaTools
 		// the Update loop contains a very simple example of moving the character around and controlling the animation
 		void Update()
 		{
-			GetInput();			
+			GetInput();		
 			ApplyMovement();
+			SetCharacterState();
 		}
 
 		private void GetInput()
@@ -71,9 +81,27 @@ namespace MetroidVaniaTools
 		{
 			var smoothedMovementFactor = _controller.isGrounded ? groundDamping.Value : inAirDamping.Value;
 			velocity.Value.x = Mathf.Lerp(velocity.Value.x, horizontalDirection.Value * runSpeed.Value, Time.deltaTime * smoothedMovementFactor);
-			velocity.Value.y += Gravity.Value * Time.deltaTime;
+			velocity.Value.y += gravity.Value * Time.deltaTime;
 			_controller.move(velocity.Value * Time.deltaTime);
 			velocity.Value = _controller.velocity;
+		}
+
+		private void SetCharacterState()
+        {
+			isGrounded.Value = _controller.isGrounded;
+			if (_controller.isGrounded)
+			{
+				velocity.Value.y = 0;
+			}
+			if (!_controller.isGrounded && (_controller.isOnLeftWall || _controller.isOnRightWall))
+			{
+				velocity.Value.y = 0;
+				isWallSliding.Value = true;
+			}
+			else
+			{
+				isWallSliding.Value = false;
+			}
 		}
 	}
 }
