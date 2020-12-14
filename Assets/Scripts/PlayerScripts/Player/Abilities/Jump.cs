@@ -5,46 +5,66 @@ namespace MetroidVaniaTools
     public class Jump : MonoBehaviour
     {        
         [SerializeField]
-        private FloatVariable jumpForce;//= 3f; 
+        private FloatVariable jumpForce;
         [SerializeField]
         private BoolVariable CanWallJump;
         [SerializeField]
-        private FloatVariable wallHorizontalForce;//= 3f;
+        private BoolVariable CanDoubleJump;
+        [SerializeField]
+        private FloatVariable wallHorizontalForce;
         [SerializeField]
         private BoolVariable isGrounded;
+        [SerializeField]
+        private BoolVariable isWallSliding;
         [SerializeField]
         private FloatVariable facingDirection;
         [SerializeField]
         private BoolVariable ignoreOneWayPlatformsThisFrame;
         [SerializeField]
-        private FloatVariable gravity; //= -25f;
+        private FloatVariable gravity;
         [SerializeField]
         private VelocityVariable velocity;
 
-        private bool isWallSliding;
-       
+        private float shortJump;
+        private bool canDoubleJump;
+
+        private void Start()
+        {
+            shortJump = jumpForce.Value / 2f;
+            canDoubleJump = CanDoubleJump.Value;
+        }
+
 
         // Update is called once per frame
         void Update()
         {
             if (isGrounded.Value)
             {
+                if (CanDoubleJump.Value)
+                {
+                    canDoubleJump = true;
+                }
                 if (Input.GetButtonDown("Jump"))
                 {
-                    velocity.Value.y = Mathf.Sqrt(jumpForce.Value * -gravity.Value);
-                }
+                    velocity.Value.y = Mathf.Sqrt(shortJump * -gravity.Value);
+                }                
             }
+            else if (canDoubleJump)
+                {
+                    velocity.Value.y = Mathf.Sqrt(jumpForce.Value * -gravity.Value);
+                    canDoubleJump = false;
+                }
             WallSlide();
-        }
+        }        
 
         private void WallSlide()
         {
-            if (isWallSliding && Input.GetButton("Horizontal") && Input.GetButtonDown("Jump"))
+            if (isWallSliding.Value && Input.GetButton("Horizontal") && Input.GetButtonDown("Jump"))
             {
                 velocity.Value.y = Mathf.Sqrt(jumpForce.Value * -gravity.Value);
                 velocity.Value.x = -1 * facingDirection.Value * wallHorizontalForce.Value;
             }
-            if (isWallSliding)
+            if (isWallSliding.Value)
             {
                 velocity.Value.y += jumpForce.Value * Time.deltaTime;
             }

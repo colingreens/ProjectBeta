@@ -67,12 +67,16 @@ namespace MetroidVaniaTools
 		// the Update loop contains a very simple example of moving the character around and controlling the animation
 		void Update()
 		{
-			GetInput();		
+			GetInput();				
+		}
+
+        private void FixedUpdate()
+        {
 			ApplyMovement();
 			SetCharacterState();
 		}
 
-		private void GetInput()
+        private void GetInput()
         {
 			horizontalDirection.Value = Input.GetAxisRaw("Horizontal");	
 		}

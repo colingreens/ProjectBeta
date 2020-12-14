@@ -565,8 +565,8 @@ GameObject:
   - component: {fileID: 959043742}
   - component: {fileID: 959043741}
   - component: {fileID: 959043740}
-  - component: {fileID: 959043739}
   - component: {fileID: 959043738}
+  - component: {fileID: 959043739}
   - component: {fileID: 959043747}
   - component: {fileID: 959043746}
   - component: {fileID: 959043745}
@@ -596,7 +596,9 @@ MonoBehaviour:
   velocity: {fileID: 11400000, guid: 1505896b46d66cd4480143ca7aa7aebd, type: 2}
   horizontalDirection: {fileID: 11400000, guid: c5bd5bddf4f74f44eabda0b0ed3e87ee,
     type: 2}
-  Gravity: {fileID: 11400000, guid: 02985593a1524ef42863d8b124470f3c, type: 2}
+  gravity: {fileID: 11400000, guid: 02985593a1524ef42863d8b124470f3c, type: 2}
+  isGrounded: {fileID: 11400000, guid: 409defb2a9d446d40826e6371bbf192d, type: 2}
+  isWallSliding: {fileID: 11400000, guid: 00bde269b8c6ccf4983257e7dae48222, type: 2}
   _controller: {fileID: 959043739}
 --- !u!114 &959043739
 MonoBehaviour:
@@ -607,7 +609,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 959043737}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f17a3c0fd83abc478cffe9bf99e7600, type: 3}
+  m_Script: {fileID: 11500000, guid: 53a02c76a711c8b44a9f4a7e1784be93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ignoreOneWayPlatformsThisFrame: {fileID: 11400000, guid: 2479cf768515d914bb74f884e5a12ce9,
@@ -657,8 +659,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  totalHorizontalRays: 6
-  totalVerticalRays: 3
+  totalHorizontalRays: 8
+  totalVerticalRays: 4
 --- !u!61 &959043740
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -785,6 +787,9 @@ MonoBehaviour:
   horizontalDirection: {fileID: 11400000, guid: c5bd5bddf4f74f44eabda0b0ed3e87ee,
     type: 2}
   facingDirection: {fileID: 11400000, guid: 4bf63ef9668e8e24e84c4800f01d89f0, type: 2}
+  isGrounded: {fileID: 11400000, guid: 409defb2a9d446d40826e6371bbf192d, type: 2}
+  isWallSliding: {fileID: 11400000, guid: 00bde269b8c6ccf4983257e7dae48222, type: 2}
+  velocity: {fileID: 11400000, guid: 1505896b46d66cd4480143ca7aa7aebd, type: 2}
 --- !u!114 &959043745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -814,11 +819,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38a8b5101f14f7f40bf354c4e8d9cbf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: {fileID: 0}
-  CanWallJump: {fileID: 0}
+  jumpForce: {fileID: 11400000, guid: 9ef2eadc3f17c084396f96162096668e, type: 2}
+  CanWallJump: {fileID: 11400000, guid: 65ca55412c50ce9469d9b40a9480df66, type: 2}
   wallHorizontalForce: {fileID: 11400000, guid: b2cfc622b2119b74baa80ce21eb9d232,
     type: 2}
   isGrounded: {fileID: 11400000, guid: 409defb2a9d446d40826e6371bbf192d, type: 2}
+  isWallSliding: {fileID: 11400000, guid: 00bde269b8c6ccf4983257e7dae48222, type: 2}
   facingDirection: {fileID: 11400000, guid: 4bf63ef9668e8e24e84c4800f01d89f0, type: 2}
   ignoreOneWayPlatformsThisFrame: {fileID: 11400000, guid: 2479cf768515d914bb74f884e5a12ce9,
     type: 2}
@@ -967,15 +973,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 4861175300317635782, guid: e01b4100abc5a364aac1dcecd31e3313,
+        type: 3}
+      propertyPath: m_DeadZoneWidth
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4861175300317635782, guid: e01b4100abc5a364aac1dcecd31e3313,
+        type: 3}
+      propertyPath: m_DeadZoneHeight
+      value: 0.4
+      objectReference: {fileID: 0}
     - target: {fileID: 4861175301250614336, guid: e01b4100abc5a364aac1dcecd31e3313,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -12.002465
+      value: -12.002464
       objectReference: {fileID: 0}
     - target: {fileID: 4861175301250614336, guid: e01b4100abc5a364aac1dcecd31e3313,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.7767148
+      value: -2.776715
       objectReference: {fileID: 0}
     - target: {fileID: 4861175301250614336, guid: e01b4100abc5a364aac1dcecd31e3313,
         type: 3}
@@ -985,12 +1001,12 @@ PrefabInstance:
     - target: {fileID: 4861175301623462526, guid: e01b4100abc5a364aac1dcecd31e3313,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -12.002465
+      value: -12.002464
       objectReference: {fileID: 0}
     - target: {fileID: 4861175301623462526, guid: e01b4100abc5a364aac1dcecd31e3313,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.7767148
+      value: -2.776715
       objectReference: {fileID: 0}
     - target: {fileID: 4861175301623462526, guid: e01b4100abc5a364aac1dcecd31e3313,
         type: 3}
