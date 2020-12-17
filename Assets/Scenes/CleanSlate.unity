@@ -821,6 +821,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpForce: {fileID: 11400000, guid: 9ef2eadc3f17c084396f96162096668e, type: 2}
   CanWallJump: {fileID: 11400000, guid: 65ca55412c50ce9469d9b40a9480df66, type: 2}
+  CanDoubleJump: {fileID: 11400000, guid: 73f9a38b5b7b368418df6b9b7566af71, type: 2}
   wallHorizontalForce: {fileID: 11400000, guid: b2cfc622b2119b74baa80ce21eb9d232,
     type: 2}
   isGrounded: {fileID: 11400000, guid: 409defb2a9d446d40826e6371bbf192d, type: 2}

@@ -49,7 +49,7 @@ namespace MetroidVaniaTools
                     velocity.Value.y = Mathf.Sqrt(shortJump * -gravity.Value);
                 }                
             }
-            else if (canDoubleJump)
+            else if (canDoubleJump && Input.GetButtonDown("Jump"))
                 {
                     velocity.Value.y = Mathf.Sqrt(jumpForce.Value * -gravity.Value);
                     canDoubleJump = false;

@@ -4,7 +4,7 @@ namespace MetroidVaniaTools
 {
     public class CombatController : MonoBehaviour
     {
-        public FloatVariable facingPosition;
+        public FloatVariable facingDirection;
         public Transform projectilePosition;
         [HideInInspector]
         public float WeaponCoolDown = .1f; //global cooldown, can be set by weapon.
