@@ -566,12 +566,7 @@ GameObject:
   - component: {fileID: 959043741}
   - component: {fileID: 959043740}
   - component: {fileID: 959043738}
-  - component: {fileID: 959043739}
-  - component: {fileID: 959043747}
-  - component: {fileID: 959043746}
-  - component: {fileID: 959043745}
-  - component: {fileID: 959043744}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -587,80 +582,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 959043737}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d28ff53e4fa66a4299edae43ad5a174, type: 3}
+  m_Script: {fileID: 11500000, guid: c771bda9e32871d4189abf983fbf9f4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runSpeed: {fileID: 11400000, guid: 9cb134865984a2940bcc9d280e490232, type: 2}
-  groundDamping: {fileID: 11400000, guid: b520d6ad42796984ab70a8a205450ac9, type: 2}
-  inAirDamping: {fileID: 11400000, guid: e5f67e7cb2a8aed4e839657939454619, type: 2}
-  velocity: {fileID: 11400000, guid: 1505896b46d66cd4480143ca7aa7aebd, type: 2}
-  horizontalDirection: {fileID: 11400000, guid: c5bd5bddf4f74f44eabda0b0ed3e87ee,
-    type: 2}
-  gravity: {fileID: 11400000, guid: 02985593a1524ef42863d8b124470f3c, type: 2}
-  isGrounded: {fileID: 11400000, guid: 409defb2a9d446d40826e6371bbf192d, type: 2}
-  isWallSliding: {fileID: 11400000, guid: 00bde269b8c6ccf4983257e7dae48222, type: 2}
-  _controller: {fileID: 959043739}
---- !u!114 &959043739
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 959043737}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53a02c76a711c8b44a9f4a7e1784be93, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ignoreOneWayPlatformsThisFrame: {fileID: 11400000, guid: 2479cf768515d914bb74f884e5a12ce9,
-    type: 2}
-  _skinWidth: 0.02
-  platformMask:
-    serializedVersion: 2
-    m_Bits: 256
-  triggerMask:
-    serializedVersion: 2
-    m_Bits: 0
-  oneWayPlatformMask:
-    serializedVersion: 2
-    m_Bits: 0
-  slopeLimit: 30
-  jumpingThreshold: 0.07
-  slopeSpeedMultiplier:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: -90
-      value: 1.5
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 90
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  totalHorizontalRays: 8
-  totalVerticalRays: 4
+  Velocity: {x: 0, y: 0}
+  IsGrounded: 0
+  MoveInput: 0
+  FacingDirection: 0
+  Speed: 9
+  WalkAcceleration: 75
+  AirAcceleration: 30
+  GroundDeceleration: 70
+  JumpHeight: 4
+  Gravity: -25
+  JumpCommand: {fileID: 11400000, guid: 6c84f897bacc39043ae58e7c0d5ae582, type: 2}
+  DashCommand: {fileID: 11400000, guid: bb0fdad720c5c2b408f2f1ee211bf6e1, type: 2}
+  MainAttackStrategy: {fileID: 0}
 --- !u!61 &959043740
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -670,7 +607,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 959043737}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 9cc325ba71fd8584d937a1cbd9e60bae, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -772,79 +709,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &959043744
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 959043737}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c0983a1b3e3cf04fb4fe4d34e6ee2f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  horizontalDirection: {fileID: 11400000, guid: c5bd5bddf4f74f44eabda0b0ed3e87ee,
-    type: 2}
-  facingDirection: {fileID: 11400000, guid: 4bf63ef9668e8e24e84c4800f01d89f0, type: 2}
-  isGrounded: {fileID: 11400000, guid: 409defb2a9d446d40826e6371bbf192d, type: 2}
-  isWallSliding: {fileID: 11400000, guid: 00bde269b8c6ccf4983257e7dae48222, type: 2}
-  velocity: {fileID: 11400000, guid: 1505896b46d66cd4480143ca7aa7aebd, type: 2}
---- !u!114 &959043745
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 959043737}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eba6661ac53ddfb439e3d151751bc830, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onDashPress: {fileID: 11400000, guid: 8ee0b6cecc8437a42baea5fd217e3ff0, type: 2}
-  dashAbility: {fileID: 11400000, guid: 4cfab5b1dd9431041a5f867a6cafc0f9, type: 2}
-  dashCoolDown: {fileID: 11400000, guid: 72503cb56ff4dfd45b932ebfbdec5870, type: 2}
-  facingDirection: {fileID: 11400000, guid: 4bf63ef9668e8e24e84c4800f01d89f0, type: 2}
-  velocity: {fileID: 11400000, guid: 1505896b46d66cd4480143ca7aa7aebd, type: 2}
---- !u!114 &959043746
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 959043737}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38a8b5101f14f7f40bf354c4e8d9cbf9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  jumpForce: {fileID: 11400000, guid: 9ef2eadc3f17c084396f96162096668e, type: 2}
-  CanWallJump: {fileID: 11400000, guid: 65ca55412c50ce9469d9b40a9480df66, type: 2}
-  CanDoubleJump: {fileID: 11400000, guid: 73f9a38b5b7b368418df6b9b7566af71, type: 2}
-  wallHorizontalForce: {fileID: 11400000, guid: b2cfc622b2119b74baa80ce21eb9d232,
-    type: 2}
-  isGrounded: {fileID: 11400000, guid: 409defb2a9d446d40826e6371bbf192d, type: 2}
-  isWallSliding: {fileID: 11400000, guid: 00bde269b8c6ccf4983257e7dae48222, type: 2}
-  facingDirection: {fileID: 11400000, guid: 4bf63ef9668e8e24e84c4800f01d89f0, type: 2}
-  ignoreOneWayPlatformsThisFrame: {fileID: 11400000, guid: 2479cf768515d914bb74f884e5a12ce9,
-    type: 2}
-  gravity: {fileID: 11400000, guid: 02985593a1524ef42863d8b124470f3c, type: 2}
-  velocity: {fileID: 11400000, guid: 1505896b46d66cd4480143ca7aa7aebd, type: 2}
---- !u!114 &959043747
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 959043737}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 524ba6cf759c40e47909f6a07ff0c8d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inputCollection:
-  - {fileID: 11400000, guid: 8ee0b6cecc8437a42baea5fd217e3ff0, type: 2}
 --- !u!1 &1490124001
 GameObject:
   m_ObjectHideFlags: 0
