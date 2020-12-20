@@ -11,7 +11,9 @@ namespace MetroidVaniaTools
         [HideInInspector]
         public float MoveInput;
         [HideInInspector]
-        public int FacingDirection;
+        public float MovementDirection;
+        [HideInInspector]
+        public bool IsFacingRight;
 
         [Header("SpeedSettings")]
         [SerializeField, Tooltip("Max speed, in units per second, that the character moves.")]
@@ -31,5 +33,7 @@ namespace MetroidVaniaTools
 
         [SerializeField, Tooltip("Max height the character will jump regardless of gravity")]
         public float Gravity = -25;
+
+        public LayerMask GroundLayer;
     }
 }

@@ -22,23 +22,28 @@ namespace MetroidVaniaTools
 
         private float acceleration;
         private float deceleration;
+        private float preJumpPeakGravity;
+        private float postJumpPeakGravity;
 
         private void Awake()
         {
             boxCollider = GetComponent<BoxCollider2D>();
             spriteRenderer = GetComponent<SpriteRenderer>();
-            FacingDirection = 1;
+            IsFacingRight = true;
+            MovementDirection = 1;
+            preJumpPeakGravity = Gravity * 2f;
+            postJumpPeakGravity = Gravity;
         }
 
         private void Update()
         {
             HandleCoolDowns();
-            CheckInput();
-            ApplyPhysics();
+            CheckInput();            
             SetHorizontalVelocity();
+            ApplyPhysics();
             MoveCharacter();
             CheckOrientation();
-            CheckCollisions();
+            CheckGround();
         }
 
         private void HandleCoolDowns()
@@ -57,22 +62,27 @@ namespace MetroidVaniaTools
             {
                 DashCommand.Execute(this);
             }
-            if (Input.GetButtonDown("Fire1"))
-            {
-                MainAttackStrategy.Execute(this);
-            }
+            //if (Input.GetButtonDown("Fire1"))
+            //{
+            //    MainAttackStrategy.Execute(this);
+            //}
         }
         private void ApplyPhysics()
-        {
-            Gravity = Velocity.y > Mathf.Epsilon ? Gravity : Gravity * 2f;
-            Velocity.y += IsGrounded ? Gravity * Time.deltaTime : 0f;
+        {                       
             acceleration = IsGrounded ? WalkAcceleration : AirAcceleration;
-            deceleration = IsGrounded ? GroundDeceleration : float.Epsilon;
+            deceleration = IsGrounded ? GroundDeceleration : 0f;
+            if (IsGrounded)
+            {
+                Gravity = 0f;
+            }
+            Gravity = Velocity.y < 0f ? postJumpPeakGravity : preJumpPeakGravity;
+            
+            Velocity.y += Gravity * Time.deltaTime;
         }
 
         private void SetHorizontalVelocity()
         {
-            Velocity.x = Math.Abs(MoveInput) > float.Epsilon ?
+            Velocity.x = Math.Abs(MoveInput) > 0f ?
                 Mathf.MoveTowards(Velocity.x, Speed * MoveInput, acceleration * Time.deltaTime) :
                 Mathf.MoveTowards(Velocity.x, 0f, deceleration * Time.deltaTime);
         }
@@ -80,18 +90,21 @@ namespace MetroidVaniaTools
         private void MoveCharacter()
         {
             transform.Translate(Velocity * Time.deltaTime);
+            IsGrounded = false;            
         }
 
         private void CheckOrientation()
         {
-            FacingDirection = Math.Abs(MoveInput) > float.Epsilon ? (int)MoveInput : FacingDirection;
-            if (Velocity.x > Mathf.Epsilon && FacingDirection < Mathf.Epsilon)
+            MovementDirection = MoveInput != 0f ? MoveInput: MovementDirection;
+            if (IsFacingRight && MovementDirection < 0f)
             {
                 spriteRenderer.flipX = true;
+                IsFacingRight = false;
             }
-            else if (Velocity.x < Mathf.Epsilon && FacingDirection > Mathf.Epsilon)
+            else if (!IsFacingRight && MovementDirection > 0f)
             {
                 spriteRenderer.flipX = false;
+                IsFacingRight = true;
             }
         }
 
@@ -108,10 +121,9 @@ namespace MetroidVaniaTools
         //    }
         //}
 
-        private void CheckCollisions()
+        private void CheckGround()
         {
-            IsGrounded = false;
-            var hits = Physics2D.OverlapBoxAll(transform.position, boxCollider.size, 0);
+            var hits = Physics2D.OverlapBoxAll(transform.position, boxCollider.size, 0, GroundLayer);
             foreach (var hit in hits)
             {
                 if (hit == boxCollider)
@@ -124,6 +136,7 @@ namespace MetroidVaniaTools
                 if (Vector2.Angle(colliderDistance.normal, Vector2.up) < 90 && Velocity.y < float.Epsilon)
                 {
                     IsGrounded = true;
+                    Velocity.y = 0;
                 }
             }
         }
