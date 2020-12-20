@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: Player_MainWeapon
-  m_EditorClassIdentifier: Assembly-CSharp:MetroidVaniaTools:FireWeapon
-  Projectile: {fileID: 0}
-  Velocity: 0
+  m_Script: {fileID: 11500000, guid: 0cafdb7ebedec1d43aa97092088a9f6b, type: 3}
+  m_Name: FireCommand
+  m_EditorClassIdentifier: 
+  Projectile: {fileID: 8543623087401214929, guid: 836ab438e3a0dc344a960458c71de6b4,
+    type: 3}
+  Velocity: 25
